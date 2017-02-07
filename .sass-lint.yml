@@ -1,0 +1,55 @@
+files:
+    include: './sass/**/*.scss'
+
+rules:
+    # error
+    attribute-quotes: 2
+    brace-style: 2
+    empty-line-between-blocks: 2
+    final-newline: 2
+    force-attribute-nesting: 2
+    force-element-nesting: 2
+    force-pseudo-nesting: 2
+    hex-length: 2
+    no-color-keywords: 2
+    no-color-literals: 2
+    no-empty-rulesets: 2
+    no-mergeable-selectors: 2
+    no-qualifying-elements: 2
+    no-trailing-whitespace: 2
+    one-declaration-per-line: 2
+    pseudo-element: 2
+    single-line-per-selector: 2
+    space-after-colon: 2
+    space-after-comma: 2
+    space-before-bang: 2
+    space-before-brace: 2
+    space-before-colon: 2
+    trailing-semicolon: 2
+
+    # error with configuration
+    border-zero:
+        - 2
+        - convention: none
+    hex-notation:
+        - 2
+        - size: lowercase
+    indentation:
+        - 2
+        - size: 4
+    leading-zero:
+        - 2
+        - include: true
+    nesting-depth:
+        - 2
+        - max-depth: 4
+    quotes:
+        - 2
+        - style: single
+
+    # disable
+    no-css-comments: 0
+    no-ids: 0
+    no-vendor-prefixes: 0
+    property-sort-order: 0
+    shorthand-values: 0
