@@ -1,0 +1,65 @@
+---
+- hosts: all
+
+  vars:
+    dbpw: "Wibble123!"
+    dot_bashrc: "/home/vagrant/.bashrc"
+
+  pre_tasks:
+    - name: Timestamp provision
+      shell: date >> /etc/vagrant_provisioned_at
+      args:
+        executable: /bin/bash
+      changed_when: False
+      become: true
+
+    - name: Update apt cache
+      apt: update_cache=yes cache_valid_time=3600
+      become: true
+
+  tasks:
+    - name: Install apt packages
+      apt: name={{ item }} state=present
+      with_items:
+        - git
+        - htop
+        - vim
+        - postgresql
+        - postgresql-server-dev-9.3
+        - nginx
+        - php5-cli
+        - php5-curl
+        - php5-fpm
+        - php5-intl
+        - php5-pgsql
+        - php5-xdebug
+        - php5-xmlrpc
+      become: true
+
+    - name: Set PostgreSQL database password
+      command: psql -U postgres -d postgres -c "alter user postgres with password '{{ dbpw }}';"
+      become: true
+      become_user: postgres
+      changed_when: False
+
+    - name: Protect .pgpass
+      file: path=/home/vagrant/.pgpass mode=0600 state=file
+
+    - name: Enable colour prompt in bash
+      replace: dest={{ dot_bashrc }} regexp="^\#force_color_prompt\=yes$" replace="force_color_prompt=yes"
+
+    - name: Template nginx server block
+      template:
+        src: nginx-server-block
+        dest: /etc/nginx/sites-available/default
+        owner: bin
+        group: root
+        mode: 0644
+      become: true
+
+    - name: Restart services
+      service: name={{ item }} state=restarted
+      with_items:
+        - postgresql
+        - nginx
+      become: true

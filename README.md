@@ -2,9 +2,13 @@
 
 Moodle 3.2.1 (blastoff!) plus:
 
-- [ ] [Vagrant](https://www.vagrantup.com/) environment (Ubuntu Xenial, nginx, PostgreSQL)
+- [ ] [Vagrant](https://www.vagrantup.com/) environment (Ubuntu Trusty, nginx, PostgreSQL)
 - [ ] Bootstrap 4 based theme
 - [ ] JavaScript and Sass with Webpack 2 and npm scripts
+
+## TODO
+
+- [ ] Provision at least PHP 5.6.5 (as Moodle 3.2 requires it)
 
 ## Requirements
 
@@ -21,3 +25,8 @@ git remote add moodle https://github.com/moodle/moodle
 git subtree add  --squash --prefix=moodle/ moodle v3.2.0
 git subtree pull --squash --prefix=moodle/ moodle v3.2.1
 ```
+
+## Notes
+
+* [Moodle's nginx guide](https://docs.moodle.org/32/en/Nginx)
+* [Digital Ocean's nginx guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts)

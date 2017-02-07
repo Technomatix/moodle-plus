@@ -2,11 +2,11 @@
 # vi: set ft=ruby :
 
 Vagrant.configure("2") do |config|
-    config.vm.define "Moodle Plus" do |foo|
+    config.vm.define "Moodle-Plus" do |foo|
     end
 
     # base box
-    config.vm.box = "ubuntu/xenial64"
+    config.vm.box = "ubuntu/trusty64"
 
     # virtualbox
     config.vm.provider "virtualbox" do |v|
@@ -16,6 +16,12 @@ Vagrant.configure("2") do |config|
 
     # static IP
     config.vm.network "private_network", ip: "10.0.0.10"
+
+    # synced folder
+    config.vm.synced_folder ".", "/vagrant",
+        owner: "vagrant",
+        group: "www-data",
+        mount_options: ["dmode=775,fmode=664"]
 
     # provisioned files
     config.vm.provision "file", source: "vagrant/bash_aliases", destination: ".bash_aliases"
@@ -29,4 +35,7 @@ Vagrant.configure("2") do |config|
         ansible.playbook = "playbook.yml"
         ansible.limit = "all"
     end
+
+    # post-up message
+    config.vm.post_up_message = "Moodle is now available at http://10.0.0.10"
 end

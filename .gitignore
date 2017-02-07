@@ -1,4 +1,6 @@
 *.log
+playbook.retry
 node_modules/
 moodledata/
 phpu_moodledata/
+.vagrant/
