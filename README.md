@@ -2,13 +2,16 @@
 
 Moodle 3.2.1 (blastoff!) plus:
 
-- [ ] [Vagrant](https://www.vagrantup.com/) environment (Ubuntu Trusty, nginx, PostgreSQL)
-- [ ] Bootstrap 4 based theme
-- [ ] JavaScript and Sass with Webpack 2 and npm scripts
+- [Vagrant](https://www.vagrantup.com/) environment (Ubuntu Trusty, nginx, PostgreSQL)
+- Bootstrap 4 based theme
+- JavaScript and Sass with Webpack 2 and npm scripts
 
 ## TODO
 
-- [ ] Provision at least PHP 5.6.5 (as Moodle 3.2 requires it)
+- [*] Provision at least PHP 5.6.5 (as Moodle 3.2 requires it)
+- [ ] Check Xdebug works in PHPStorm
+- [ ] Fix file sessions (workaround is to use database sessions by setting `$CFG->session_handler_class = '\core\session\database';` in `config.php`)
+- [ ] Theme based on Bootstrap 4 with JavaScript and Sass compiled by Webpack
 
 ## Requirements
 
