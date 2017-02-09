@@ -37,5 +37,5 @@ Vagrant.configure("2") do |config|
     end
 
     # post-up message
-    config.vm.post_up_message = "Moodle is now available at http://10.0.0.10"
+    config.vm.post_up_message = "Moodle is now available at http://10.0.0.10\nPlease login with username 'admin' and password 'Wibble123!'"
 end

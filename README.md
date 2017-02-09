@@ -9,8 +9,11 @@ Moodle 3.2.1 (blastoff!) plus:
 ## TODO
 
 - [x] Provision at least PHP 5.6.5 (as Moodle 3.2 requires it)
-- [ ] Check Xdebug works in PHPStorm
-- [ ] Fix file sessions (workaround is to use database sessions by setting `$CFG->session_handler_class = '\core\session\database';` in `config.php`)
+- [x] Check Xdebug works in PHPStorm
+- [x] Check Moodle can write to `moodledata`
+- [x] Provision Moodle cron
+- [x] Provision `config.php` to have `$CFG->session_file_save_path = '/tmp/';`
+- [x] Command line install of Moodle (if `config.php` missing)
 - [ ] Theme based on Bootstrap 4 with JavaScript and Sass compiled by Webpack
 
 ## Requirements

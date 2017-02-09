@@ -1,10 +1,12 @@
+# known to work with Ansible 2.2.1.0
 ---
 - hosts: all
 
   vars:
-    dbpw: "Wibble123!"
+    general_password: "Wibble123!"
     dot_bashrc: "/home/vagrant/.bashrc"
     php_ini: "/etc/php/5.6/fpm/php.ini"
+    config_php: "/vagrant/moodle/config.php"
 
   pre_tasks:
     - name: Timestamp provision
@@ -55,7 +57,7 @@
       become: true
 
     - name: Set PostgreSQL database password
-      command: psql -U postgres -d postgres -c "alter user postgres with password '{{ dbpw }}';"
+      command: psql -U postgres -d postgres -c "alter user postgres with password '{{ general_password }}';"
       become: true
       become_user: postgres
       changed_when: False
@@ -68,6 +70,12 @@
         name: moodle
       become: true
       become_user: postgres
+
+    - name: Create moodledata directory
+      file:
+        path: /vagrant/moodledata
+        state: directory
+        mode: 0755
 
     - name: Enable colour prompt in bash
       replace: dest={{ dot_bashrc }} regexp="^\#force_color_prompt\=yes$" replace="force_color_prompt=yes"
@@ -92,15 +100,27 @@
         - { key: "xdebug.remote_connect_back", value: "on" }
       become: true
 
-    - name: Set session save location
-      ini_file: dest={{ php_ini }}
-                section=Session option={{ item.key }}
-                value={{ item.value }}
-                state=present
-                backup=yes
-      with_items:
-        - { key: "session.save_path", value: "\"/tmp/\"" }
+    - name: Stat Moodle's config.php
+      stat: path={{ config_php }}
+      register: moodle_config
+
+    - name: Template Moodle's config.php
+      template:
+        src: config.php
+        dest: "{{ config_php }}"
+        owner: vagrant
+        group: www-data
+        mode: 0644
+      when: moodle_config.stat.exists == False
+
+    - name: Install Moodle database
+      command: /usr/bin/php /vagrant/moodle/admin/cli/install_database.php --adminpass={{ general_password }} --agree-license --fullname=Moodle --shortname=Moodle
+      when: moodle_config.stat.exists == False
       become: true
+      become_user: www-data
+
+    - name: Setup Moodle cron
+      cron: user=vagrant name="Moodle" job="/usr/bin/php /vagrant/moodle/admin/cli/cron.php > /tmp/cron-moodle.txt" minute="0,10,20,30,40,50" state=present
 
     - name: Restart services
       service: name={{ item }} state=restarted
