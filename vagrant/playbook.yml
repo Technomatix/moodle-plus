@@ -7,6 +7,7 @@
     dot_bashrc: "/home/vagrant/.bashrc"
     php_ini: "/etc/php/5.6/fpm/php.ini"
     config_php: "/vagrant/moodle/config.php"
+    composer: "/usr/local/bin/composer"
 
   pre_tasks:
     - name: Timestamp provision
@@ -16,10 +17,6 @@
       changed_when: False
       become: true
 
-    - name: Update apt cache
-      apt: update_cache=yes cache_valid_time=3600
-      become: true
-
   tasks:
     - name: Add PHP 5.6 apt repository
       apt_repository:
@@ -27,8 +24,7 @@
       become: true
 
     - name: Update apt cache
-      apt:
-        update_cache: yes
+      apt: update_cache=yes cache_valid_time=3600
       become: true
 
     - name: Install apt packages
@@ -121,6 +117,37 @@
 
     - name: Setup Moodle cron
       cron: user=vagrant name="Moodle" job="/usr/bin/php /vagrant/moodle/admin/cli/cron.php > /tmp/cron-moodle.txt" minute="0,10,20,30,40,50" state=present
+
+    - name: Install Composer
+      # https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
+      shell: |
+        EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
+        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
+        ACTUAL_SIGNATURE=$(php -r "echo hash_file('SHA384', 'composer-setup.php');")
+
+        if [ "$EXPECTED_SIGNATURE" != "$ACTUAL_SIGNATURE" ]
+        then
+            >&2 echo 'ERROR: Invalid installer signature'
+            rm composer-setup.php
+            exit 1
+        fi
+
+        php composer-setup.php --quiet
+        RESULT=$?
+        rm composer-setup.php
+        exit $RESULT
+      args:
+        chdir: /tmp/
+
+    - name: Move Composer to somewhere on path
+      command: mv /tmp/composer.phar {{ composer }}
+      become: true
+
+    - name: Make Composer executable
+      file:
+        path: "{{ composer }}"
+        mode: 0775
+      become: true
 
     - name: Restart services
       service: name={{ item }} state=restarted

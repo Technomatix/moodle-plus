@@ -3,19 +3,14 @@
 Moodle 3.2.1 (blastoff!) plus:
 
 - [Vagrant](https://www.vagrantup.com/) environment (Ubuntu Trusty, nginx, PostgreSQL)
-- Bootstrap 4 based theme
+- [Bootstrap 4](https://v4-alpha.getbootstrap.com/) based theme
 - JavaScript and Sass with Webpack 2 and npm scripts
 
 ## TODO
 
-- [x] Provision at least PHP 5.6.5 (as Moodle 3.2 requires it)
-- [x] Check Xdebug works in PHPStorm
-- [x] Check Moodle can write to `moodledata`
-- [x] Provision Moodle cron
-- [x] Provision `config.php` to have `$CFG->session_file_save_path = '/tmp/';`
-- [x] Command line install of Moodle (if `config.php` missing)
-- [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
 - [ ] Investigate [Lumen](https://lumen.laravel.com/)
+- [ ] Investigate [Slim 3](https://www.slimframework.com/)
+- [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
 
 ## Requirements
 
