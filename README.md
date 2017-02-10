@@ -14,7 +14,8 @@ Moodle 3.2.1 (blastoff!) plus:
 - [x] Provision Moodle cron
 - [x] Provision `config.php` to have `$CFG->session_file_save_path = '/tmp/';`
 - [x] Command line install of Moodle (if `config.php` missing)
-- [ ] Theme based on Bootstrap 4 with JavaScript and Sass compiled by Webpack
+- [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
+- [ ] Investigate [Lumen](https://lumen.laravel.com/)
 
 ## Requirements
 
@@ -37,3 +38,4 @@ git subtree pull --squash --prefix=moodle/ moodle v3.2.1
 * [Moodle's nginx guide](https://docs.moodle.org/32/en/Nginx)
 * [Digital Ocean's nginx guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts)
 * [Digital Ocean's LEMP stack guide](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
+* [Moodle's 'Boost' theme guide](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
