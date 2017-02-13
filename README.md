@@ -10,7 +10,7 @@ Moodle 3.2.1 (blastoff!) plus:
 
 - [x] Setup Moodle to run its own PHPUnit test suite
 - [x] Install Moodle's Composer packages defined in its own `composer.json` file into its own `vendor/` directory
-- [ ] Check can diff `moodle/` subdirectory against Moodle tag
+- [x] Check can diff `moodle/` subdirectory against Moodle tag
 - [ ] Provision [Slim 3](https://www.slimframework.com/)
 - [ ] Build [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) blogpost as a Moodle `local` plugin
 - [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
@@ -33,12 +33,22 @@ php utils/plugin_types.php
 
 ## Moodle source code
 
+### git subtree
+
 The Moodle source code is managed as a [git subtree](https://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/) under `moodle/`.
 
 ```
 git remote add moodle https://github.com/moodle/moodle
 git subtree add  --squash --prefix=moodle/ moodle v3.2.0
 git subtree pull --squash --prefix=moodle/ moodle v3.2.1
+```
+
+### Diff
+
+Moodle source code files (i.e. those under `moodle/`) that've been added, modified or deleted can be determined as below (replacing `v3.2.1` with a Moodle tag as appropriate).
+
+```
+git diff --name-status v3.2.1 HEAD:moodle/
 ```
 
 ## Notes
