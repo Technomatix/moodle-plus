@@ -11,7 +11,7 @@ Moodle 3.2.1 (blastoff!) plus:
 - [x] Setup Moodle to run its own PHPUnit test suite
 - [x] Install Moodle's Composer packages defined in its own `composer.json` file into its own `vendor/` directory
 - [x] Check can diff `moodle/` subdirectory against Moodle tag
-- [ ] Provision [Slim 3](https://www.slimframework.com/)
+- [x] Provision [Slim 3](https://www.slimframework.com/)
 - [ ] Build [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) blogpost as a Moodle `local` plugin
 - [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
 - [ ] Look into Behat

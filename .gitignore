@@ -1,6 +1,8 @@
 *.log
 playbook.retry
+composer.lock
 node_modules/
+vendor/
 moodledata/
 phpu_moodledata/
 .vagrant/

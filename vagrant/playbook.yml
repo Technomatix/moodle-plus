@@ -176,6 +176,16 @@
         chdir: "{{ moodle_dir }}"
       when: moodle_vendor.stat.exists == False
 
+    - name: Stat project's vendor/ directory
+      stat: path=/vagrant/vendor
+      register: project_vendor
+
+    - name: Install project's Composer packages
+      command: composer install
+      args:
+        chdir: /vagrant/
+      when: project_vendor.stat.exists == False
+
     - name: Install AU locale (required by Moodle, bizarrely, for its PHPUnit test suite)
       command: "locale-gen {{ item }}"
       with_items:
