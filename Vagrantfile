@@ -21,7 +21,7 @@ Vagrant.configure("2") do |config|
     config.vm.synced_folder ".", "/vagrant",
         owner: "vagrant",
         group: "www-data",
-        mount_options: ["dmode=775,fmode=664"]
+        mount_options: ["dmode=775,fmode=764"]
 
     # provisioned files
     config.vm.provision "file", source: "vagrant/bash_aliases", destination: ".bash_aliases"

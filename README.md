@@ -8,15 +8,28 @@ Moodle 3.2.1 (blastoff!) plus:
 
 ## TODO
 
-- [ ] Investigate [Lumen](https://lumen.laravel.com/)
-- [ ] Investigate [Slim 3](https://www.slimframework.com/)
+- [x] Setup Moodle to run its own PHPUnit test suite
+- [x] Install Moodle's Composer packages defined in its own `composer.json` file into its own `vendor/` directory
+- [ ] Check can diff `moodle/` subdirectory against Moodle tag
+- [ ] Provision [Slim 3](https://www.slimframework.com/)
+- [ ] Build [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) blogpost as a Moodle `local` plugin
 - [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
+- [ ] Look into Behat
 
 ## Requirements
 
 * git
 * [Vagrant](https://www.vagrantup.com/) 1.8.7 or later
 * Node 7.4.0 or later (ideally managed with [nvm](https://github.com/creationix/nvm))
+
+## Moodle plugin types
+
+To see which [Moodle plugin types](https://docs.moodle.org/dev/Plugin_types) are available, run the below in the Vagrant VM:
+
+```
+cd /vagrant
+php utils/plugin_types.php
+```
 
 ## Moodle source code
 

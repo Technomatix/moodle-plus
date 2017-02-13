@@ -21,6 +21,9 @@ $CFG->wwwroot   = 'http://10.0.0.10';
 $CFG->dataroot  = '/vagrant/moodledata';
 $CFG->admin     = 'admin';
 
+$CFG->phpunit_prefix   = 'phpu_';
+$CFG->phpunit_dataroot = '/vagrant/phpu_moodledata';
+
 $CFG->directorypermissions = 0777;
 
 $CFG->session_file_save_path = '/tmp/';

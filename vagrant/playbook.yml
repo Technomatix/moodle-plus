@@ -6,7 +6,8 @@
     general_password: "Wibble123!"
     dot_bashrc: "/home/vagrant/.bashrc"
     php_ini: "/etc/php/5.6/fpm/php.ini"
-    config_php: "/vagrant/moodle/config.php"
+    moodle_dir: "/vagrant/moodle/"
+    config_php: "{{ moodle_dir }}config.php"
     composer: "/usr/local/bin/composer"
 
   pre_tasks:
@@ -73,6 +74,12 @@
         state: directory
         mode: 0755
 
+    - name: Create phpu_moodledata directory
+      file:
+        path: /vagrant/phpu_moodledata
+        state: directory
+        mode: 0755
+
     - name: Enable colour prompt in bash
       replace: dest={{ dot_bashrc }} regexp="^\#force_color_prompt\=yes$" replace="force_color_prompt=yes"
 
@@ -110,15 +117,19 @@
       when: moodle_config.stat.exists == False
 
     - name: Install Moodle database
-      command: /usr/bin/php /vagrant/moodle/admin/cli/install_database.php --adminpass={{ general_password }} --agree-license --fullname=Moodle --shortname=Moodle
+      command: "/usr/bin/php {{ moodle_dir }}admin/cli/install_database.php --adminpass={{ general_password }} --agree-license --fullname=Moodle --shortname=Moodle"
       when: moodle_config.stat.exists == False
       become: true
       become_user: www-data
 
     - name: Setup Moodle cron
-      cron: user=vagrant name="Moodle" job="/usr/bin/php /vagrant/moodle/admin/cli/cron.php > /tmp/cron-moodle.txt" minute="0,10,20,30,40,50" state=present
+      cron: user=vagrant name="Moodle" job="/usr/bin/php {{ moodle_dir }}admin/cli/cron.php > /tmp/cron-moodle.txt" minute="0,10,20,30,40,50" state=present
 
-    - name: Install Composer
+    - name: Stat Composer (perm)
+      stat: path={{ composer }}
+      register: composer_perm
+
+    - name: Install Composer into /tmp/
       # https://getcomposer.org/doc/faqs/how-to-install-composer-programmatically.md
       shell: |
         EXPECTED_SIGNATURE=$(wget -q -O - https://composer.github.io/installer.sig)
@@ -138,16 +149,54 @@
         exit $RESULT
       args:
         chdir: /tmp/
+      when: composer_perm.stat.exists == False
 
-    - name: Move Composer to somewhere on path
+    - name: Stat Composer (temp)
+      stat: path=/tmp/composer.phar
+      register: composer_temp
+
+    - name: Move Composer (temp) to somewhere on path (perm)
       command: mv /tmp/composer.phar {{ composer }}
       become: true
+      when: composer_temp.stat.exists
 
-    - name: Make Composer executable
+    - name: Make Composer (perm) executable
       file:
         path: "{{ composer }}"
         mode: 0775
       become: true
+
+    - name: Stat Moodle's vendor/ directory
+      stat: path="{{ moodle_dir }}vendor"
+      register: moodle_vendor
+
+    - name: Install Moodle's Composer packages
+      command: composer install
+      args:
+        chdir: "{{ moodle_dir }}"
+      when: moodle_vendor.stat.exists == False
+
+    - name: Install AU locale (required by Moodle, bizarrely, for its PHPUnit test suite)
+      command: "locale-gen {{ item }}"
+      with_items:
+        - en_AU
+        - en_AU.UTF-8
+      become: true
+
+    - name: Stat an arbitrary phpunit.xml file (to determine whether 'component configs' need building)
+      stat: path="{{ moodle_dir }}admin/tool/behat/phpunit.xml"
+      register: behat_phpunit
+
+    - name: Build 'component configs'
+      command: php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
+      args:
+        chdir: "{{ moodle_dir }}"
+      when: behat_phpunit.stat.exists == False
+
+    - name: Initialize Moodle PHPUnit test environment
+      command: php admin/tool/phpunit/cli/init.php
+      args:
+        chdir: "{{ moodle_dir }}"
 
     - name: Restart services
       service: name={{ item }} state=restarted
