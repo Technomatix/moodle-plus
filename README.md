@@ -8,10 +8,6 @@ Moodle 3.2.1 (blastoff!) plus:
 
 ## TODO
 
-- [x] Setup Moodle to run its own PHPUnit test suite
-- [x] Install Moodle's Composer packages defined in its own `composer.json` file into its own `vendor/` directory
-- [x] Check can diff `moodle/` subdirectory against Moodle tag
-- [x] Provision [Slim 3](https://www.slimframework.com/)
 - [ ] Build [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) blogpost as a Moodle `local` plugin
 - [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
 - [ ] Look into Behat
@@ -50,6 +46,26 @@ Moodle source code files (i.e. those under `moodle/`) that've been added, modifi
 ```
 git diff --name-status v3.2.1 HEAD:moodle/
 ```
+
+### Lint
+
+One or more PHP files can be linted (in the Vagrant VM) with `phpcs`, for example:
+
+```
++vagrant@vagrant-ubuntu-trusty-64:/vagrant/moodle$ phpcs index.php
+
+FILE: /vagrant/moodle/index.php
+----------------------------------------------------------------------
+FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
+----------------------------------------------------------------------
+ 25 | WARNING | Expected MOODLE_INTERNAL check or config.php
+    |         | inclusion
+----------------------------------------------------------------------
+
+Time: 319ms; Memory: 10Mb
+```
+
+(Much of Moodle's own code doesn't lint according to its own rules.)
 
 ## Notes
 

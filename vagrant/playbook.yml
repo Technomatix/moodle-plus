@@ -5,6 +5,7 @@
   vars:
     general_password: "Wibble123!"
     dot_bashrc: "/home/vagrant/.bashrc"
+    dot_profile: "/home/vagrant/.profile"
     php_ini: "/etc/php/5.6/fpm/php.ini"
     moodle_dir: "/vagrant/moodle/"
     config_php: "{{ moodle_dir }}config.php"
@@ -207,6 +208,15 @@
       command: php admin/tool/phpunit/cli/init.php
       args:
         chdir: "{{ moodle_dir }}"
+
+    - name: Install PHP Code Sniffer
+      command: composer global require "squizlabs/php_codesniffer=*"
+
+    - name: Add global Composer bin directory to path
+      lineinfile: dest={{ dot_profile }} line="PATH=\"$HOME/.config/composer/vendor/bin:$PATH\""
+
+    - name: Clone Moodle local/codechecker repo
+      git: repo=https://github.com/moodlehq/moodle-local_codechecker dest=/home/vagrant/.codechecker version=v2.5.4 update=no
 
     - name: Restart services
       service: name={{ item }} state=restarted
