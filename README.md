@@ -58,11 +58,8 @@ FILE: /vagrant/moodle/index.php
 ----------------------------------------------------------------------
 FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
 ----------------------------------------------------------------------
- 25 | WARNING | Expected MOODLE_INTERNAL check or config.php
-    |         | inclusion
+ 25 | WARNING | Expected MOODLE_INTERNAL check or config.php inclusion
 ----------------------------------------------------------------------
-
-Time: 319ms; Memory: 10Mb
 ```
 
 (Much of Moodle's own code doesn't lint according to its own rules.)
