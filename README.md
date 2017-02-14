@@ -49,7 +49,7 @@ git diff --name-status v3.2.1 HEAD:moodle/
 
 ### Lint
 
-One or more PHP files can be linted (in the Vagrant VM) with `phpcs`, for example:
+One or more PHP files can be linted (in the Vagrant VM, against the [Moodle coding style](https://docs.moodle.org/dev/Coding_style)) with [phpcs](https://github.com/squizlabs/PHP_CodeSniffer):
 
 ```
 +vagrant@vagrant-ubuntu-trusty-64:/vagrant/moodle$ phpcs index.php
