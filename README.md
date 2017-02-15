@@ -70,7 +70,7 @@ Remote debugging with [Xdebug](https://xdebug.org/) is possible in [PHPStorm](ht
 
 Debugging in VSCode requires the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
 
-To set up source code mapping, add the two lines below to a VSCode debugger `launch.json` file:
+To set up source code mapping, add the two lines below to the "Listen for XDebug" configuration of a VSCode debugger `launch.json` file:
 
 ```
 "localSourceRoot": "${workspaceRoot}/moodle",
