@@ -1,15 +1,21 @@
 # Moodle Plus
 
-Moodle 3.2.1 (blastoff!) plus:
+A Moodle [Vagrant](https://www.vagrantup.com/) environment provisioned with [Ansible local](https://www.vagrantup.com/docs/provisioning/ansible_local.html):
 
-- [Vagrant](https://www.vagrantup.com/) environment (Ubuntu Trusty, nginx, PostgreSQL)
-- [Bootstrap 4](https://v4-alpha.getbootstrap.com/) based theme
-- JavaScript and Sass with Webpack 2 and npm scripts
+* Ubuntu Trusty
+* nginx
+* PostgreSQL
+* PHP 5.6
+* [XDebug](https://xdebug.org/)
+* [Composer](https://getcomposer.org/)
+* [PHPUnit](https://docs.moodle.org/dev/PHPUnit)
+* [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer)
+* [Slim 3 micro-framework](https://www.slimframework.com/docs/)
 
 ## TODO
 
-- [ ] Build [Thinking in React](https://facebook.github.io/react/docs/thinking-in-react.html) blogpost as a Moodle `local` plugin
-- [ ] Theme based on 'Boost' with JavaScript and Sass compiled by Webpack
+- [ ] Build example TODOs app (as a `local` plugin) with a Slim REST API and React/Redux front-end
+- [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 - [ ] Look into Behat
 
 ## Requirements
@@ -82,6 +88,6 @@ To set up source code mapping, add the two lines below to the "Listen for XDebug
 ## Notes
 
 * [Moodle's nginx guide](https://docs.moodle.org/32/en/Nginx)
+* [Moodle's 'Boost' theme guide](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
 * [Digital Ocean's nginx guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts)
 * [Digital Ocean's LEMP stack guide](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
-* [Moodle's 'Boost' theme guide](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
