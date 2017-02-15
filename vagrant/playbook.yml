@@ -102,6 +102,7 @@
       with_items:
         - { key: "xdebug.remote_enable", value: "on" }
         - { key: "xdebug.remote_connect_back", value: "on" }
+        - { key: "xdebug.remote_autostart", value: "on" }
       become: true
 
     - name: Stat Moodle's config.php

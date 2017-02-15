@@ -64,6 +64,21 @@ FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
 
 (Much of Moodle's own code doesn't lint according to its own rules.)
 
+### Debug
+
+Remote debugging with [Xdebug](https://xdebug.org/) is possible in [PHPStorm](https://www.jetbrains.com/phpstorm/) and [Visual Studio Code](https://code.visualstudio.com/Docs/languages/php).
+
+Debugging in VSCode requires the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
+
+To set up source code mapping, add the two lines below to a VSCode debugger `launch.json` file:
+
+```
+"localSourceRoot": "${workspaceRoot}/moodle",
+"serverSourceRoot": "/vagrant/moodle"
+```
+
+(Since the XDebug `remote_autostart` setting is provisioned, [Bookmarklets](https://www.jetbrains.com/phpstorm/marklets/) shouldn't be necessary.)
+
 ## Notes
 
 * [Moodle's nginx guide](https://docs.moodle.org/32/en/Nginx)
