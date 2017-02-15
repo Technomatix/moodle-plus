@@ -72,7 +72,7 @@ FOUND 0 ERRORS AND 1 WARNING AFFECTING 1 LINE
 
 ### Debug
 
-Remote debugging with [Xdebug](https://xdebug.org/) is possible in [PHPStorm](https://www.jetbrains.com/phpstorm/) and [Visual Studio Code](https://code.visualstudio.com/Docs/languages/php).
+Remote debugging with [XDebug](https://xdebug.org/) is possible in [PHPStorm](https://www.jetbrains.com/phpstorm/) and [Visual Studio Code](https://code.visualstudio.com/Docs/languages/php).
 
 Debugging in VSCode requires the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
 
@@ -83,7 +83,7 @@ To set up source code mapping, add the two lines below to the "Listen for XDebug
 "serverSourceRoot": "/vagrant/moodle"
 ```
 
-(Since the XDebug `remote_autostart` setting is provisioned, [Bookmarklets](https://www.jetbrains.com/phpstorm/marklets/) shouldn't be necessary.)
+(Since the XDebug `remote_autostart` setting is provisioned, [bookmarklets](https://www.jetbrains.com/phpstorm/marklets/) shouldn't be necessary.)
 
 ## Notes
 
