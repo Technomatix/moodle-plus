@@ -9,14 +9,15 @@ A Moodle [Vagrant](https://www.vagrantup.com/) environment provisioned with [Ans
 * [XDebug](https://xdebug.org/)
 * [Composer](https://getcomposer.org/)
 * [PHPUnit](https://docs.moodle.org/dev/PHPUnit)
+* [Behat](https://docs.moodle.org/dev/Acceptance_testing)
 * [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer)
 * [Slim 3 micro-framework](https://www.slimframework.com/docs/)
 
 ## TODO
 
+- [ ] Only run Ansible task for initializing test environments if db tables don't exist
 - [ ] Build example TODOs app (as a `local` plugin) with a Slim REST API and React/Redux front-end
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
-- [ ] Look into Behat
 
 ## Requirements
 
@@ -85,9 +86,36 @@ To set up source code mapping, add the two lines below to the "Listen for XDebug
 
 (Since the XDebug `remote_autostart` setting is provisioned, [bookmarklets](https://www.jetbrains.com/phpstorm/marklets/) shouldn't be necessary.)
 
-## Notes
+### Behat
 
-* [Moodle's nginx guide](https://docs.moodle.org/32/en/Nginx)
-* [Moodle's 'Boost' theme guide](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
-* [Digital Ocean's nginx guide](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts)
-* [Digital Ocean's LEMP stack guide](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
+This requires three ssh sessions in the Vagrant VM.
+
+In the first ssh session, run the PHP built-in web server:
+
+```
+cd /vagrant/moodle
+php -S localhost:8000
+```
+
+In the second ssh session, run Selenium:
+
+```
+java -jar /vagrant/utils/selenium-server-standalone-2.53.1.jar
+```
+
+In the third ssh session, run the Behat test suite (in headless Firefox):
+
+```
+cd /vagrant/moodle
+Xvfb :99 -ac &
+vendor/bin/behat --config ../behat_moodledata/behat/behat.yml /path/to/some/behat/feature/files/
+```
+
+## Guides
+
+* [nginx with Moodle](https://docs.moodle.org/32/en/Nginx)
+* ['Boost' theme](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
+* [Behat with Moodle](https://docs.moodle.org/dev/Acceptance_testing)
+* [Digital Ocean r.e. nginx](https://www.digitalocean.com/community/tutorials/how-to-set-up-nginx-server-blocks-virtual-hosts-on-ubuntu-14-04-lts)
+* [Digital Ocean r.e. LEMP stack](https://www.digitalocean.com/community/tutorials/how-to-install-linux-nginx-mysql-php-lemp-stack-on-ubuntu-14-04)
+* [Headless Firefox with Selenium](https://medium.com/@griggheo/running-selenium-webdriver-tests-using-firefox-headless-mode-on-ubuntu-d32500bb6af2#.txv9ubupd)

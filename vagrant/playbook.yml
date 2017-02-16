@@ -52,6 +52,9 @@
         - php5.6-xml
         - php5.6-xmlrpc
         - php5.6-zip
+        - default-jre
+        - firefox
+        - xvfb
       become: true
 
     - name: Set PostgreSQL database password
@@ -188,14 +191,14 @@
         chdir: /vagrant/
       when: project_vendor.stat.exists == False
 
-    - name: Install AU locale (required by Moodle, bizarrely, for its PHPUnit test suite)
+    - name: Install AU locale (required for the PHPUnit test suite)
       command: "locale-gen {{ item }}"
       with_items:
         - en_AU
         - en_AU.UTF-8
       become: true
 
-    - name: Stat an arbitrary phpunit.xml file (to determine whether 'component configs' need building)
+    - name: Stat an arbitrary phpunit.xml file
       stat: path="{{ moodle_dir }}admin/tool/behat/phpunit.xml"
       register: behat_phpunit
 
@@ -205,8 +208,11 @@
         chdir: "{{ moodle_dir }}"
       when: behat_phpunit.stat.exists == False
 
-    - name: Initialize Moodle PHPUnit test environment
-      command: php admin/tool/phpunit/cli/init.php
+    - name: Initialize Moodle test environments
+      command: "php admin/tool/{{ item }}/cli/init.php"
+      with_items:
+        - phpunit
+        - behat
       args:
         chdir: "{{ moodle_dir }}"
 
@@ -215,6 +221,9 @@
 
     - name: Add global Composer bin directory to path
       lineinfile: dest={{ dot_profile }} line="PATH=\"$HOME/.config/composer/vendor/bin:$PATH\""
+
+    - name: Add display id for Xvfb (for Behat)
+      lineinfile: dest={{ dot_profile }} line="export DISPLAY=:99"
 
     - name: Clone Moodle local/codechecker repo
       git: repo=https://github.com/moodlehq/moodle-local_codechecker dest=/home/vagrant/.codechecker version=v2.5.4 update=no

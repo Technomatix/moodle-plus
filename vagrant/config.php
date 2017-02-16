@@ -11,18 +11,23 @@ $CFG->dbname    = 'moodle';
 $CFG->dbuser    = 'postgres';
 $CFG->dbpass    = 'Wibble123!';
 $CFG->prefix    = 'mdl_';
-$CFG->dboptions = array (
-  'dbpersist' => 0,
-  'dbport' => 5432,
-  'dbsocket' => '',
-);
 
-$CFG->wwwroot   = 'http://10.0.0.10';
-$CFG->dataroot  = '/vagrant/moodledata';
-$CFG->admin     = 'admin';
+$CFG->dboptions = [
+    'dbpersist' => 0,
+    'dbport'    => 5432,
+    'dbsocket'  => '',
+];
+
+$CFG->wwwroot  = 'http://10.0.0.10';
+$CFG->dataroot = '/vagrant/moodledata';
+$CFG->admin    = 'admin';
 
 $CFG->phpunit_prefix   = 'phpu_';
 $CFG->phpunit_dataroot = '/vagrant/phpu_moodledata';
+
+$CFG->behat_prefix   = 'behat_';
+$CFG->behat_dataroot = '/vagrant/behat_moodledata';
+$CFG->behat_wwwroot  = 'http://localhost:8000';
 
 $CFG->directorypermissions = 0777;
 
