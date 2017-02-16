@@ -1,15 +1,15 @@
 {
   "scripts": {
-    "clean": "rimraf vendor && rimraf moodle/vendor && rimraf moodledata && rimraf phpu_moodledata && rimraf behat_moodledata && rimraf moodle/config.php"
+    "clean": "rimraf vendor && rimraf moodle/vendor && rimraf moodledata && rimraf moodle/config.php"
   },
   "devDependencies": {
-    "babel-core": "6.22.1",
-    "babel-loader": "6.2.10",
+    "babel-core": "6.23.1",
+    "babel-loader": "6.3.2",
     "babel-preset-es2015": "6.22.0",
-    "babel-preset-react": "6.22.0",
+    "babel-preset-react": "6.23.0",
     "eslint": "3.15.0",
     "eslint-loader": "1.6.1",
-    "eslint-plugin-react": "6.9.0",
+    "eslint-plugin-react": "6.10.0",
     "node-sass": "4.5.0",
     "rimraf": "2.5.4",
     "sass-lint": "1.10.2",

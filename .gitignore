@@ -4,8 +4,6 @@ composer.lock
 node_modules/
 vendor/
 moodledata/
-phpu_moodledata/
-behat_moodledata/
 .vagrant/
 .idea/
 .vscode/

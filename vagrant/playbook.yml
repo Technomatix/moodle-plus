@@ -76,13 +76,13 @@
 
     - name: Create moodledata directories
       file:
-        path: "/vagrant/{{ item }}"
+        path: "/vagrant/moodledata/{{ item }}"
         state: directory
         mode: 0755
       with_items:
-        - moodledata
-        - phpu_moodledata
-        - behat_moodledata
+        - main
+        - phpu
+        - behat
 
     - name: Enable colour prompt in bash
       replace: dest={{ dot_bashrc }} regexp="^\#force_color_prompt\=yes$" replace="force_color_prompt=yes"

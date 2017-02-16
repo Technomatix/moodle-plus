@@ -19,14 +19,14 @@ $CFG->dboptions = [
 ];
 
 $CFG->wwwroot  = 'http://10.0.0.10';
-$CFG->dataroot = '/vagrant/moodledata';
+$CFG->dataroot = '/vagrant/moodledata/main';
 $CFG->admin    = 'admin';
 
 $CFG->phpunit_prefix   = 'phpu_';
-$CFG->phpunit_dataroot = '/vagrant/phpu_moodledata';
+$CFG->phpunit_dataroot = '/vagrant/moodledata/phpu';
 
 $CFG->behat_prefix   = 'behat_';
-$CFG->behat_dataroot = '/vagrant/behat_moodledata';
+$CFG->behat_dataroot = '/vagrant/moodledata/behat';
 $CFG->behat_wwwroot  = 'http://localhost:8000';
 
 $CFG->directorypermissions = 0777;
