@@ -11,8 +11,8 @@ server {
         try_files $uri $uri/ =404;
     }
 
-    location /foo/ {
-        rewrite ^/foo/(.*)$ /bar/index.php?query=$1 last;
+    location /todolist/ {
+        rewrite ^/todolist/(.*)$ /local/todolist/index.php?query=$1 last;
     }
 
     location ~ [^/]\.php(/|$) {
