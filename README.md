@@ -15,7 +15,6 @@ A Moodle [Vagrant](https://www.vagrantup.com/) environment provisioned with [Ans
 
 ## TODO
 
-- [ ] Only run Ansible task for initializing test environments if db tables don't exist
 - [ ] Build example TODOs app (as a `local` plugin) with a Slim REST API and React/Redux front-end
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
@@ -93,8 +92,7 @@ This requires three ssh sessions in the Vagrant VM.
 In the first ssh session, run the PHP built-in web server:
 
 ```
-cd /vagrant/moodle
-php -S localhost:8000
+php -S localhost:8000 -t /vagrant/moodle
 ```
 
 In the second ssh session, run Selenium:
@@ -103,12 +101,11 @@ In the second ssh session, run Selenium:
 java -jar /vagrant/utils/selenium-server-standalone-2.53.1.jar
 ```
 
-In the third ssh session, run the Behat test suite (in headless Firefox):
+In the third ssh session, point Behat at a `.feature` file:
 
 ```
 cd /vagrant/moodle
-Xvfb :99 -ac &
-vendor/bin/behat --config ../behat_moodledata/behat/behat.yml /path/to/some/behat/feature/files/
+vendor/bin/behat --config ../behat_moodledata/behat/behat.yml blocks/myprofile/tests/behat/block_myprofile_frontpage.feature
 ```
 
 ## Guides

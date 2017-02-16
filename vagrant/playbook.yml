@@ -4,12 +4,14 @@
 
   vars:
     general_password: "Wibble123!"
-    dot_bashrc: "/home/vagrant/.bashrc"
-    dot_profile: "/home/vagrant/.profile"
+    home: "/home/vagrant/"
+    dot_bashrc: "{{ home }}.bashrc"
+    dot_profile: "{{ home }}.profile"
     php_ini: "/etc/php/5.6/fpm/php.ini"
     moodle_dir: "/vagrant/moodle/"
     config_php: "{{ moodle_dir }}config.php"
     composer: "/usr/local/bin/composer"
+    xvfb_display_id: ":99"
 
   pre_tasks:
     - name: Timestamp provision
@@ -64,7 +66,7 @@
       changed_when: False
 
     - name: Protect .pgpass
-      file: path=/home/vagrant/.pgpass mode=0600 state=file
+      file: path="{{ home }}.pgpass" mode=0600 state=file
 
     - name: Create moodle database
       postgresql_db:
@@ -72,17 +74,15 @@
       become: true
       become_user: postgres
 
-    - name: Create moodledata directory
+    - name: Create moodledata directories
       file:
-        path: /vagrant/moodledata
+        path: "/vagrant/{{ item }}"
         state: directory
         mode: 0755
-
-    - name: Create phpu_moodledata directory
-      file:
-        path: /vagrant/phpu_moodledata
-        state: directory
-        mode: 0755
+      with_items:
+        - moodledata
+        - phpu_moodledata
+        - behat_moodledata
 
     - name: Enable colour prompt in bash
       replace: dest={{ dot_bashrc }} regexp="^\#force_color_prompt\=yes$" replace="force_color_prompt=yes"
@@ -191,12 +191,19 @@
         chdir: /vagrant/
       when: project_vendor.stat.exists == False
 
+    - name: Check whether AU locale is installed
+      shell: locale -a | grep -P "^en_AU$"
+      register: au_locale_installed
+      failed_when: False
+      changed_when: False
+
     - name: Install AU locale (required for the PHPUnit test suite)
       command: "locale-gen {{ item }}"
       with_items:
         - en_AU
         - en_AU.UTF-8
       become: true
+      when: au_locale_installed.stdout != "en_AU"
 
     - name: Stat an arbitrary phpunit.xml file
       stat: path="{{ moodle_dir }}admin/tool/behat/phpunit.xml"
@@ -215,18 +222,44 @@
         - behat
       args:
         chdir: "{{ moodle_dir }}"
+      when: moodle_config.stat.exists == False
+
+    - name: Stat squizlabs
+      stat: path="{{ home }}.config/composer/vendor/squizlabs"
+      register: squizlabs
 
     - name: Install PHP Code Sniffer
       command: composer global require "squizlabs/php_codesniffer=*"
+      when: squizlabs.stat.exists == False
 
     - name: Add global Composer bin directory to path
       lineinfile: dest={{ dot_profile }} line="PATH=\"$HOME/.config/composer/vendor/bin:$PATH\""
 
     - name: Add display id for Xvfb (for Behat)
-      lineinfile: dest={{ dot_profile }} line="export DISPLAY=:99"
+      lineinfile: dest={{ dot_profile }} line="export DISPLAY={{ xvfb_display_id }}"
+
+    - name: Check whether Xvfb is running
+      shell: ps -elf | grep Xvfb | grep -v grep | grep -o Xvfb
+      register: xvfb_running
+      failed_when: False
+      changed_when: False
+
+    - name: Run Xvfb
+      shell: "Xvfb {{ xvfb_display_id }} -ac >/dev/null 2>&1 &"
+      when: xvfb_running.stdout != "Xvfb"
 
     - name: Clone Moodle local/codechecker repo
-      git: repo=https://github.com/moodlehq/moodle-local_codechecker dest=/home/vagrant/.codechecker version=v2.5.4 update=no
+      git: repo=https://github.com/moodlehq/moodle-local_codechecker dest="{{ home }}.codechecker" version=v2.5.4 update=no
+
+    - name: Turn on Moodle debugging and turn off JavaScript caching
+      command: psql -U postgres -d moodle -a -f config.sql
+      become: true
+      become_user: postgres
+
+    - name: Purge Moodle caches
+      command: php admin/cli/purge_caches.php
+      args:
+        chdir: "{{ moodle_dir }}"
 
     - name: Restart services
       service: name={{ item }} state=restarted

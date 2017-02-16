@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "clean": "rimraf moodle/vendor && rimraf moodledata && rimraf phpu_moodledata && rimraf behat_moodledata && rimraf moodle/config.php"
+    "clean": "rimraf vendor && rimraf moodle/vendor && rimraf moodledata && rimraf phpu_moodledata && rimraf behat_moodledata && rimraf moodle/config.php"
   },
   "devDependencies": {
     "babel-core": "6.22.1",
