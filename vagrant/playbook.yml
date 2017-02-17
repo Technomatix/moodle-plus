@@ -5,6 +5,7 @@
   vars:
     general_password: "Wibble123!"
     home: "/home/vagrant/"
+    moodledata: "{{ home }}moodledata/"
     dot_bashrc: "{{ home }}.bashrc"
     dot_profile: "{{ home }}.profile"
     php_ini: "/etc/php/5.6/fpm/php.ini"
@@ -76,13 +77,17 @@
 
     - name: Create moodledata directories
       file:
-        path: "/vagrant/moodledata/{{ item }}"
+        path: "{{ moodledata }}{{ item }}"
         state: directory
-        mode: 0755
+        owner: vagrant
+        group: www-data
+        mode: 0775
+        recurse: yes
       with_items:
         - main
         - phpu
         - behat
+      become: true
 
     - name: Enable colour prompt in bash
       replace: dest={{ dot_bashrc }} regexp="^\#force_color_prompt\=yes$" replace="force_color_prompt=yes"

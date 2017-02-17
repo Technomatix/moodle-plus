@@ -26,6 +26,6 @@ server {
 
     location /dataroot/ {
         internal;
-        alias /vagrant/moodledata/main/;
+        alias {{ moodledata }}main/;
     }
 }

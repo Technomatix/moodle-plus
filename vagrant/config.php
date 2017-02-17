@@ -9,7 +9,7 @@ $CFG->dblibrary = 'native';
 $CFG->dbhost    = 'localhost';
 $CFG->dbname    = 'moodle';
 $CFG->dbuser    = 'postgres';
-$CFG->dbpass    = 'Wibble123!';
+$CFG->dbpass    = '{{ general_password }}';
 $CFG->prefix    = 'mdl_';
 
 $CFG->dboptions = [
@@ -19,14 +19,14 @@ $CFG->dboptions = [
 ];
 
 $CFG->wwwroot  = 'http://10.0.0.10';
-$CFG->dataroot = '/vagrant/moodledata/main';
+$CFG->dataroot = '{{ moodledata }}main';
 $CFG->admin    = 'admin';
 
 $CFG->phpunit_prefix   = 'phpu_';
-$CFG->phpunit_dataroot = '/vagrant/moodledata/phpu';
+$CFG->phpunit_dataroot = '{{ moodledata }}phpu';
 
 $CFG->behat_prefix   = 'behat_';
-$CFG->behat_dataroot = '/vagrant/moodledata/behat';
+$CFG->behat_dataroot = '{{ moodledata }}behat';
 $CFG->behat_wwwroot  = 'http://localhost:8000';
 
 $CFG->directorypermissions = 0777;

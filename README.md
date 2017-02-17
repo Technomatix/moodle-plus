@@ -105,7 +105,7 @@ In the third ssh session, point Behat at a `.feature` file:
 
 ```
 cd /vagrant/moodle
-vendor/bin/behat --config ../moodledata/behat/behat/behat.yml blocks/myprofile/tests/behat/block_myprofile_frontpage.feature
+vendor/bin/behat --config /home/vagrant/moodledata/behat/behat/behat.yml blocks/myprofile/tests/behat/block_myprofile_frontpage.feature
 ```
 
 ## Guides
