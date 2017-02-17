@@ -102,11 +102,12 @@
       become: true
 
     - name: Enable Xdebug
-      ini_file: dest={{ php_ini }}
-                section=xdebug option={{ item.key }}
-                value={{ item.value }}
-                state=present
-                backup=yes
+      ini_file:
+        dest={{ php_ini }}
+        section=xdebug option={{ item.key }}
+        value={{ item.value }}
+        state=present
+        backup=yes
       with_items:
         - { key: "xdebug.remote_enable", value: "on" }
         - { key: "xdebug.remote_connect_back", value: "on" }
@@ -254,7 +255,7 @@
       when: xvfb_running.stdout != "Xvfb"
 
     - name: Clone Moodle local/codechecker repo
-      git: repo=https://github.com/moodlehq/moodle-local_codechecker dest="{{ home }}.codechecker" version=v2.5.4 update=no
+      git: repo=https://github.com/moodlehq/moodle-local_codechecker dest="{{ home }}codechecker" version=v2.5.4 update=no
 
     - name: Turn on Moodle debugging and turn off JavaScript caching
       command: psql -U postgres -d moodle -a -f config.sql

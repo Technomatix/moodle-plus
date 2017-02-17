@@ -1,5 +1,5 @@
 alias l='ls -l --sort=extension'
 alias c='clear'
 alias uu='sudo apt update && sudo apt upgrade'
-alias phpcs='phpcs --standard=/home/vagrant/.codechecker/moodle/ruleset.xml'
-alias phpcbf='phpcbf --standard=/home/vagrant/.codechecker/moodle/ruleset.xml'
+alias phpcs='phpcs --standard=/home/vagrant/codechecker/moodle/ruleset.xml'
+alias phpcbf='phpcbf --standard=/home/vagrant/codechecker/moodle/ruleset.xml'
