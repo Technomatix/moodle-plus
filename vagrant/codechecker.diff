@@ -1,0 +1,77 @@
+diff --git a/moodle/Sniffs/Commenting/InlineCommentSniff.php b/moodle/Sniffs/Commenting/InlineCommentSniff.php
+index 12dfa69..1f69940 100644
+--- a/moodle/Sniffs/Commenting/InlineCommentSniff.php
++++ b/moodle/Sniffs/Commenting/InlineCommentSniff.php
+@@ -381,6 +381,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+             $phpcsFile->addWarning($error, $topComment, 'NotCapital');
+         }
+ 
++        /*
+         // End with .!?
+         $commentCloser   = $commentText[(strlen($commentText) - 1)];
+         $acceptedClosers = array(
+@@ -400,6 +401,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+             $data  = array($ender);
+             $phpcsFile->addWarning($error, $stackPtr, 'InvalidEndChar', $data);
+         }
++        */
+ 
+         // Finally, the line below the last comment cannot be empty if this inline
+         // comment is on a line by itself.
+diff --git a/moodle/Sniffs/Files/BoilerplateCommentSniff.php b/moodle/Sniffs/Files/BoilerplateCommentSniff.php
+index 9ea1870..b6dfe77 100644
+--- a/moodle/Sniffs/Files/BoilerplateCommentSniff.php
++++ b/moodle/Sniffs/Files/BoilerplateCommentSniff.php
+@@ -69,13 +69,14 @@ class moodle_Sniffs_Files_BoilerplateCommentSniff implements PHP_CodeSniffer_Sni
+             }
+         }
+ 
+-        if ($numnewlines > 0) {
++        if ($numnewlines > 1) {
+             $file->addError('The opening <?php tag must be followed by exactly one newline.',
+                     1, 'WrongWhitespace');
+             return;
+         }
+         $offset = $numnewlines + 1;
+ 
++        /*
+         // Now check the text of the comment.
+         foreach (self::$comment as $lineindex => $line) {
+             $tokenptr = $offset + $lineindex;
+@@ -94,5 +95,6 @@ class moodle_Sniffs_Files_BoilerplateCommentSniff implements PHP_CodeSniffer_Sni
+                         $tokenptr, 'WrongLine', array($lineindex + 1, $line));
+             }
+         }
++        */
+     }
+ }
+diff --git a/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php b/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php
+index 9e2b444..2bec519 100644
+--- a/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php
++++ b/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php
+@@ -120,10 +120,5 @@ class moodle_Sniffs_NamingConventions_ValidVariableNameSniff
+             $error = "Variable \"$varname\" must be all lower-case";
+             $phpcsfile->addError($error, $stackptr);
+         }
+-
+-        if (strpos($varname, '_') !== false && !in_array($varname, self::$allowedglobals)) {
+-            $error = "Variable \"$varname\" must not contain underscores.";
+-            $phpcsfile->addError($error, $stackptr);
+-        }
+     }
+ }
+diff --git a/moodle/Sniffs/PHP/IncludingFileSniff.php b/moodle/Sniffs/PHP/IncludingFileSniff.php
+index 2bab076..69f75d2 100644
+--- a/moodle/Sniffs/PHP/IncludingFileSniff.php
++++ b/moodle/Sniffs/PHP/IncludingFileSniff.php
+@@ -35,8 +35,8 @@ class moodle_Sniffs_PHP_IncludingFileSniff implements PHP_CodeSniffer_Sniff {
+     public function process(PHP_CodeSniffer_File $file, $stackptr) {
+         $tokens = $file->getTokens();
+ 
+-        if ($tokens[$stackptr + 1]['code'] !== T_OPEN_PARENTHESIS) {
+-            $error = '"%s" must be immediately followed by an open parenthesis';
++        if ($tokens[$stackptr + 1]['code'] === T_OPEN_PARENTHESIS) {
++            $error = '"%s" must not be immediately followed by an open parenthesis';
+             $data  = array($tokens[$stackptr]['content']);
+             $file->addError($error, $stackptr, 'BracketsNotRequired', $data);
+         }

@@ -256,6 +256,13 @@
 
     - name: Clone Moodle local/codechecker repo
       git: repo=https://github.com/moodlehq/moodle-local_codechecker dest="{{ home }}codechecker" version=v2.5.4 update=no
+      register: codechecker_repo
+
+    - name: Patch codechecker
+      command: git apply /vagrant/vagrant/codechecker.diff
+      args:
+        chdir: "{{ home }}codechecker"
+      when: codechecker_repo.changed
 
     - name: Turn on Moodle debugging and turn off JavaScript caching
       command: psql -U postgres -d moodle -a -f config.sql

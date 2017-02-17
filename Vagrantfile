@@ -30,6 +30,7 @@ Vagrant.configure("2") do |config|
     config.vm.provision "file", source: "vagrant/vimrc", destination: ".vimrc"
     config.vm.provision "file", source: "vagrant/inputrc", destination: ".inputrc"
     config.vm.provision "file", source: "vagrant/pgpass", destination: ".pgpass"
+    config.vm.provision "file", source: "vagrant/gitconfig", destination: ".gitconfig"
 
     # provisioning script
     config.vm.provision :ansible_local do |ansible|
