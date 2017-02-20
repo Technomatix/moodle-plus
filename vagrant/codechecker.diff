@@ -1,5 +1,5 @@
 diff --git a/moodle/Sniffs/Commenting/InlineCommentSniff.php b/moodle/Sniffs/Commenting/InlineCommentSniff.php
-index 12dfa69..81297d2 100644
+index 12dfa69..848655e 100644
 --- a/moodle/Sniffs/Commenting/InlineCommentSniff.php
 +++ b/moodle/Sniffs/Commenting/InlineCommentSniff.php
 @@ -68,6 +68,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
@@ -18,15 +18,22 @@ index 12dfa69..81297d2 100644
  
          if ($tokens[$stackPtr]['content']{0} === '#') {
              $error = 'Perl-style comments are not allowed; use "// Comment." instead';
-@@ -381,6 +383,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+@@ -376,11 +378,14 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+         }
+ 
+         // Start with upper case, digit or 3-dots sequence.
++        /*
+         if (preg_match('!^([A-Z0-9]|\.{3})!', $commentText) === 0) {
+             $error = 'Inline comments must start with a capital letter, digit or 3-dots sequence';
              $phpcsFile->addWarning($error, $topComment, 'NotCapital');
          }
++        */
  
 +        /*
          // End with .!?
          $commentCloser   = $commentText[(strlen($commentText) - 1)];
          $acceptedClosers = array(
-@@ -400,6 +403,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+@@ -400,6 +405,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
              $data  = array($ender);
              $phpcsFile->addWarning($error, $stackPtr, 'InvalidEndChar', $data);
          }
