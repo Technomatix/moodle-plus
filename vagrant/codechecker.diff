@@ -1,8 +1,24 @@
 diff --git a/moodle/Sniffs/Commenting/InlineCommentSniff.php b/moodle/Sniffs/Commenting/InlineCommentSniff.php
-index 12dfa69..1f69940 100644
+index 12dfa69..81297d2 100644
 --- a/moodle/Sniffs/Commenting/InlineCommentSniff.php
 +++ b/moodle/Sniffs/Commenting/InlineCommentSniff.php
-@@ -381,6 +381,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+@@ -68,6 +68,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+         // If this is a function/class/interface doc block comment, skip it.
+         // We are only interested in inline doc block comments, which are
+         // not allowed.
++        /*
+         if ($tokens[$stackPtr]['code'] === T_DOC_COMMENT_OPEN_TAG) {
+             $nextToken = $phpcsFile->findNext(
+                 PHP_CodeSniffer_Tokens::$emptyTokens,
+@@ -203,6 +204,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+                 $phpcsFile->addError($error, $stackPtr, 'DocBlock');
+             }
+         }//end if
++        */
+ 
+         if ($tokens[$stackPtr]['content']{0} === '#') {
+             $error = 'Perl-style comments are not allowed; use "// Comment." instead';
+@@ -381,6 +383,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
              $phpcsFile->addWarning($error, $topComment, 'NotCapital');
          }
  
@@ -10,7 +26,7 @@ index 12dfa69..1f69940 100644
          // End with .!?
          $commentCloser   = $commentText[(strlen($commentText) - 1)];
          $acceptedClosers = array(
-@@ -400,6 +401,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
+@@ -400,6 +403,7 @@ class moodle_Sniffs_Commenting_InlineCommentSniff implements PHP_CodeSniffer_Sni
              $data  = array($ender);
              $phpcsFile->addWarning($error, $stackPtr, 'InvalidEndChar', $data);
          }

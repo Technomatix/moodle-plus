@@ -101,6 +101,13 @@
         mode: 0644
       become: true
 
+    - name: Turn off nginx 'sendfile'
+      lineinfile:
+        dest: /etc/nginx/nginx.conf
+        regexp: 'sendfile\s+on'
+        line: "\tsendfile off;"
+      become: true
+
     - name: Enable Xdebug
       ini_file:
         dest={{ php_ini }}
