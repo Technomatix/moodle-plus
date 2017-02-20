@@ -104,7 +104,7 @@
     - name: Turn off nginx 'sendfile'
       lineinfile:
         dest: /etc/nginx/nginx.conf
-        regexp: 'sendfile\s+on'
+        regexp: 'sendfile\s+(on|off);'
         line: "\tsendfile off;"
       become: true
 
