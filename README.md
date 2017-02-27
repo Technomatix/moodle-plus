@@ -15,7 +15,8 @@ A Moodle [Vagrant](https://www.vagrantup.com/) environment provisioned with [Ans
 
 ## TODO
 
-- [ ] Build example TODOs app (as a `local` plugin) with a Slim REST API and React/Redux front-end
+- [ ] Replace Vagrant with Docker (and Docker Compose)
+- [ ] Continue building example `local/todolist` plugin
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
 ## Requirements
