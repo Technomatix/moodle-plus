@@ -6,3 +6,4 @@ vendor/
 .vagrant/
 .idea/
 .vscode/
+moodledata/
