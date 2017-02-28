@@ -20,6 +20,9 @@ RUN docker-php-ext-configure opcache --enable-opcache
 RUN docker-php-ext-install opcache
 COPY opcache.ini /usr/local/etc/php/conf.d/
 
-# xdebug
+# Xdebug
 RUN pecl install xdebug
 COPY xdebug.ini /usr/local/etc/php/conf.d/
+
+# Composer
+RUN curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
