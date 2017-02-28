@@ -1,5 +1,3 @@
-# Adopt version 2 syntax:
-#   https://docs.docker.com/compose/compose-file/#/versioning
 version: '2'
 
 volumes:
@@ -16,16 +14,16 @@ services:
         volumes_from:
             - php
 
-    php:
-        build: ./docker/php/
-        expose:
-            - 9000
-        volumes:
-            - .:/var/www/html
-
     pgsql:
         image: postgres:latest
         expose:
             - 5432
         volumes:
             - pgdata:/var/lib/postgresql/data/
+
+    php:
+        build: ./docker/php/
+        expose:
+            - 9000
+        volumes:
+            - .:/var/www/html
