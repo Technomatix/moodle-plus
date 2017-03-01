@@ -26,3 +26,8 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/
 
 # Composer
 RUN curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
+
+# AU locale for PHPUnit
+RUN DEBIAN_FRONTEND=noninteractive apt-get install -y locales
+RUN sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen
+RUN locale-gen

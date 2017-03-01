@@ -24,6 +24,7 @@ A Dockerized Moodle development environment
 ## TODO
 
 - [ ] Replace Vagrant with Docker (and Docker Compose)
+- [ ] Move to Docker Compose v3 syntax
 - [ ] Fix problem with `local/todolist` and the timestamped RequireJS
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
@@ -37,9 +38,7 @@ docker-compose up -d
 
 ## Install Moodle
 
-### Create a database
-
-To set the password for the `postgres` user and create an empty database for Moodle:
+Set the password for the `postgres` user and create an empty database for Moodle:
 
 ```
 docker-compose exec pgsql bash
@@ -50,35 +49,31 @@ create database moodle;
 
 (Either set the `postgres` password to `Wibble123!` or change Moodle's `config.php` by hand.)
 
-### Install Composer packages
-
-To install (two sets of) Composer packages:
+Run the install script:
 
 ```
-docker-compose run -u 1000 php composer install
-docker-compose run -u 1000 -w /var/www/html/moodle php composer install
+. docker/install.sh
 ```
-
-### Create moodledata directory
-
-```
-mkdir moodledata
-chmod 777 moodledata
-```
-
-### Run command-line database installer
-
-Copy the example `config.php` and run the Moodle command-line database installer:
-
-```
-cp docker/php/config.php moodle/
-chmod a+r moodle/config.php
-docker-compose run -w /var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
-```
-
-Visit `localhost` in a browser.
 
 ## Commands
+
+### PHP shell
+
+To get a PHP shell:
+
+```
+docker-compose exec php bash
+php -a
+```
+
+### PostgreSQL shell
+
+To get a PostgreSQL shell:
+
+```
+docker-compose exec pgsql bash
+psql -Upostgres
+```
 
 ### Logs
 

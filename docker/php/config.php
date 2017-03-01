@@ -18,8 +18,15 @@ $CFG->dboptions = array (
 );
 
 $CFG->wwwroot   = 'http://localhost';
-$CFG->dataroot  = '/var/www/html/moodledata';
+$CFG->dataroot  = '/var/www/html/moodledata/main';
 $CFG->admin     = 'admin';
+
+$CFG->phpunit_prefix   = 'phpu_';
+$CFG->phpunit_dataroot = '/var/www/html/moodledata/phpu';
+
+$CFG->behat_prefix   = 'behat_';
+$CFG->behat_dataroot = '/var/www/html/moodledata/behat';
+$CFG->behat_wwwroot  = 'http://localhost:8000';
 
 $CFG->directorypermissions = 0777;
 
