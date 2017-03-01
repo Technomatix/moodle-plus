@@ -1,9 +1,7 @@
 *.log
-playbook.retry
 composer.lock
 node_modules/
 vendor/
-.vagrant/
+moodledata/
 .idea/
 .vscode/
-moodledata/
