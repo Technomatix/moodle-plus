@@ -28,12 +28,72 @@ A Dockerized Moodle development environment
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
-## Moodle plugin types
+## Build Docker images and run Docker containers
+
+```
+docker-compose build
+docker-compose up -d
+```
+
+## Install Moodle
+
+### Create a database
+
+To set the password for the `postgres` user and create an empty database for Moodle:
+
+```
+docker-compose exec pgsql bash
+psql -Upostgres
+\password postgres
+create database moodle;
+```
+
+(Either set the `postgres` password to `Wibble123!` or change Moodle's `config.php` by hand.)
+
+### Install Composer packages
+
+To install (two sets of) Composer packages:
+
+```
+docker-compose run -u 1000 php composer install
+docker-compose run -u 1000 -w /var/www/html/moodle php composer install
+```
+
+### Create moodledata directory
+
+```
+mkdir moodledata
+chmod 777 moodledata
+```
+
+### Run command-line database installer
+
+Copy the example `config.php` and run the Moodle command-line database installer:
+
+```
+cp docker/php/config.php moodle/
+chmod a+r moodle/config.php
+docker-compose run -w /var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
+```
+
+Visit `localhost` in a browser.
+
+## Commands
+
+### Logs
+
+To see logs through Docker Compose:
+
+```
+docker-compose logs -f
+```
+
+### Moodle plugin types
 
 To see which [Moodle plugin types](https://docs.moodle.org/dev/Plugin_types) are available:
 
 ```
-docker exec moodleplus_php_1 php utils/plugin_types.php
+docker-compose run php php utils/plugin_types.php
 ```
 
 ## Moodle source code
