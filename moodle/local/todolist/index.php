@@ -13,11 +13,26 @@ const URL = '/todolist/';
 const PLUGIN = 'local_todolist';
 
 /**
+ * get JavaScript revision
+ * @return integer
+ */
+$get_jsrev = function () {
+    global $CFG;
+    if (empty($CFG->cachejs)) {
+        return -1;
+    } else if (empty($CFG->jsrev)) {
+        return 1;
+    } else {
+        return (integer)$CFG->jsrev;
+    }
+};
+
+/**
  * @param Request $request
  * @param Response $response
  * @return Response
  */
-$main = function (Request $request, Response $response) {
+$main = function (Request $request, Response $response) use ($get_jsrev) {
     /** @var \moodle_page $PAGE */
     global $PAGE;
     global $CFG, $DB, $USER;
@@ -43,7 +58,7 @@ $main = function (Request $request, Response $response) {
     $header = $output->header();
     $footer = $output->footer();
     $footer = str_replace(
-        '<script type="text/javascript" src="' . $CFG->wwwroot . '/lib/javascript.php/-1/lib/requirejs/require.min.js"></script>',
+        '<script type="text/javascript" src="' . $CFG->wwwroot . '/lib/javascript.php/' . $get_jsrev() . '/lib/requirejs/require.min.js"></script>',
         '<script type="text/javascript">var require = function () {};</script>' .
         '<script type="application/json" class="todolist-items">' . $todolist_items . '</script>' .
         '<script type="text/javascript" src="' . $CFG->wwwroot . '/local/todolist/build/todolist' . $bundle_ext . '"></script>',
