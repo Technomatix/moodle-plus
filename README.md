@@ -27,6 +27,7 @@ A dockerized Moodle 3.2 development environment with three containers:
 - [ ] Don't show 'done' items for which the due date is in the past
 - [ ] Add new item
 - [ ] Behat with Docker
+- [ ] PHP Code Sniffer with Docker
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
 ## Build Docker images and run Docker containers
