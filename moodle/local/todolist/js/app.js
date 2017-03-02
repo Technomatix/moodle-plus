@@ -8,22 +8,15 @@ import thunk from 'redux-thunk';
 
 import reducer from './reducer';
 import {receiveTodoItems} from './actionCreators';
+import {TodoListContainer} from './components/TodoList';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducer);
 store.dispatch(receiveTodoItems(JSON.parse(document.querySelector('.todolist-items').innerHTML)));
 
-const T = ({name}) => (
-    <div>Hello, {name}</div>
-);
-
-T.propTypes = {
-    name: React.PropTypes.string
-};
-
 ReactDOM.render(
     <Provider store={store}>
-        <T name="Mike"/>
+        <TodoListContainer/>
     </Provider>,
     document.querySelector('div[role="main"]')
 );

@@ -1,0 +1,2 @@
+moodle/**/build/**/*.js -diff
+moodle/**/build/**/*.js.map -diff
