@@ -23,7 +23,6 @@ A dockerized Moodle 3.2 development environment with three containers:
 ## TODO
 
 - [ ] Replace Vagrant with Docker (and Docker Compose)
-- [ ] Debugging and JavaScript caching
 - [ ] Behat with Docker
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
