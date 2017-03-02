@@ -25,14 +25,17 @@ function xmldb_local_todolist_install() {
             'done' => false,
         ],
     ];
+    $now = time();
 
-    each($tasks, function ($task) {
+    each($tasks, function ($task) use ($now) {
         global $DB;
         $admin = get_admin();
         $DB->insert_record('local_todolist', (object)[
-            'task_description' => $task->desc,
-            'is_done' => $task->done ? 1 : 0,
-            'user_id' => $admin->id,
+            'task_description'  => $task->desc,
+            'is_done'           => $task->done ? 1 : 0,
+            'due_timestamp'     => $now + 3600 * 24 * 7,
+            'created_timestamp' => $now,
+            'user_id'           => $admin->id,
         ]);
     });
 }

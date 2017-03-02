@@ -47,7 +47,7 @@ $main = function (Request $request, Response $response) use ($get_jsrev) {
     $PAGE->set_heading($plugin_name);
 
     // get items belonging to the logged in user
-    $records = $DB->get_recordset('local_todolist', ['user_id' => $USER->id]);
+    $records = $DB->get_recordset('local_todolist', ['user_id' => $USER->id], 'due_timestamp');
     $todolist_items = json_encode(array_values(iterator_to_array($records)));
     $bundle_ext = debugging() ? '.js' : '.min.js';
 

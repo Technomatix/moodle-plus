@@ -12,7 +12,8 @@ const receiveTodoItems = (state, items) => {
     newState.items = _.map(items, item => ({
         id: parseInt(item.id),
         taskDescription: item.task_description,
-        isDone: item.is_done === '1'
+        isDone: item.is_done === '1',
+        dueDate: new Date(parseInt(item.due_timestamp) * 1000)
     }));
     return newState;
 };
