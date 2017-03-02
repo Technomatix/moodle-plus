@@ -1,11 +1,10 @@
 # Moodle Plus
 
-A Dockerized Moodle development environment
+A dockerized Moodle 3.2 development environment with three containers:
 
-* Moodle 3.2
 * nginx
-* PHP-FPM 5.6
 * PostgreSQL
+* PHP-FPM 5.6
 
 ## Including
 
@@ -24,6 +23,8 @@ A Dockerized Moodle development environment
 ## TODO
 
 - [ ] Replace Vagrant with Docker (and Docker Compose)
+- [ ] Debugging and JavaScript caching
+- [ ] Behat with Docker
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
@@ -57,8 +58,6 @@ Run the install script:
 
 ### PHP shell
 
-To get a PHP shell:
-
 ```
 docker-compose exec php bash
 php -a
@@ -66,24 +65,36 @@ php -a
 
 ### PostgreSQL shell
 
-To get a PostgreSQL shell:
-
 ```
 docker-compose exec pgsql bash
 psql -Upostgres
 ```
 
-### Logs
-
-To see logs through Docker Compose:
+### View logs
 
 ```
 docker-compose logs -f
 ```
 
-### Moodle plugin types
+### Run Moodle cron
 
-To see which [Moodle plugin types](https://docs.moodle.org/dev/Plugin_types) are available:
+```
+docker-compose run -w /var/www/html/moodle php php admin/cli/cron.php
+```
+
+### Run PHPUnits for a particular plugin
+
+```
+docker-compose run -w /var/www/html/moodle php vendor/bin/phpunit -c path/to/moodle/plugin
+```
+
+### Purge Moodle caches
+
+```
+docker-compose run -w /var/www/html/moodle php php admin/cli/purge_caches.php
+```
+
+### See available Moodle plugin types
 
 ```
 docker-compose run php php utils/plugin_types.php
@@ -119,14 +130,13 @@ Remote debugging with [XDebug](https://xdebug.org/) is possible in [PHPStorm](ht
 
 Debugging in VSCode requires the [PHP Debug](https://marketplace.visualstudio.com/items?itemName=felixfbecker.php-debug) extension.
 
-To set up source code mapping, add the two lines below to the "Listen for XDebug" configuration of a VSCode debugger `launch.json` file:
+To set up source code mapping, add the lines below to the "Listen for XDebug" configuration of a VSCode debugger `launch.json` file:
 
 ```
+"port": 10000,
 "localSourceRoot": "${workspaceRoot}/moodle",
-"serverSourceRoot": "/vagrant/moodle"
+"serverSourceRoot": "/var/www/html/moodle"
 ```
-
-(Since the XDebug `remote_autostart` setting is provisioned, [bookmarklets](https://www.jetbrains.com/phpstorm/marklets/) shouldn't be necessary.)
 
 ### Behat
 
