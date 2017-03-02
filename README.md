@@ -24,8 +24,6 @@ A Dockerized Moodle development environment
 ## TODO
 
 - [ ] Replace Vagrant with Docker (and Docker Compose)
-- [ ] Move to Docker Compose v3 syntax
-- [ ] Fix problem with `local/todolist` and the timestamped RequireJS
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
