@@ -19,6 +19,7 @@ chmod a+r moodle/config.php
 docker-compose run -u 1000 -w /var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '30719' where name = 'debug'"
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '0' where name in ('debugdisplay', 'cachejs')"
+docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '14400' where name = 'sessiontimeout'"
 
 # PHPUnit
 docker-compose run -u 1000 -w /var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
