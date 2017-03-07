@@ -22,13 +22,17 @@ A dockerized Moodle 3.2 development environment with three containers:
 
 ## TODO
 
+### Docker
+
+- [x] PHP Code Sniffer with Docker
+- [ ] Behat with Docker
+
+### local/todolist plugin
+
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Clicking on an item toggles its 'done' status
 - [ ] Don't show 'done' items for which the due date is in the past
 - [ ] Add new item
-- [ ] Behat with Docker
-- [ ] PHP Code Sniffer with Docker
-- [ ] Theme based on [Boost](https://docs.moodle.org/32/en/Boost_theme)
 
 ## Build Docker images and run Docker containers
 
@@ -102,6 +106,14 @@ docker-compose run -w /var/www/html/moodle php php admin/cli/purge_caches.php
 docker-compose run php php utils/plugin_types.php
 ```
 
+### Lint PHP code with CodeSniffer
+
+```
+docker-compose exec php bash
+cd /path/to/moodle/plugin
+phpcs
+```
+
 ## Moodle source code
 
 ### git subtree
@@ -122,10 +134,6 @@ Moodle source code files (i.e. those under `moodle/`) that've been added, modifi
 git diff --name-status v3.2.1 HEAD:moodle/
 ```
 
-### Lint
-
-TODO
-
 ### XDebug
 
 Remote debugging with [XDebug](https://xdebug.org/) is possible in [PHPStorm](https://www.jetbrains.com/phpstorm/) and [Visual Studio Code](https://code.visualstudio.com/Docs/languages/php).
@@ -139,7 +147,3 @@ To set up source code mapping, add the lines below to the "Listen for XDebug" co
 "localSourceRoot": "${workspaceRoot}/moodle",
 "serverSourceRoot": "/var/www/html/moodle"
 ```
-
-### Behat
-
-TODO

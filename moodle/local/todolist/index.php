@@ -57,11 +57,13 @@ $main = function (Request $request, Response $response) use ($get_jsrev) {
     // output
     $header = $output->header();
     $footer = $output->footer();
+    $require_js = $CFG->wwwroot . '/lib/javascript.php/' . $get_jsrev() . '/lib/requirejs/require.min.js';
+    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist' . $bundle_ext;
     $footer = str_replace(
-        '<script type="text/javascript" src="' . $CFG->wwwroot . '/lib/javascript.php/' . $get_jsrev() . '/lib/requirejs/require.min.js"></script>',
+        '<script type="text/javascript" src="' . $require_js . '"></script>',
         '<script type="text/javascript">var require = function () {};</script>' .
         '<script type="application/json" class="todolist-items">' . $todolist_items . '</script>' .
-        '<script type="text/javascript" src="' . $CFG->wwwroot . '/local/todolist/build/todolist' . $bundle_ext . '"></script>',
+        '<script type="text/javascript" src="' . $bundle_js . '"></script>',
         $footer
     );
     $response->getBody()->write($header . $footer);
