@@ -49,7 +49,6 @@ $main = function (Request $request, Response $response) use ($get_jsrev) {
     // get items belonging to the logged in user
     $records = $DB->get_recordset('local_todolist', ['user_id' => $USER->id], 'due_timestamp');
     $todolist_items = json_encode(array_values(iterator_to_array($records)));
-    $bundle_ext = debugging() ? '.js' : '.min.js';
 
     /** @var \local_todolist\output\renderer $output */
     $output = $PAGE->get_renderer(PLUGIN);
@@ -58,7 +57,7 @@ $main = function (Request $request, Response $response) use ($get_jsrev) {
     $header = $output->header();
     $footer = $output->footer();
     $require_js = $CFG->wwwroot . '/lib/javascript.php/' . $get_jsrev() . '/lib/requirejs/require.min.js';
-    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist' . $bundle_ext;
+    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . (debugging() ? 'js' : 'min.js');
     $footer = str_replace(
         '<script type="text/javascript" src="' . $require_js . '"></script>',
         '<script type="text/javascript">var require = function () {};</script>' .
