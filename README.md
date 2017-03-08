@@ -5,8 +5,8 @@ A dockerized Moodle 3.2 development environment with containers:
 * nginx
 * PostgreSQL
 * PHP-FPM 5.6
-* Selenium
-* PHP-CLI 5.6 (built-in web server)
+* Selenium (for Behat)
+* Built-in web server (for Behat)
 
 ## Including
 
@@ -49,10 +49,10 @@ create database moodle;
 
 (Either set the `postgres` password to `Wibble123!` or change Moodle's `config.php` by hand.)
 
-Run the install script:
+Run the initialization script:
 
 ```
-. docker/install.sh
+. docker/init.sh
 ```
 
 ## Commands
@@ -86,7 +86,13 @@ docker-compose run --rm -w /var/www/html/moodle php php admin/cli/cron.php
 ### Run PHPUnits for a particular plugin
 
 ```
-docker-compose run --rm -w /var/www/html/moodle php vendor/bin/phpunit -c path/to/moodle/plugin
+docker-compose run --rm -w /var/www/html/moodle php vendor/bin/phpunit --colors=always -c path/to/plugin
+```
+
+### Run Behat tests for a particular feature
+
+```
+docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodledata/behat/behat/behat.yml path/to/feature
 ```
 
 ### Purge Moodle caches
@@ -107,24 +113,6 @@ docker-compose run --rm php php utils/plugin_types.php
 docker-compose exec php bash
 cd /path/to/moodle/plugin
 phpcs
-```
-
-### Run Behat test suite
-
-Evaluate Docker container IP addresses:
-
-```
-docker ps -q | xargs docker inspect --format "{{ .Name }} -> {{ .NetworkSettings.Networks.moodleplus_default.IPAddress }}"
-```
-
-* Put the `builtin` IP address into Moodle's `config.php` under `$CFG->behat_wwwroot`.
-* Put the `builtin` IP address into `moodledata/behat/behat/behat.yml` under `base_url`.
-* Put the `selenium` IP address into `moodledata/behat/behat/behat.yml` under `wd_host`.
-
-Run the Behat test suite:
-
-```
-docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat --config /var/www/html/moodledata/behat/behat/behat.yml
 ```
 
 ## Moodle source code
