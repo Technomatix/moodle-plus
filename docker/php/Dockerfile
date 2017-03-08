@@ -24,8 +24,11 @@ COPY opcache.ini /usr/local/etc/php/conf.d/
 RUN pecl install xdebug
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 
-# Composer
-RUN curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
+# Composer (set Composer home to /opt/.composer as the 1000 user has no home directory of its own)
+ENV COMPOSER_HOME /opt/.composer
+RUN mkdir -p /opt/.composer \
+    && chown 1000 /opt/.composer \
+    && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 
 # AU locale for PHPUnit
 RUN DEBIAN_FRONTEND=noninteractive apt-get install -y locales \

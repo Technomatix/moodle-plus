@@ -26,10 +26,15 @@ services:
         expose:
             - 4444
 
+    builtin:
+        build: ./docker/builtin/
+        expose:
+            - 8000
+        volumes_from:
+            - php
+
     php:
         build: ./docker/php/
-        ports:
-            - 8000:8000
         expose:
             - 9000
         volumes:

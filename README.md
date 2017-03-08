@@ -6,6 +6,7 @@ A dockerized Moodle 3.2 development environment with containers:
 * PostgreSQL
 * PHP-FPM 5.6
 * Selenium
+* PHP-CLI 5.6 (built-in web server)
 
 ## Including
 
@@ -110,31 +111,17 @@ phpcs
 
 ### Run Behat test suite
 
-Determine the IP address of the Docker container running the `php` service with `docker inspect`:
+Evaluate Docker container IP addresses:
 
 ```
-docker inspect $(docker ps -a | grep moodleplus_php | grep -Po "^[0-9a-z]+") | grep IPAddress | grep -Po "[\d+\.?]{1,}"
+docker ps -q | xargs docker inspect --format "{{ .Name }} -> {{ .NetworkSettings.Networks.moodleplus_default.IPAddress }}"
 ```
 
-Set the above IP address into Moodle's `config.php` under `$CFG->behat_wwwroot`.
+* Put the `builtin` IP address into Moodle's `config.php` under `$CFG->behat_wwwroot`.
+* Put the `builtin` IP address into `moodledata/behat/behat/behat.yml` under `base_url`.
+* Put the `selenium` IP address into `moodledata/behat/behat/behat.yml` under `wd_host`.
 
-Determine the IP address of the Docker container running the `selenium` service with `docker inspect`:
-
-```
-docker inspect $(docker ps -a | grep selenium | grep -Po "^[0-9a-z]+") | grep IPAddress | grep -Po "[\d+\.?]{1,}"
-```
-
-Set the above IP address into `moodledata/behat/behat/behat.yml` under `wd_host`.
-
-Start the PHP built-in web server on port 8000:
-
-```
-docker-compose exec php bash
-cd moodle
-php -S 0.0.0.0:8000
-```
-
-Run a Behat test suite:
+Run the Behat test suite:
 
 ```
 docker-compose run -w /var/www/html/moodle php vendor/bin/behat --config /var/www/html/moodledata/behat/behat/behat.yml
