@@ -1,4 +1,5 @@
 *.log
+*.js.map
 composer.lock
 node_modules/
 vendor/
