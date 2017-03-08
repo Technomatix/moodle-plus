@@ -80,25 +80,25 @@ docker-compose logs -f
 ### Run Moodle cron
 
 ```
-docker-compose run -w /var/www/html/moodle php php admin/cli/cron.php
+docker-compose run --rm -w /var/www/html/moodle php php admin/cli/cron.php
 ```
 
 ### Run PHPUnits for a particular plugin
 
 ```
-docker-compose run -w /var/www/html/moodle php vendor/bin/phpunit -c path/to/moodle/plugin
+docker-compose run --rm -w /var/www/html/moodle php vendor/bin/phpunit -c path/to/moodle/plugin
 ```
 
 ### Purge Moodle caches
 
 ```
-docker-compose run -w /var/www/html/moodle php php admin/cli/purge_caches.php
+docker-compose run --rm -w /var/www/html/moodle php php admin/cli/purge_caches.php
 ```
 
 ### See available Moodle plugin types
 
 ```
-docker-compose run php php utils/plugin_types.php
+docker-compose run --rm php php utils/plugin_types.php
 ```
 
 ### Lint PHP code with CodeSniffer
@@ -124,7 +124,7 @@ docker ps -q | xargs docker inspect --format "{{ .Name }} -> {{ .NetworkSettings
 Run the Behat test suite:
 
 ```
-docker-compose run -w /var/www/html/moodle php vendor/bin/behat --config /var/www/html/moodledata/behat/behat/behat.yml
+docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat --config /var/www/html/moodledata/behat/behat/behat.yml
 ```
 
 ## Moodle source code
