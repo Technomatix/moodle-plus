@@ -21,8 +21,15 @@ services:
         volumes:
             - pgdata:/var/lib/postgresql/data/
 
+    selenium:
+        image: selenium/standalone-firefox:2.53.1-beryllium
+        expose:
+            - 4444
+
     php:
         build: ./docker/php/
+        ports:
+            - 8000:8000
         expose:
             - 9000
         volumes:

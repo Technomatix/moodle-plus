@@ -8,7 +8,7 @@ docker-compose run -u 1000 -w /var/www/html/moodle php composer install
 if [ ! -d moodledata ]; then
     mkdir moodledata
     mkdir moodledata/main
-    mkdir moodledata/phpunit
+    mkdir moodledata/phpu
     mkdir moodledata/behat
     chmod -R 777 moodledata
 fi;
@@ -24,3 +24,6 @@ docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set val
 # PHPUnit
 docker-compose run -u 1000 -w /var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
 docker-compose run -u 1000 -w /var/www/html/moodle php php admin/tool/phpunit/cli/init.php
+
+# Behat
+docker-compose run -u 1000 -w /var/www/html/moodle php php admin/tool/behat/cli/init.php

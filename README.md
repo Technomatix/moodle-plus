@@ -1,10 +1,11 @@
 # Moodle Plus
 
-A dockerized Moodle 3.2 development environment with three containers:
+A dockerized Moodle 3.2 development environment with containers:
 
 * nginx
 * PostgreSQL
 * PHP-FPM 5.6
+* Selenium
 
 ## Including
 
@@ -21,13 +22,6 @@ A dockerized Moodle 3.2 development environment with three containers:
 * Docker Compose 1.11.2
 
 ## TODO
-
-### Docker
-
-- [x] PHP Code Sniffer with Docker
-- [ ] Behat with Docker
-
-### local/todolist plugin
 
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Clicking on an item toggles its 'done' status
@@ -112,6 +106,38 @@ docker-compose run php php utils/plugin_types.php
 docker-compose exec php bash
 cd /path/to/moodle/plugin
 phpcs
+```
+
+### Run Behat test suite
+
+Determine the IP address of the Docker container running the `php` service with `docker inspect`:
+
+```
+docker inspect $(docker ps -a | grep moodleplus_php | grep -Po "^[0-9a-z]+") | grep IPAddress | grep -Po "[\d+\.?]{1,}"
+```
+
+Set the above IP address into Moodle's `config.php` under `$CFG->behat_wwwroot`.
+
+Determine the IP address of the Docker container running the `selenium` service with `docker inspect`:
+
+```
+docker inspect $(docker ps -a | grep selenium | grep -Po "^[0-9a-z]+") | grep IPAddress | grep -Po "[\d+\.?]{1,}"
+```
+
+Set the above IP address into `moodledata/behat/behat/behat.yml` under `wd_host`.
+
+Start the PHP built-in web server on port 8000:
+
+```
+docker-compose exec php bash
+cd moodle
+php -S 0.0.0.0:8000
+```
+
+Run a Behat test suite:
+
+```
+docker-compose run -w /var/www/html/moodle php vendor/bin/behat --config /var/www/html/moodledata/behat/behat/behat.yml
 ```
 
 ## Moodle source code

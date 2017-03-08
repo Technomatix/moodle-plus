@@ -26,7 +26,7 @@ $CFG->phpunit_dataroot = '/var/www/html/moodledata/phpu';
 
 $CFG->behat_prefix   = 'behat_';
 $CFG->behat_dataroot = '/var/www/html/moodledata/behat';
-$CFG->behat_wwwroot  = 'http://localhost:8000';
+$CFG->behat_wwwroot  = 'http://172.18.0.2:8000'; # IP address of the Docker container running the 'php' service
 
 $CFG->directorypermissions = 0777;
 
