@@ -47,5 +47,5 @@ RUN mkdir -p /usr/code/codechecker \
     && git clone https://github.com/moodlehq/moodle-local_codechecker /usr/code/codechecker \
     && cd /usr/code/codechecker \
     && git checkout v2.5.4 \
-    && git apply /tmp/codechecker.diff \
+    && git apply --whitespace=fix /tmp/codechecker.diff \
     && echo 'alias phpcs="find -type f -name \"*.php\" | xargs /usr/code/codesniffer/scripts/phpcs --standard=/usr/code/codechecker/moodle/ruleset.xml"' >> ~/.bashrc
