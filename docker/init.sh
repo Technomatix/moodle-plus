@@ -2,7 +2,7 @@
 
 # Composer packages
 docker-compose run --rm -u 1000 php composer install
-docker-compose run --rm -u 1000 -w /var/www/html/moodle php composer install
+docker-compose run --rm -u 1000 -w //var/www/html/moodle php composer install
 
 # moodledata directories
 if [ ! -d moodledata ]; then
@@ -20,15 +20,15 @@ if [ ! -f moodle/config.php ]; then
 fi;
 
 # database
-docker-compose run --rm -u 1000 -w /var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
+docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '30719' where name = 'debug'"
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '0' where name in ('debugdisplay', 'cachejs')"
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '14400' where name = 'sessiontimeout'"
 
 # PHPUnit and Behat
-docker-compose run --rm -u 1000 -w /var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
-docker-compose run --rm -u 1000 -w /var/www/html/moodle php php admin/tool/phpunit/cli/init.php
-docker-compose run --rm -u 1000 -w /var/www/html/moodle php php admin/tool/behat/cli/init.php
+docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
+docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/phpunit/cli/init.php
+docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/behat/cli/init.php
 
 # get IP address of built-in web server and Selenium
 builtin=`docker inspect --format "{{ .NetworkSettings.Networks.moodleplus_default.IPAddress }}" $(docker ps -a | grep builtin | grep -Po "^[a-z0-9]+")`

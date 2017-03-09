@@ -59,6 +59,8 @@ Run the initialization script:
 
 ## Commands
 
+On Windows (specifically "git bash" or "Docker Quickstart Terminal") commands that specify a working directory (e.g. `-w /var/www/html/moodle`) may need an [initial double slash](http://stackoverflow.com/questions/16344985/how-do-i-pass-an-absolute-path-to-the-adb-command-via-git-bash-for-windows) (e.g. `-w //var/www/html/moodle`).
+
 ### PHP shell
 
 ```
