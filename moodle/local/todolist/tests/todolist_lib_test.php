@@ -48,9 +48,9 @@ class todolist_lib_test extends advanced_testcase {
     }
 
     /**
-     * tests get_incomplete_items_for_user sorts items by due date
+     * tests get_items_for_user sorts items by due date
      */
-    public function test_get_incomplete_items_for_user_sorts_items_by_due_date() {
+    public function test_get_items_for_user_sorts_items_by_due_date() {
         $expected = [
             $this->_now - 3600 * 24 * 1,
             $this->_now + 3600 * 24 * 1,
@@ -58,7 +58,7 @@ class todolist_lib_test extends advanced_testcase {
             $this->_now + 3600 * 24 * 3,
             $this->_now + 3600 * 24 * 4,
         ];
-        $todolist_items = \local_todolist\get_incomplete_items_for_user($this->_user, $this->_now);
+        $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
         $timestamps = F\map($todolist_items, function ($item) {
             return (integer)$item->due_timestamp;
         });
@@ -66,10 +66,10 @@ class todolist_lib_test extends advanced_testcase {
     }
 
     /**
-     * tests get_incomplete_items_for_user excludes historic items
+     * tests get_items_for_user excludes historic items
      */
-    public function test_get_incomplete_items_for_user_excludes_historic_items() {
-        $todolist_items = \local_todolist\get_incomplete_items_for_user($this->_user, $this->_now);
+    public function test_get_items_for_user_excludes_historic_items() {
+        $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
         $descriptions = F\map($todolist_items, function ($item) {
             return $item->task_description;
         });
@@ -78,14 +78,50 @@ class todolist_lib_test extends advanced_testcase {
     }
 
     /**
-     * tests get_incomplete_items_for_user excludes other user's items
+     * tests get_items_for_user excludes other user's items
      */
-    public function test_get_incomplete_items_for_user_excludes_other_users() {
-        $todolist_items = \local_todolist\get_incomplete_items_for_user($this->_user, $this->_now);
+    public function test_get_items_for_user_excludes_other_users() {
+        $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
         $descriptions = F\map($todolist_items, function ($item) {
             return $item->task_description;
         });
         $this->assertNotContains('others', $descriptions);
+    }
+
+    /**
+     * tests getting an item
+     */
+    public function test_get_item() {
+        $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
+        $item = $todolist_items[0];
+        $item = \local_todolist\get_item($item->id);
+        $this->assertEquals([
+            'id' => $todolist_items[0]->id,
+            'task_description' => $todolist_items[0]->task_description,
+            'is_done' => $todolist_items[0]->is_done,
+            'due_timestamp' => $todolist_items[0]->due_timestamp,
+            'created_timestamp' => $todolist_items[0]->created_timestamp,
+            'user_id' => $todolist_items[0]->user_id,
+        ], $item);
+    }
+
+    /**
+     * tests updating an item
+     */
+    public function test_update_item() {
+        $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
+        $item = $todolist_items[0];
+        $modified_task_description = 'Modified task description';
+        $item->task_description = $modified_task_description;
+        $item = \local_todolist\update_item((array)$item);
+        $this->assertEquals([
+            'id' => $todolist_items[0]->id,
+            'task_description' => $modified_task_description,
+            'is_done' => $todolist_items[0]->is_done,
+            'due_timestamp' => $todolist_items[0]->due_timestamp,
+            'created_timestamp' => $todolist_items[0]->created_timestamp,
+            'user_id' => $todolist_items[0]->user_id,
+        ], $item);
     }
 
 }

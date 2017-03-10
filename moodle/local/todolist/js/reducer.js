@@ -23,6 +23,20 @@ const receiveTodoItems = (state, items) => {
  * @param {object} item
  * @returns {object}
  */
+const receiveTodoItem = (state, item) => {
+    const newState = _.cloneDeep(state);
+    const newItem = _.find(newState.items, i => i.id === item.id);
+    newItem.taskDescription = item.task_description;
+    newItem.isDone = item.is_done === '1';
+    newItem.dueDate = new Date(parseInt(item.due_timestamp) * 1000);
+    return newState;
+};
+
+/**
+ * @param {object} state
+ * @param {object} item
+ * @returns {object}
+ */
 const toggleDone = (state, item) => {
     const newState = _.cloneDeep(state);
     const newItem = _.find(newState.items, i => i.id === item.id);
@@ -40,6 +54,8 @@ export default (state = {}, action = {}) => {
     switch (action.type) {
         case 'RECEIVE_TODO_ITEMS':
             return receiveTodoItems(state, action.items);
+        case 'RECEIVE_TODO_ITEM':
+            return receiveTodoItem(state, action.item);
         case 'TOGGLE_DONE':
             return toggleDone(state, action.item);
     }

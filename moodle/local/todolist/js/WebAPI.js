@@ -11,6 +11,11 @@ export function putItem(item, cb) {
     request.put('item/')
         .type('application/json')
         .accept('application/json')
-        .send(item)
+        .send({
+            id: item.id,
+            task_description: item.taskDescription,
+            is_done: item.isDone ? 1 : 0,
+            dueDate: parseInt(item.dueDate.getTime() / 1000)
+        })
         .end(cb);
 }

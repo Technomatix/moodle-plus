@@ -22,7 +22,7 @@ $home = function (Request $request, Response $response) {
     require_login();
 
     // get items belonging to the logged in user
-    $todolist_items = json_encode(get_incomplete_items_for_user($USER));
+    $todolist_items = json_encode(get_items_for_user($USER));
 
     /** @var \local_todolist\output\renderer $output */
     $output = get_plugin_renderer(URL);
@@ -44,12 +44,23 @@ $home = function (Request $request, Response $response) {
     return $response;
 };
 
+/**
+ * @param Request $request
+ * @param Response $response
+ * @return Response
+ */
+$put_item = function (Request $request, Response $response) {
+    global $USER;
+    $item = $request->getParsedBody();
+    $current_item = get_item($item['id']);
+    if (!isloggedin() || (integer)$USER->id !== (integer)$current_item['user_id']) {
+        return $response->withStatus(403);
+    }
+    $item = update_item($item);
+    return $response->withJson($item);
+};
+
 $app = new App();
 $app->get(URL, $home);
-$app->put(URL . 'item/', function (Request $request, Response $response) {
-    global $USER;
-    require_login();
-    $todolist_items = json_encode(get_incomplete_items_for_user($USER));
-    return json_encode($todolist_items);
-});
+$app->put(URL . 'item/', $put_item);
 $app->run();

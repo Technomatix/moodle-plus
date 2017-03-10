@@ -39,13 +39,13 @@ function get_plugin_renderer($url) {
 }
 
 /**
- * get incomplete items for the given user
+ * get items for the given user
  * @global \moodle_database $DB
  * @param \stdClass $user
  * @param integer $now
  * @return array
  */
-function get_incomplete_items_for_user(\stdClass $user, $now = null) {
+function get_items_for_user(\stdClass $user, $now = null) {
     global $DB;
     $now = empty($now) ? time() : $now;
     $records = $DB->get_recordset_select(
@@ -58,4 +58,27 @@ function get_incomplete_items_for_user(\stdClass $user, $now = null) {
         'due_timestamp'
     );
     return array_values(iterator_to_array($records));
+}
+
+/**
+ * gets the item with the given id from the database
+ * @global \moodle_database $DB
+ * @param integer $id
+ * @return array
+ */
+function get_item($id) {
+    global $DB;
+    return (array)$DB->get_record('local_todolist', ['id' => $id], '*', MUST_EXIST);
+}
+
+/**
+ * updates the database with the given item
+ * @global \moodle_database $DB
+ * @param array $item
+ * @return array
+ */
+function update_item(array $item) {
+    global $DB;
+    $DB->update_record('local_todolist', (object)$item);
+    return get_item($item['id']);
 }

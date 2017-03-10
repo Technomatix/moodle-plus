@@ -11,16 +11,15 @@ import React from 'react';
 const Item = ({item, toggleDone}) => {
     const lgi = 'list-group-item';
     const dw = item.dueDate < new Date() ? 'danger' : 'warning';
-    const cn = `${lgi} ${lgi}action ${lgi}-${item.isDone ? 'success' : dw}`;
+    const cn = `${lgi} ${lgi}-${item.isDone ? 'success' : dw}`;
+    const tx = item.isDone ? 'Done' : `Due ${item.dueDate.toLocaleDateString()}`;
     return (
-        <a href="#"
-            key={item.id}
-            className={cn}
-            onClick={() => toggleDone(item)}
-        >
-            <span>Due {item.dueDate.toLocaleDateString()}: </span>
-            <span>{item.taskDescription}</span>
-        </a>
+        <li key={item.id} className={cn}>
+            <label className="form-check-label">
+                <input className="form-check-input" type="checkbox" checked={item.isDone} onChange={() => toggleDone(item)}/>
+                <span> {tx}: {item.taskDescription}</span>
+            </label>
+        </li>
     );
 };
 
