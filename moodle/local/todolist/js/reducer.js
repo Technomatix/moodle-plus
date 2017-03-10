@@ -19,6 +19,18 @@ const receiveTodoItems = (state, items) => {
 };
 
 /**
+ * @param {object} state
+ * @param {object} item
+ * @returns {object}
+ */
+const toggleDone = (state, item) => {
+    const newState = _.cloneDeep(state);
+    const newItem = _.find(newState.items, i => i.id === item.id);
+    newItem.isDone = !newItem.isDone;
+    return newState;
+};
+
+/**
  * the reducer
  * @param {object} state
  * @param {object} action
@@ -28,6 +40,8 @@ export default (state = {}, action = {}) => {
     switch (action.type) {
         case 'RECEIVE_TODO_ITEMS':
             return receiveTodoItems(state, action.items);
+        case 'TOGGLE_DONE':
+            return toggleDone(state, action.item);
     }
     return state;
 };

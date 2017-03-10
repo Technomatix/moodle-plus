@@ -46,4 +46,10 @@ $home = function (Request $request, Response $response) {
 
 $app = new App();
 $app->get(URL, $home);
+$app->put(URL . 'item/', function (Request $request, Response $response) {
+    global $USER;
+    require_login();
+    $todolist_items = json_encode(get_incomplete_items_for_user($USER));
+    return json_encode($todolist_items);
+});
 $app->run();
