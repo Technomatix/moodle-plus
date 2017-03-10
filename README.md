@@ -19,12 +19,11 @@ A dockerized Moodle 3.2 development environment with containers:
 
 ## Requirements
 
-* Docker Engine 1.13.1
+* Docker 17.03.0 (CE)
 * Docker Compose 1.11.2
 
 ## TODO
 
-- [ ] Continue building example `local/todolist` plugin
 - [x] Clicking on an item toggles its 'done' status
 - [x] Don't show 'done' items for which the due date is in the past
 - [ ] Add new item

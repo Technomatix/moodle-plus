@@ -5,6 +5,7 @@ namespace local_todolist;
 defined('MOODLE_INTERNAL') || die();
 
 const PLUGIN = 'local_todolist';
+const TABLE = 'local_todolist';
 
 /**
  * get JavaScript revision
@@ -49,7 +50,7 @@ function get_items_for_user(\stdClass $user, $now = null) {
     global $DB;
     $now = empty($now) ? time() : $now;
     $records = $DB->get_recordset_select(
-        'local_todolist',
+        TABLE,
         'user_id = :user_id AND (is_done = 0 OR due_timestamp >= :now)',
         [
             'user_id' => $user->id,
@@ -68,7 +69,7 @@ function get_items_for_user(\stdClass $user, $now = null) {
  */
 function get_item($id) {
     global $DB;
-    return (array)$DB->get_record('local_todolist', ['id' => $id], '*', MUST_EXIST);
+    return (array)$DB->get_record(TABLE, ['id' => $id], '*', MUST_EXIST);
 }
 
 /**
@@ -79,6 +80,6 @@ function get_item($id) {
  */
 function update_item(array $item) {
     global $DB;
-    $DB->update_record('local_todolist', (object)$item);
+    $DB->update_record(TABLE, (object)$item);
     return get_item($item['id']);
 }
