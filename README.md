@@ -29,6 +29,7 @@ A dockerized Moodle 3.2 development environment with containers:
 - [ ] Add new item
 - [ ] PHPUnits
 - [ ] Behat tests
+- [ ] Create a theme based on [Boost](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
 - [ ] Try putting Webpack vendor bundle in theme JS
 
 ## Build Docker images and run Docker containers

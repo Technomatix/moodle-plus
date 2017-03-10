@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import Item from './Item';
+import ItemForm from './ItemForm';
 import * as actionCreators from '../actionCreators';
 
 /**
@@ -14,9 +15,12 @@ import * as actionCreators from '../actionCreators';
  * @returns {XML}
  */
 const TodoList = ({items, toggleDoneThunk}) => (
-    <ul className="list-group">
-        {_.map(items, item => <Item key={item.id} item={item} toggleDone={toggleDoneThunk}/>)}
-    </ul>
+    <div>
+        <ul className="list-group">
+            {_.map(items, item => <Item key={item.id} item={item} toggleDone={toggleDoneThunk}/>)}
+        </ul>
+        <ItemForm/>
+    </div>
 );
 
 TodoList.propTypes = {
