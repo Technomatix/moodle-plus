@@ -22,7 +22,7 @@ class db_install_test extends advanced_testcase {
         global $DB;
         $orig = (integer)$DB->count_records('local_todolist');
         xmldb_local_todolist_install();
-        $this->assertSame($orig + 4, (integer)$DB->count_records('local_todolist'));
+        $this->assertSame($orig + 5, (integer)$DB->count_records('local_todolist'));
     }
 
 }
