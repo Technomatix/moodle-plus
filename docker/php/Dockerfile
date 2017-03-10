@@ -1,19 +1,28 @@
 FROM php:5.6-fpm
+LABEL name="php"
+LABEL version="0.0.1"
 
 # basics
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y wget git vim
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends wget git vim \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # install PostgreSQL
 RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/apt/sources.list.d/pgdg.list \
     && wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y postgresql-server-dev-9.5 \
-    && docker-php-ext-install pgsql
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends postgresql-server-dev-9.5 \
+    && docker-php-ext-install pgsql \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # other PHP extensions required by Moodle
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y libpng12-dev libpng12-dev libicu-dev libxml2 libxml2-dev libcurl4-nss-dev zlib1g-dev \
-    && docker-php-ext-install curl gd intl mbstring soap xml xmlrpc zip
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libpng12-dev libpng12-dev libicu-dev libxml2 libxml2-dev libcurl4-nss-dev zlib1g-dev \
+    && docker-php-ext-install curl gd intl mbstring soap xml xmlrpc zip \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # opcache
 RUN docker-php-ext-configure opcache --enable-opcache \
@@ -31,9 +40,12 @@ RUN mkdir -p /opt/.composer \
     && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 
 # AU locale for PHPUnit
-RUN DEBIAN_FRONTEND=noninteractive apt-get install -y locales \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends locales \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \
-    && locale-gen
+    && locale-gen \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
 
 # CodeSniffer
 RUN mkdir -p /usr/code/codesniffer \
