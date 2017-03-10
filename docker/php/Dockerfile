@@ -48,4 +48,4 @@ RUN mkdir -p /usr/code/codechecker \
     && cd /usr/code/codechecker \
     && git checkout v2.5.4 \
     && git apply --whitespace=fix /tmp/codechecker.diff \
-    && echo 'alias phpcs="find -type f -name \"*.php\" | xargs /usr/code/codesniffer/scripts/phpcs --standard=/usr/code/codechecker/moodle/ruleset.xml"' >> ~/.bashrc
+    && echo 'alias phpcs="find -type f -name \"*.php\" | xargs /usr/code/codesniffer/scripts/phpcs --colors --standard=/usr/code/codechecker/moodle/ruleset.xml"' >> ~/.bashrc

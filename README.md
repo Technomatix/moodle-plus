@@ -26,10 +26,11 @@ A dockerized Moodle 3.2 development environment with containers:
 
 - [ ] Continue building example `local/todolist` plugin
 - [ ] Clicking on an item toggles its 'done' status
-- [ ] Don't show 'done' items for which the due date is in the past
+- [x] Don't show 'done' items for which the due date is in the past
 - [ ] Add new item
 - [ ] PHPUnits
 - [ ] Behat tests
+- [ ] Try putting Webpack vendor bundle in theme JS
 
 ## Build Docker images and run Docker containers
 
@@ -49,17 +50,23 @@ psql -Upostgres
 create database moodle;
 ```
 
-(Either set the `postgres` password to `Wibble123!` or change Moodle's `config.php` by hand.)
+(Either set the `postgres` password to `Wibble123!` or change Moodle's `config.php` by hand once Moodle is installed.)
 
-Run the initialization script:
+### Environments with bash
+
+Run the bash initialization script:
 
 ```
 . docker/init.sh
 ```
 
+### Environments without bash
+
+The above bash initialization script should work on Windows environments that have bash ("Docker Quickstart Terminal" for "Docker Toolbox") however it won't work in PowerShell (obviously) if using (the newer) "Docker for Windows" (instead of the older "Docker Toolbox"). If using "Docker for Windows", the individual commands in `init.sh` should be performed manually.
+
 ## Commands
 
-On Windows (specifically "git bash" or "Docker Quickstart Terminal") commands that specify a working directory (e.g. `-w /var/www/html/moodle`) may need an [initial double slash](http://stackoverflow.com/questions/16344985/how-do-i-pass-an-absolute-path-to-the-adb-command-via-git-bash-for-windows) (e.g. `-w //var/www/html/moodle`).
+In some Windows environments ("Docker Quickstart Terminal" for "Docker Toolbox") commands that specify a working directory (e.g. `-w /var/www/html/moodle`) may need an [initial double slash](http://stackoverflow.com/questions/16344985/how-do-i-pass-an-absolute-path-to-the-adb-command-via-git-bash-for-windows) (e.g. `-w //var/www/html/moodle`).
 
 ### PHP shell
 

@@ -1,6 +1,6 @@
 <?php
 
-use function Functional\each;
+use Functional as F;
 
 defined('MOODLE_INTERNAL') || die();
 
@@ -27,7 +27,7 @@ function xmldb_local_todolist_install() {
     ];
     $now = time();
 
-    each($tasks, function ($task) use ($now) {
+    F\each($tasks, function ($task) use ($now) {
         global $DB;
         $admin = get_admin();
         $DB->insert_record('local_todolist', (object)[

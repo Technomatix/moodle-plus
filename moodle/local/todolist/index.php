@@ -8,55 +8,29 @@ use \Slim\App;
 
 require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../../vendor/autoload.php';
+require_once __DIR__ . '/lib.php';
 
 const URL = '/todolist/';
-const PLUGIN = 'local_todolist';
-
-/**
- * get JavaScript revision
- * @return integer
- */
-$get_jsrev = function () {
-    global $CFG;
-    if (empty($CFG->cachejs)) {
-        return -1;
-    } else if (empty($CFG->jsrev)) {
-        return 1;
-    } else {
-        return (integer)$CFG->jsrev;
-    }
-};
 
 /**
  * @param Request $request
  * @param Response $response
  * @return Response
  */
-$main = function (Request $request, Response $response) use ($get_jsrev) {
-    /** @var \moodle_page $PAGE */
-    global $PAGE;
-    global $CFG, $DB, $USER;
+$home = function (Request $request, Response $response) {
+    global $CFG, $USER;
     require_login();
 
-    // page
-    $plugin_name = get_string('pluginname', PLUGIN);
-    $PAGE->set_url(URL);
-    $PAGE->set_context(\context_system::instance());
-    $PAGE->set_pagelayout('standard');
-    $PAGE->set_title($plugin_name);
-    $PAGE->set_heading($plugin_name);
-
     // get items belonging to the logged in user
-    $records = $DB->get_recordset('local_todolist', ['user_id' => $USER->id], 'due_timestamp');
-    $todolist_items = json_encode(array_values(iterator_to_array($records)));
+    $todolist_items = json_encode(get_incomplete_items_for_user($USER));
 
     /** @var \local_todolist\output\renderer $output */
-    $output = $PAGE->get_renderer(PLUGIN);
+    $output = get_plugin_renderer(URL);
 
     // output
     $header = $output->header();
     $footer = $output->footer();
-    $require_js = $CFG->wwwroot . '/lib/javascript.php/' . $get_jsrev() . '/lib/requirejs/require.min.js';
+    $require_js = $CFG->wwwroot . '/lib/javascript.php/' . get_jsrev() . '/lib/requirejs/require.min.js';
     $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . (debugging() ? 'js' : 'min.js');
     $footer = str_replace(
         '<script type="text/javascript" src="' . $require_js . '"></script>',
@@ -71,5 +45,5 @@ $main = function (Request $request, Response $response) use ($get_jsrev) {
 };
 
 $app = new App();
-$app->get(URL, $main);
+$app->get(URL, $home);
 $app->run();
