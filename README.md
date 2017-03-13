@@ -159,3 +159,12 @@ To set up source code mapping, add the lines below to the "Listen for XDebug" co
 "localSourceRoot": "${workspaceRoot}/moodle",
 "serverSourceRoot": "/var/www/html/moodle"
 ```
+
+## Stop and remove Docker containers
+
+The below will not remove the `pgdata` Docker volume (thereby ensuring the PostgreSQL database is persisted):
+
+```
+docker-compose stop
+docker-compose rm -f
+```
