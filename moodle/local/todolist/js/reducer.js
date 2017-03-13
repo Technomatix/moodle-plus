@@ -33,7 +33,11 @@ const setInitialState = (state, items) => {
  */
 const receiveTodoItem = (state, item) => {
     const newState = _.cloneDeep(state);
-    const newItem = _.find(newState.items, i => i.id === parseInt(item.id));
+    let newItem = _.find(newState.items, i => i.id === parseInt(item.id));
+    if (_.isUndefined(newItem)) {
+        newItem = _.last(newState.items);
+        newItem.id = parseInt(item.id);
+    }
     newItem.taskDescription = item.task_description;
     newItem.isDone = item.is_done === '1';
     newItem.dueDate = new Date(parseInt(item.due_timestamp) * 1000);
@@ -104,6 +108,16 @@ const optimisticallyAddItem = state => {
 };
 
 /**
+ * @param {object} state
+ * @returns {object}
+ */
+const removeOptimisticallyAddedItems = state => {
+    const newState = _.cloneDeep(state);
+    newState.items = _.filter(newState.items, i => i.id > 0);
+    return newState;
+};
+
+/**
  * the reducer
  * @param {object} state
  * @param {object} action
@@ -123,6 +137,8 @@ export default (state = {}, action = {}) => {
             return setFormTaskDescription(state, action.taskDescription);
         case 'OPTIMISTICALLY_ADD_ITEM':
             return optimisticallyAddItem(state);
+        case 'REMOVE_OPTIMISTICALLY_ADDED_ITEMS':
+            return removeOptimisticallyAddedItems(state);
     }
     return state;
 };

@@ -51,9 +51,10 @@ export const addItemThunk = () => (dispatch, getState) => {
     const dueDate = getState().form.dueDate;
     const taskDescription = getState().form.taskDescription;
     dispatch(optimisticallyAddItem(dueDate, taskDescription));
-    /*
     WebAPI.postItem(dueDate, taskDescription, (error, response) => {
-        dispatch(error ? dispatch(removeOptimisticallyAddedItems()) : receiveTodoItem(response.body));
+        if (!error) {
+            dispatch(receiveTodoItem(response.body));
+        }
+        dispatch(dispatch(removeOptimisticallyAddedItems()));
     });
-    */
 };

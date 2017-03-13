@@ -15,14 +15,14 @@ export function putItem(item, cb) {
             id: item.id,
             task_description: item.taskDescription,
             is_done: item.isDone ? 1 : 0,
-            dueDate: parseInt(item.dueDate.getTime() / 1000)
+            due_timestamp: parseInt(item.dueDate.getTime() / 1000)
         })
         .end(cb);
 }
 
 /**
  * posts one item
- * @param {string} dueDate
+ * @param {Date} dueDate
  * @param {string} taskDescription
  * @param {function} cb
  */
@@ -32,7 +32,7 @@ export function postItem(dueDate, taskDescription, cb) {
         .accept('application/json')
         .send({
             task_description: taskDescription,
-            dueDate: parseInt(dueDate)
+            due_timestamp: parseInt(dueDate.getTime() / 1000)
         })
         .end(cb);
 }

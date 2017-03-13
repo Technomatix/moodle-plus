@@ -49,6 +49,21 @@ $home = function (Request $request, Response $response) {
  * @param Response $response
  * @return Response
  */
+$post_item = function (Request $request, Response $response) {
+    global $USER;
+    $item = $request->getParsedBody();
+    if (!isloggedin()) {
+        return $response->withStatus(403);
+    }
+    $item = create_item($item);
+    return $response->withJson($item);
+};
+
+/**
+ * @param Request $request
+ * @param Response $response
+ * @return Response
+ */
 $put_item = function (Request $request, Response $response) {
     global $USER;
     $item = $request->getParsedBody();
@@ -62,5 +77,6 @@ $put_item = function (Request $request, Response $response) {
 
 $app = new App();
 $app->get(URL, $home);
+$app->post(URL . 'item/', $post_item);
 $app->put(URL . 'item/', $put_item);
 $app->run();

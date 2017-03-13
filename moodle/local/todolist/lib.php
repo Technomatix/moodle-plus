@@ -73,6 +73,21 @@ function get_item($id) {
 }
 
 /**
+ * create an item in the database
+ * @global \moodle_database $DB
+ * @param array $item
+ * @return array
+ */
+function create_item(array $item) {
+    global $DB, $USER;
+    $item['user_id'] = $USER->id;
+    $item['created_timestamp'] = strtotime(date('Y-m-d', time()));
+    $item['is_done'] = '0';
+    $id = $DB->insert_record(TABLE, (object)$item);
+    return get_item($id);
+}
+
+/**
  * updates the database with the given item
  * @global \moodle_database $DB
  * @param array $item

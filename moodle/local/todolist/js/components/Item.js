@@ -9,8 +9,10 @@ import React from 'react';
  * @returns {XML}
  */
 const Item = ({item, toggleDoneThunk}) => {
+    const d = new Date();
+    d.setHours(0, 0, 0, 0);
     const lgi = 'list-group-item';
-    const dw = item.dueDate < new Date() ? 'danger' : 'warning';
+    const dw = item.dueDate < d ? 'danger' : 'warning';
     const cn = `${lgi} ${lgi}-${item.isDone ? 'success' : dw}`;
     const tx = item.isDone ? 'Done' : `Due ${item.dueDate.toLocaleDateString()}`;
     return (

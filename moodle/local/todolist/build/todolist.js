@@ -24053,11 +24053,12 @@ var addItemThunk = exports.addItemThunk = function addItemThunk() {
         var dueDate = getState().form.dueDate;
         var taskDescription = getState().form.taskDescription;
         dispatch(optimisticallyAddItem(dueDate, taskDescription));
-        /*
-        WebAPI.postItem(dueDate, taskDescription, (error, response) => {
-            dispatch(error ? dispatch(removeOptimisticallyAddedItems()) : receiveTodoItem(response.body));
+        WebAPI.postItem(dueDate, taskDescription, function (error, response) {
+            if (!error) {
+                dispatch(receiveTodoItem(response.body));
+            }
+            dispatch(dispatch(removeOptimisticallyAddedItems()));
         });
-        */
     };
 };
 
@@ -27739,6 +27740,10 @@ var receiveTodoItem = function receiveTodoItem(state, item) {
     var newItem = _lodash2.default.find(newState.items, function (i) {
         return i.id === parseInt(item.id);
     });
+    if (_lodash2.default.isUndefined(newItem)) {
+        newItem = _lodash2.default.last(newState.items);
+        newItem.id = parseInt(item.id);
+    }
     newItem.taskDescription = item.task_description;
     newItem.isDone = item.is_done === '1';
     newItem.dueDate = new Date(parseInt(item.due_timestamp) * 1000);
@@ -27811,6 +27816,18 @@ var optimisticallyAddItem = function optimisticallyAddItem(state) {
 };
 
 /**
+ * @param {object} state
+ * @returns {object}
+ */
+var removeOptimisticallyAddedItems = function removeOptimisticallyAddedItems(state) {
+    var newState = _lodash2.default.cloneDeep(state);
+    newState.items = _lodash2.default.filter(newState.items, function (i) {
+        return i.id > 0;
+    });
+    return newState;
+};
+
+/**
  * the reducer
  * @param {object} state
  * @param {object} action
@@ -27834,6 +27851,8 @@ exports.default = function () {
             return setFormTaskDescription(state, action.taskDescription);
         case 'OPTIMISTICALLY_ADD_ITEM':
             return optimisticallyAddItem(state);
+        case 'REMOVE_OPTIMISTICALLY_ADDED_ITEMS':
+            return removeOptimisticallyAddedItems(state);
     }
     return state;
 };
@@ -27906,20 +27925,20 @@ function putItem(item, cb) {
         id: item.id,
         task_description: item.taskDescription,
         is_done: item.isDone ? 1 : 0,
-        dueDate: parseInt(item.dueDate.getTime() / 1000)
+        due_timestamp: parseInt(item.dueDate.getTime() / 1000)
     }).end(cb);
 }
 
 /**
  * posts one item
- * @param {string} dueDate
+ * @param {Date} dueDate
  * @param {string} taskDescription
  * @param {function} cb
  */
 function postItem(dueDate, taskDescription, cb) {
     _superagent2.default.post('item/').type('application/json').accept('application/json').send({
         task_description: taskDescription,
-        dueDate: parseInt(dueDate)
+        due_timestamp: parseInt(dueDate.getTime() / 1000)
     }).end(cb);
 }
 
@@ -27950,8 +27969,10 @@ var Item = function Item(_ref) {
     var item = _ref.item,
         toggleDoneThunk = _ref.toggleDoneThunk;
 
+    var d = new Date();
+    d.setHours(0, 0, 0, 0);
     var lgi = 'list-group-item';
-    var dw = item.dueDate < new Date() ? 'danger' : 'warning';
+    var dw = item.dueDate < d ? 'danger' : 'warning';
     var cn = lgi + ' ' + lgi + '-' + (item.isDone ? 'success' : dw);
     var tx = item.isDone ? 'Done' : 'Due ' + item.dueDate.toLocaleDateString();
     return _react2.default.createElement(
