@@ -5,8 +5,9 @@ use Functional as F;
 defined('MOODLE_INTERNAL') || die();
 
 require_once __DIR__ . '/../lib.php';
+require_once __DIR__ . '/../classes/task/remove_historic_items.php';
 
-class todolist_lib_test extends advanced_testcase {
+class todolist_general_test extends advanced_testcase {
 
     /**
      * @var \stdClass
@@ -164,7 +165,8 @@ class todolist_lib_test extends advanced_testcase {
      */
     public function test_remove_historic_items() {
         global $DB;
-        \local_todolist\remove_historic_items($this->_now);
+        $task = new \local_todolist\task\remove_historic_items();
+        $task->execute($this->_now);
         $records = $DB->get_recordset(
             'local_todolist',
             ['created_timestamp' => $this->_now],

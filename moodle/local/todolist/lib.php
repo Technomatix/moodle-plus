@@ -114,14 +114,3 @@ function delete_item(array $item) {
     ]);
     return;
 }
-
-/**
- * remove all historic items that are 'done'
- * @global \moodle_database $DB
- * @param integer $now
- */
-function remove_historic_items($now = null) {
-    require_once __DIR__ . '/classes/task/remove_historic_items.php';
-    $t = new task\remove_historic_items();
-    $t->execute($now);
-}
