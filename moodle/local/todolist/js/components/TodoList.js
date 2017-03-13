@@ -1,12 +1,9 @@
 'use strict';
 
 import React from 'react';
-import {connect} from 'react-redux';
 import _ from 'lodash';
 
 import Item from './Item';
-import ItemForm from './ItemForm';
-import * as actionCreators from '../actionCreators';
 
 /**
  * a TODO list
@@ -15,11 +12,13 @@ import * as actionCreators from '../actionCreators';
  * @returns {XML}
  */
 const TodoList = ({items, toggleDoneThunk}) => (
-    <div>
-        <ul className="list-group">
-            {_.map(items, item => <Item key={item.id} item={item} toggleDone={toggleDoneThunk}/>)}
-        </ul>
-        <ItemForm/>
+    <div className="card">
+        <div className="card-block">
+            <h4 className="card-title">Items</h4>
+            <ul className="list-group">
+                {_.map(items, item => <Item key={item.id} item={item} toggleDone={toggleDoneThunk}/>)}
+            </ul>
+        </div>
     </div>
 );
 
@@ -28,6 +27,4 @@ TodoList.propTypes = {
     toggleDoneThunk: React.PropTypes.func,
 };
 
-export const TodoListContainer = connect(state => ({
-    items: state.items
-}), actionCreators)(TodoList);
+export default TodoList;
