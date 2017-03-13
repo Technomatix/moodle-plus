@@ -24057,7 +24057,7 @@ var addItemThunk = exports.addItemThunk = function addItemThunk() {
             if (!error) {
                 dispatch(receiveTodoItem(response.body));
             }
-            dispatch(dispatch(removeOptimisticallyAddedItems()));
+            dispatch(removeOptimisticallyAddedItems());
         });
     };
 };
@@ -27622,9 +27622,9 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(59);
 
-var _TodoList = __webpack_require__(104);
+var _ItemList = __webpack_require__(104);
 
-var _TodoList2 = _interopRequireDefault(_TodoList);
+var _ItemList2 = _interopRequireDefault(_ItemList);
 
 var _ItemForm = __webpack_require__(103);
 
@@ -27658,7 +27658,7 @@ var App = function App(_ref) {
     return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_TodoList2.default, {
+        _react2.default.createElement(_ItemList2.default, {
             items: items,
             toggleDoneThunk: toggleDoneThunk
         }),
@@ -28147,7 +28147,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {function} toggleDoneThunk
  * @returns {XML}
  */
-var TodoList = function TodoList(_ref) {
+var ItemList = function ItemList(_ref) {
     var items = _ref.items,
         toggleDoneThunk = _ref.toggleDoneThunk;
     return _react2.default.createElement(
@@ -28172,12 +28172,12 @@ var TodoList = function TodoList(_ref) {
     );
 };
 
-TodoList.propTypes = {
+ItemList.propTypes = {
     items: _react2.default.PropTypes.arrayOf(_react2.default.PropTypes.object),
     toggleDoneThunk: _react2.default.PropTypes.func
 };
 
-exports.default = TodoList;
+exports.default = ItemList;
 
 /***/ }),
 /* 105 */

@@ -27,7 +27,7 @@ A dockerized Moodle 3.2 development environment with containers:
 - [x] Clicking on an item toggles its 'done' status
 - [x] Don't show 'done' items for which the due date is in the past
 - [x] Add new item
-- [ ] Plugin cron task to delete historic items
+- [x] Plugin cron task to delete historic items
 - [ ] Delete existing item
 - [ ] PHPUnits
 - [ ] Behat tests

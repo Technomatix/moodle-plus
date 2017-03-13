@@ -11,7 +11,7 @@ import Item from './Item';
  * @param {function} toggleDoneThunk
  * @returns {XML}
  */
-const TodoList = ({items, toggleDoneThunk}) => (
+const ItemList = ({items, toggleDoneThunk}) => (
     <div className="card">
         <div className="card-block">
             <h4 className="card-title">Items</h4>
@@ -22,9 +22,9 @@ const TodoList = ({items, toggleDoneThunk}) => (
     </div>
 );
 
-TodoList.propTypes = {
+ItemList.propTypes = {
     items: React.PropTypes.arrayOf(React.PropTypes.object),
     toggleDoneThunk: React.PropTypes.func,
 };
 
-export default TodoList;
+export default ItemList;

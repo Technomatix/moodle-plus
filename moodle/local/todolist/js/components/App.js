@@ -3,7 +3,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
 
-import TodoList from './TodoList';
+import ItemList from './ItemList';
 import ItemForm from './ItemForm';
 import * as actionCreators from '../actionCreators';
 
@@ -19,7 +19,7 @@ import * as actionCreators from '../actionCreators';
  */
 const App = ({items, form, toggleDoneThunk, setFormDueDate, setFormTaskDescription, addItemThunk}) => (
     <div>
-        <TodoList
+        <ItemList
             items={items}
             toggleDoneThunk={toggleDoneThunk}
         />

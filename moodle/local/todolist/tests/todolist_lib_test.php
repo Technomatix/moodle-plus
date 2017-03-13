@@ -145,4 +145,31 @@ class todolist_lib_test extends advanced_testcase {
         ], $item);
     }
 
+    /**
+     * tests removing historic items
+     * @global moodle_database $DB
+     */
+    public function test_remove_historic_items() {
+        global $DB;
+        \local_todolist\remove_historic_items($this->_now);
+        $records = $DB->get_recordset(
+            'local_todolist',
+            ['created_timestamp' => $this->_now],
+            'task_description'
+        );
+        $todolist_items = array_values(iterator_to_array($records));
+        $descriptions = F\map($todolist_items, function ($item) {
+            return $item->task_description;
+        });
+        $this->assertNotContains('historic', $descriptions);
+        $this->assertEquals([
+            'abc',
+            'bar',
+            'foo',
+            'others',
+            'overdue',
+            'xyz',
+        ], $descriptions);
+    }
+
 }

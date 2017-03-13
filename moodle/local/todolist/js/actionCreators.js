@@ -55,6 +55,6 @@ export const addItemThunk = () => (dispatch, getState) => {
         if (!error) {
             dispatch(receiveTodoItem(response.body));
         }
-        dispatch(dispatch(removeOptimisticallyAddedItems()));
+        dispatch(removeOptimisticallyAddedItems());
     });
 };
