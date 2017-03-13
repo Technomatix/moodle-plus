@@ -29,7 +29,7 @@ A dockerized Moodle 3.2 development environment with containers:
 - [x] Add new item
 - [x] Plugin cron task to delete historic items
 - [x] Delete existing item
-- [ ] PHPUnits
+- [x] PHPUnits
 - [ ] Behat tests
 - [ ] Create a theme based on [Boost](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
 - [ ] Try putting Webpack vendor bundle in theme JS
@@ -160,6 +160,28 @@ To set up source code mapping, add the lines below to the "Listen for XDebug" co
 "port": 10000,
 "localSourceRoot": "${workspaceRoot}/moodle",
 "serverSourceRoot": "/var/www/html/moodle"
+```
+
+## PostgreSQL query logging
+
+Inspect the `moodleplus_pgdata` Docker volume to determine the mountpoint:
+
+```
+docker volume inspect moodleplus_pgdata
+```
+
+Edit the `postgresql.conf` file to set `log_statement = 'all'`.
+
+Restart the `pgsql` container:
+
+```
+docker-compose restart pgsql
+```
+
+View the logs:
+
+```
+docker-compose logs -f
 ```
 
 ## Stop and remove Docker containers
