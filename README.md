@@ -148,7 +148,7 @@ Moodle source code files (i.e. those under `moodle/`) that've been added, modifi
 git diff --name-status v3.2.1 HEAD:moodle/
 ```
 
-### XDebug
+## XDebug
 
 Remote debugging with [XDebug](https://xdebug.org/) is possible in [PHPStorm](https://www.jetbrains.com/phpstorm/) and [Visual Studio Code](https://code.visualstudio.com/Docs/languages/php).
 
