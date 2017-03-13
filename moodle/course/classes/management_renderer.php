@@ -1266,7 +1266,7 @@ class core_course_management_renderer extends plugin_renderer_base {
             // Delete.
             if ($course->can_delete()) {
                 $actions[] = $this->output->action_icon(
-                    new moodle_url('/course/asdf/delete.php', array('id' => $course->id)),
+                    new moodle_url('/course/delete.php', array('id' => $course->id)),
                     new pix_icon('t/delete', get_string('delete')),
                     null,
                     array('class' => 'action-delete')
