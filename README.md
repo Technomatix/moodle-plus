@@ -138,14 +138,15 @@ The Moodle source code is managed as a [git subtree](https://blogs.atlassian.com
 git remote add moodle https://github.com/moodle/moodle
 git subtree add  --squash --prefix=moodle/ moodle v3.2.0
 git subtree pull --squash --prefix=moodle/ moodle v3.2.1
+git subtree pull --squash --prefix=moodle/ moodle v3.2.2
 ```
 
 ### Diff
 
-Moodle source code files (i.e. those under `moodle/`) that've been added, modified or deleted can be determined as below (replacing `v3.2.1` with a Moodle tag as appropriate).
+Moodle source code files (i.e. those under `moodle/`) that've been added, modified or deleted can be determined as below (replacing `v3.2.2` with a Moodle tag as appropriate).
 
 ```
-git diff --name-status v3.2.1 HEAD:moodle/
+git diff --name-status v3.2.2 HEAD:moodle/
 ```
 
 ## XDebug
