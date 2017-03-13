@@ -16,7 +16,7 @@ const TodoList = ({items, toggleDoneThunk}) => (
         <div className="card-block">
             <h4 className="card-title">Items</h4>
             <ul className="list-group">
-                {_.map(items, item => <Item key={item.id} item={item} toggleDone={toggleDoneThunk}/>)}
+                {_.map(items, item => <Item key={item.id} item={item} toggleDoneThunk={toggleDoneThunk}/>)}
             </ul>
         </div>
     </div>

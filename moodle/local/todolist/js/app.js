@@ -7,12 +7,12 @@ import {Provider} from 'react-redux';
 import thunk from 'redux-thunk';
 
 import reducer from './reducer';
-import {receiveTodoItems} from './actionCreators';
+import {setInitialState} from './actionCreators';
 import {AppContainer} from './components/App';
 
 const createStoreWithMiddleware = applyMiddleware(thunk)(createStore);
 const store = createStoreWithMiddleware(reducer);
-store.dispatch(receiveTodoItems(JSON.parse(document.querySelector('.todolist-items').innerHTML)));
+store.dispatch(setInitialState(JSON.parse(document.querySelector('.todolist-items').innerHTML)));
 
 ReactDOM.render(
     <Provider store={store}>

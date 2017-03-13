@@ -19,3 +19,20 @@ export function putItem(item, cb) {
         })
         .end(cb);
 }
+
+/**
+ * posts one item
+ * @param {string} dueDate
+ * @param {string} taskDescription
+ * @param {function} cb
+ */
+export function postItem(dueDate, taskDescription, cb) {
+    request.post('item/')
+        .type('application/json')
+        .accept('application/json')
+        .send({
+            task_description: taskDescription,
+            dueDate: parseInt(dueDate)
+        })
+        .end(cb);
+}

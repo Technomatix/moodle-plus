@@ -1,29 +1,56 @@
 'use strict';
 
 import React from 'react';
+import _ from 'lodash';
 
 /**
  * a form for adding a new item
+ * @param {object} form
+ * @param {function} setFormDueDate
+ * @param {function} setFormTaskDescription
+ * @param {function} addItemThunk
  * @returns {XML}
  */
-const ItemForm = () => (
+const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) => (
     <div className="card card-block">
         <h4 className="card-title">Add item</h4>
         <form>
             <div className="form-group">
                 <label htmlFor="due">Due</label>
-                <input type="date" className="form-control" id="due"/>
+                <input
+                    type="date"
+                    className="form-control"
+                    id="due"
+                    value={form.dueDate.toISOString().substr(0, 10)}
+                    onChange={e => setFormDueDate(e.target.value)}
+                />
             </div>
             <div className="form-group">
                 <label htmlFor="description">Description</label>
-                <input type="text" className="form-control" id="description" placeholder="Type task description here"/>
+                <input
+                    type="text"
+                    className="form-control"
+                    id="description"
+                    placeholder="Type task description here"
+                    value={form.taskDescription}
+                    onChange={e => setFormTaskDescription(e.target.value)}
+                />
             </div>
-            <button type="button" className="btn btn-primary">Save</button>
+            <button
+                type="button"
+                className="btn btn-primary"
+                onClick={() => addItemThunk()}
+                disabled={_.size(form.taskDescription) === 0}
+            >Save</button>
         </form>
     </div>
 );
 
 ItemForm.propTypes = {
+    form: React.PropTypes.object,
+    setFormDueDate: React.PropTypes.func,
+    setFormTaskDescription: React.PropTypes.func,
+    addItemThunk: React.PropTypes.func
 };
 
 export default ItemForm;
