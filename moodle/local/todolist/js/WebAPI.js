@@ -7,7 +7,7 @@ import request from 'superagent';
  * @param {object} item
  * @param {function} cb
  */
-export function putItem(item, cb) {
+export const putItem = (item, cb) => {
     request.put('item/')
         .type('application/json')
         .accept('application/json')
@@ -18,7 +18,7 @@ export function putItem(item, cb) {
             due_timestamp: parseInt(item.dueDate.getTime() / 1000)
         })
         .end(cb);
-}
+};
 
 /**
  * posts one item
@@ -26,7 +26,7 @@ export function putItem(item, cb) {
  * @param {string} taskDescription
  * @param {function} cb
  */
-export function postItem(dueDate, taskDescription, cb) {
+export const postItem = (dueDate, taskDescription, cb) => {
     request.post('item/')
         .type('application/json')
         .accept('application/json')
@@ -35,4 +35,16 @@ export function postItem(dueDate, taskDescription, cb) {
             due_timestamp: parseInt(dueDate.getTime() / 1000)
         })
         .end(cb);
-}
+};
+
+/**
+ * deletes one item
+ * @param {object} item
+ */
+export const deleteItem = item => {
+    request.delete('item/')
+        .type('application/json')
+        .accept('application/json')
+        .send({id: item.id})
+        .end();
+};

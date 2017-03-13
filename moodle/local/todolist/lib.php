@@ -102,6 +102,20 @@ function update_item(array $item) {
 }
 
 /**
+ * deletes the given item from the database
+ * @global \moodle_database $DB
+ * @param array $item
+ * @return array
+ */
+function delete_item(array $item) {
+    global $DB;
+    $DB->delete_records(TABLE, [
+        'id' => $item['id'],
+    ]);
+    return;
+}
+
+/**
  * remove all historic items that are 'done'
  * @global \moodle_database $DB
  * @param integer $now

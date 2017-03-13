@@ -56,7 +56,7 @@ $post_item = function (Request $request, Response $response) {
         return $response->withStatus(403);
     }
     $item = create_item_for_user($item, $USER);
-    return $response->withJson($item);
+    return $response->withJson($item, 201);
 };
 
 /**
@@ -75,8 +75,25 @@ $put_item = function (Request $request, Response $response) {
     return $response->withJson($item);
 };
 
+/**
+ * @param Request $request
+ * @param Response $response
+ * @return Response
+ */
+$delete_item = function (Request $request, Response $response) {
+    global $USER;
+    $item = $request->getParsedBody();
+    $current_item = get_item($item['id']);
+    if (!isloggedin() || (integer)$USER->id !== (integer)$current_item['user_id']) {
+        return $response->withStatus(403);
+    }
+    $item = delete_item($item);
+    return $response->withStatus(204);
+};
+
 $app = new App();
 $app->get(URL, $home);
 $app->post(URL . 'item/', $post_item);
 $app->put(URL . 'item/', $put_item);
+$app->delete(URL . 'item/', $delete_item);
 $app->run();

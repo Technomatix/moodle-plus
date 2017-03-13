@@ -15,13 +15,15 @@ import * as actionCreators from '../actionCreators';
  * @param {function} setFormDueDate
  * @param {function} setFormTaskDescription
  * @param {function} addItemThunk
+ * @param {function} deleteItemThunk
  * @returns {XML}
  */
-const App = ({items, form, toggleDoneThunk, setFormDueDate, setFormTaskDescription, addItemThunk}) => (
+const App = ({items, form, toggleDoneThunk, setFormDueDate, setFormTaskDescription, addItemThunk, deleteItemThunk}) => (
     <div>
         <ItemList
             items={items}
             toggleDoneThunk={toggleDoneThunk}
+            deleteItemThunk={deleteItemThunk}
         />
         <ItemForm
             form={form}
@@ -38,7 +40,8 @@ App.propTypes = {
     toggleDoneThunk: React.PropTypes.func,
     setFormDueDate: React.PropTypes.func,
     setFormTaskDescription: React.PropTypes.func,
-    addItemThunk: React.PropTypes.func
+    addItemThunk: React.PropTypes.func,
+    deleteItemThunk: React.PropTypes.func
 };
 
 export const AppContainer = connect(state => ({

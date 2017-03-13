@@ -8,8 +8,8 @@ export const setInitialState = items => ({
     items
 });
 
-export const receiveTodoItem = item => ({
-    type: 'RECEIVE_TODO_ITEM',
+export const receiveItem = item => ({
+    type: 'RECEIVE_ITEM',
     item
 });
 
@@ -38,12 +38,17 @@ export const removeOptimisticallyAddedItems = () => ({
     type: 'REMOVE_OPTIMISTICALLY_ADDED_ITEMS'
 });
 
+export const deleteItem = item => ({
+    type: 'DELETE_ITEM',
+    item
+});
+
 export const toggleDoneThunk = item => dispatch => {
     dispatch(toggleDone(item));
     const i = _.cloneDeep(item);
     i.isDone = !i.isDone;
     WebAPI.putItem(i, (error, response) => {
-        dispatch(error ? toggleDone(item) : receiveTodoItem(response.body));
+        dispatch(error ? toggleDone(item) : receiveItem(response.body));
     });
 };
 
@@ -53,8 +58,13 @@ export const addItemThunk = () => (dispatch, getState) => {
     dispatch(optimisticallyAddItem(dueDate, taskDescription));
     WebAPI.postItem(dueDate, taskDescription, (error, response) => {
         if (!error) {
-            dispatch(receiveTodoItem(response.body));
+            dispatch(receiveItem(response.body));
         }
         dispatch(removeOptimisticallyAddedItems());
     });
+};
+
+export const deleteItemThunk = item => dispatch => {
+    dispatch(deleteItem(item));
+    WebAPI.deleteItem(item);
 };

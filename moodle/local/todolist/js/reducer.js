@@ -2,6 +2,8 @@
 
 import _ from 'lodash';
 
+import {currentDate} from './lib';
+
 /**
  * @param {object} state
  * @param {object[]} items
@@ -15,13 +17,11 @@ const setInitialState = (state, items) => {
         isDone: item.is_done === '1',
         dueDate: new Date(parseInt(item.due_timestamp) * 1000)
     }));
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
     newState.form = {
         id: -1,
         taskDescription: '',
         isDone: false,
-        dueDate: d
+        dueDate: currentDate()
     };
     return newState;
 };
@@ -31,7 +31,7 @@ const setInitialState = (state, items) => {
  * @param {object} item
  * @returns {object}
  */
-const receiveTodoItem = (state, item) => {
+const receiveItem = (state, item) => {
     const newState = _.cloneDeep(state);
     let newItem = _.find(newState.items, i => i.id === parseInt(item.id));
     if (_.isUndefined(newItem)) {
@@ -52,7 +52,9 @@ const receiveTodoItem = (state, item) => {
 const toggleDone = (state, item) => {
     const newState = _.cloneDeep(state);
     const newItem = _.find(newState.items, i => i.id === item.id);
-    newItem.isDone = !newItem.isDone;
+    if (_.isObject(newItem)) {
+        newItem.isDone = !newItem.isDone;
+    }
     return newState;
 };
 
@@ -63,13 +65,7 @@ const toggleDone = (state, item) => {
  */
 const setFormDueDate = (state, dueDate) => {
     const newState = _.cloneDeep(state);
-    if (_.size(dueDate) === 0) {
-        const d = new Date();
-        d.setHours(0, 0, 0, 0);
-        newState.form.dueDate = d;
-    } else {
-        newState.form.dueDate = new Date(dueDate);
-    }
+    newState.form.dueDate = _.size(dueDate) === 0 ? currentDate() : new Date(dueDate);
     return newState;
 };
 
@@ -96,13 +92,11 @@ const optimisticallyAddItem = state => {
         isDone: false,
         dueDate: newState.form.dueDate
     });
-    const d = new Date();
-    d.setHours(0, 0, 0, 0);
     newState.form = {
         id: newState.form.id - 1,
         taskDescription: '',
         isDone: false,
-        dueDate: d
+        dueDate: currentDate()
     };
     return newState;
 };
@@ -118,6 +112,17 @@ const removeOptimisticallyAddedItems = state => {
 };
 
 /**
+ * @param {object} state
+ * @param {object} item
+ * @returns {object}
+ */
+const deleteItem = (state, item) => {
+    const newState = _.cloneDeep(state);
+    newState.items = _.filter(newState.items, i => i.id !== item.id);
+    return newState;
+};
+
+/**
  * the reducer
  * @param {object} state
  * @param {object} action
@@ -127,8 +132,8 @@ export default (state = {}, action = {}) => {
     switch (action.type) {
         case 'SET_INITIAL_STATE':
             return setInitialState(state, action.items);
-        case 'RECEIVE_TODO_ITEM':
-            return receiveTodoItem(state, action.item);
+        case 'RECEIVE_ITEM':
+            return receiveItem(state, action.item);
         case 'TOGGLE_DONE':
             return toggleDone(state, action.item);
         case 'SET_FORM_DUE_DATE':
@@ -139,6 +144,8 @@ export default (state = {}, action = {}) => {
             return optimisticallyAddItem(state);
         case 'REMOVE_OPTIMISTICALLY_ADDED_ITEMS':
             return removeOptimisticallyAddedItems(state);
+        case 'DELETE_ITEM':
+            return deleteItem(state, action.item);
     }
     return state;
 };

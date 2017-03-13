@@ -9,14 +9,17 @@ import Item from './Item';
  * a TODO list
  * @param {object[]} items
  * @param {function} toggleDoneThunk
+ * @param {function} deleteItemThunk
  * @returns {XML}
  */
-const ItemList = ({items, toggleDoneThunk}) => (
+const ItemList = ({items, toggleDoneThunk, deleteItemThunk}) => (
     <div className="card">
         <div className="card-block">
             <h4 className="card-title">Items</h4>
             <ul className="list-group">
-                {_.map(items, item => <Item key={item.id} item={item} toggleDoneThunk={toggleDoneThunk}/>)}
+                {_.map(items, item => (
+                    <Item key={item.id} item={item} toggleDoneThunk={toggleDoneThunk} deleteItemThunk={deleteItemThunk}/>
+                ))}
             </ul>
         </div>
     </div>
@@ -25,6 +28,7 @@ const ItemList = ({items, toggleDoneThunk}) => (
 ItemList.propTypes = {
     items: React.PropTypes.arrayOf(React.PropTypes.object),
     toggleDoneThunk: React.PropTypes.func,
+    deleteItemThunk: React.PropTypes.func,
 };
 
 export default ItemList;

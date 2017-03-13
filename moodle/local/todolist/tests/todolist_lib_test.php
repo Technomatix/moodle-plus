@@ -146,6 +146,19 @@ class todolist_lib_test extends advanced_testcase {
     }
 
     /**
+     * tests updating an item
+     * @global moodle_database $DB
+     */
+    public function test_delete_item() {
+        global $DB;
+        $original_count = (integer)$DB->count_records('local_todolist');
+        $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
+        $item = $todolist_items[0];
+        \local_todolist\delete_item((array)$item);
+        $this->assertEquals($original_count - 1, (integer)$DB->count_records('local_todolist'));
+    }
+
+    /**
      * tests removing historic items
      * @global moodle_database $DB
      */
