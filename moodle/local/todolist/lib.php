@@ -48,7 +48,7 @@ function get_plugin_renderer($url) {
  */
 function get_items_for_user(\stdClass $user, $now = null) {
     global $DB;
-    $now = empty($now) ? time() : $now;
+    $now = empty($now) ? strtotime(date('Y-m-d', time())) : $now;
     $records = $DB->get_recordset_select(
         TABLE,
         'user_id = :user_id AND (is_done = 0 OR due_timestamp >= :now)',
@@ -76,12 +76,14 @@ function get_item($id) {
  * create an item in the database
  * @global \moodle_database $DB
  * @param array $item
+ * @param \stdClass $user
+ * @param integer $now
  * @return array
  */
-function create_item(array $item) {
-    global $DB, $USER;
-    $item['user_id'] = $USER->id;
-    $item['created_timestamp'] = strtotime(date('Y-m-d', time()));
+function create_item_for_user(array $item, \stdClass $user, $now = null) {
+    global $DB;
+    $item['user_id'] = $user->id;
+    $item['created_timestamp'] = empty($now) ? strtotime(date('Y-m-d', time())) : $now;
     $item['is_done'] = '0';
     $id = $DB->insert_record(TABLE, (object)$item);
     return get_item($id);

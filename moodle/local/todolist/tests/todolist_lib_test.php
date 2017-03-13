@@ -106,6 +106,27 @@ class todolist_lib_test extends advanced_testcase {
     }
 
     /**
+     * tests creating an item
+     */
+    public function test_create_item_for_user() {
+        $one_day = $this->_now - 3600 * 24 * 1;
+        $new_task_description = 'New task description';
+        $item = [
+            'due_timestamp'    => $one_day,
+            'task_description' => $new_task_description,
+        ];
+        $item = \local_todolist\create_item_for_user((array)$item, $this->_user, $this->_now);
+        $this->assertEquals([
+            'id' => $item['id'],
+            'task_description' => $new_task_description,
+            'is_done' => '0',
+            'due_timestamp' => $one_day,
+            'created_timestamp' => (string)$this->_now,
+            'user_id' => $this->_user->id,
+        ], $item);
+    }
+
+    /**
      * tests updating an item
      */
     public function test_update_item() {

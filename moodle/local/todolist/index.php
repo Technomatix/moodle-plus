@@ -55,7 +55,7 @@ $post_item = function (Request $request, Response $response) {
     if (!isloggedin()) {
         return $response->withStatus(403);
     }
-    $item = create_item($item);
+    $item = create_item_for_user($item, $USER);
     return $response->withJson($item);
 };
 
