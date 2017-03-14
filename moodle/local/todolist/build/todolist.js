@@ -28029,8 +28029,7 @@ var Item = function Item(_ref) {
 
     var listGroupItem = 'list-group-item';
     var overdue = item.dueDate < (0, _lib.currentDate)() ? 'danger' : 'warning';
-    var liClassName = listGroupItem + ' ' + listGroupItem + '-' + (item.isDone ? 'success' : overdue);
-    var btClassName = 'btn btn-danger btn-sm' + (item.isDone ? '' : ' disabled');
+    var className = listGroupItem + ' ' + listGroupItem + '-' + (item.isDone ? 'success' : overdue);
     var text = item.isDone ? 'Done' : 'Due ' + item.dueDate.toLocaleDateString();
     var style = {
         position: 'absolute',
@@ -28038,7 +28037,7 @@ var Item = function Item(_ref) {
     };
     return _react2.default.createElement(
         'li',
-        { key: item.id, className: liClassName },
+        { key: item.id, className: className },
         _react2.default.createElement(
             'label',
             { className: 'form-check-label' },
@@ -28060,14 +28059,14 @@ var Item = function Item(_ref) {
                 item.taskDescription
             ),
             _react2.default.createElement(
-                'a',
+                'button',
                 {
-                    href: '#',
-                    className: btClassName,
+                    className: 'btn btn-danger btn-sm',
                     style: style,
                     onClick: function onClick() {
                         return deleteItemThunk(item);
-                    }
+                    },
+                    disabled: !item.isDone
                 },
                 'Delete'
             )

@@ -14,15 +14,14 @@ import {currentDate} from './../lib';
 const Item = ({item, toggleDoneThunk, deleteItemThunk}) => {
     const listGroupItem = 'list-group-item';
     const overdue = item.dueDate < currentDate() ? 'danger' : 'warning';
-    const liClassName = `${listGroupItem} ${listGroupItem}-${item.isDone ? 'success' : overdue}`;
-    const btClassName = `btn btn-danger btn-sm${item.isDone ? '' : ' disabled'}`;
+    const className = `${listGroupItem} ${listGroupItem}-${item.isDone ? 'success' : overdue}`;
     const text = item.isDone ? 'Done' : `Due ${item.dueDate.toLocaleDateString()}`;
     const style = {
         position: 'absolute',
         right: '20px'
     };
     return (
-        <li key={item.id} className={liClassName}>
+        <li key={item.id} className={className}>
             <label className="form-check-label">
                 <input
                     className="form-check-input"
@@ -32,12 +31,12 @@ const Item = ({item, toggleDoneThunk, deleteItemThunk}) => {
                     disabled={item.id < 0}
                 />
                 <span> {text}: {item.taskDescription}</span>
-                <a
-                    href="#"
-                    className={btClassName}
+                <button
+                    className="btn btn-danger btn-sm"
                     style={style}
                     onClick={() => deleteItemThunk(item)}
-                >Delete</a>
+                    disabled={!item.isDone}
+                >Delete</button>
             </label>
         </li>
     );
