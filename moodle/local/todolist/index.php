@@ -10,8 +10,6 @@ require_once __DIR__ . '/../../config.php';
 require_once __DIR__ . '/../../../vendor/autoload.php';
 require_once __DIR__ . '/lib.php';
 
-const URL = '/todolist/';
-
 /**
  * @param Request $request
  * @param Response $response
@@ -25,13 +23,17 @@ $home = function (Request $request, Response $response) {
     $todolist_items = json_encode(get_items_for_user($USER));
 
     /** @var \local_todolist\output\renderer $output */
-    $output = get_plugin_renderer(URL);
+    $output = get_plugin_renderer();
 
-    // output
+    // header
     $header = $output->header();
+
+    // footer (remove RequireJS, add Webpack bundle)
     $footer = $output->footer();
-    $require_js = $CFG->wwwroot . '/lib/javascript.php/' . get_jsrev() . '/lib/requirejs/require.min.js';
-    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . (debugging() ? 'js' : 'min.js');
+    $require_min = $CFG->debugdeveloper ? 'js' : 'min.js';
+    $require_js = $CFG->wwwroot . '/lib/javascript.php/' . get_jsrev() . '/lib/requirejs/require.' . $require_min;
+    $bundle_min = debugging() ? 'js' : 'min.js';
+    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . $bundle_min;
     $footer = str_replace(
         '<script type="text/javascript" src="' . $require_js . '"></script>',
         '<script type="text/javascript">var require = function () {};</script>' .
@@ -39,8 +41,9 @@ $home = function (Request $request, Response $response) {
         '<script type="text/javascript" src="' . $bundle_js . '"></script>',
         $footer
     );
-    $response->getBody()->write($header . $footer);
 
+    // output
+    $response->getBody()->write($header . $footer);
     return $response;
 };
 
@@ -92,8 +95,8 @@ $delete_item = function (Request $request, Response $response) {
 };
 
 $app = new App();
-$app->get(URL, $home);
-$app->post(URL . 'item/', $post_item);
-$app->put(URL . 'item/', $put_item);
-$app->delete(URL . 'item/', $delete_item);
+$app->get('/', $home);
+$app->post('/item/', $post_item);
+$app->put('/item/', $put_item);
+$app->delete('/item/', $delete_item);
 $app->run();

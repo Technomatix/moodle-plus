@@ -105,7 +105,7 @@ docker-compose run --rm -w /var/www/html/moodle php vendor/bin/phpunit --colors=
 ### Run Behat tests for a particular feature
 
 ```
-docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodledata/behat/behat/behat.yml path/to/feature
+docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodledata/behat/behatrun/behat/behat.yml path/to/feature
 ```
 
 ### Purge Moodle caches

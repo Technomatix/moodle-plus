@@ -24,7 +24,7 @@ function xmldb_local_todolist_install() {
             'past' => false,
         ],
         (object)[
-            'desc' => 'Visit /todolist/ in a browser',
+            'desc' => 'Visit /local/todolist/ in a browser',
             'done' => true,
             'past' => false,
         ],

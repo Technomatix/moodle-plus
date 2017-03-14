@@ -25,13 +25,12 @@ function get_jsrev() {
 /**
  * get plugin renderer
  * @global \moodle_page $PAGE
- * @param string $url
  * @return \local_todolist\output\renderer
  */
-function get_plugin_renderer($url) {
+function get_plugin_renderer() {
     global $PAGE;
     $plugin_name = get_string('pluginname', PLUGIN);
-    $PAGE->set_url($url);
+    $PAGE->set_url('/local/todolist/');
     $PAGE->set_context(\context_system::instance());
     $PAGE->set_pagelayout('standard');
     $PAGE->set_title($plugin_name);
