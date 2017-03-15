@@ -2,7 +2,7 @@
 
 import _ from 'lodash';
 
-import {currentDate} from './lib';
+import {dateFromString} from './lib';
 
 /**
  * @param {object} state
@@ -21,7 +21,7 @@ const setInitialState = (state, items) => {
         id: -1,
         taskDescription: '',
         isDone: false,
-        dueDate: currentDate()
+        dueDate: ''
     };
     return newState;
 };
@@ -65,7 +65,7 @@ const toggleDone = (state, item) => {
  */
 const setFormDueDate = (state, dueDate) => {
     const newState = _.cloneDeep(state);
-    newState.form.dueDate = _.size(dueDate) === 0 ? currentDate() : new Date(dueDate);
+    newState.form.dueDate = dueDate;
     return newState;
 };
 
@@ -86,17 +86,18 @@ const setFormTaskDescription = (state, taskDescription) => {
  */
 const optimisticallyAddItem = state => {
     const newState = _.cloneDeep(state);
+    const dueDate = dateFromString(newState.form.dueDate);
     newState.items.push({
         id: newState.form.id,
         taskDescription: newState.form.taskDescription,
         isDone: false,
-        dueDate: newState.form.dueDate
+        dueDate
     });
     newState.form = {
         id: newState.form.id - 1,
         taskDescription: '',
         isDone: false,
-        dueDate: currentDate()
+        dueDate: ''
     };
     return newState;
 };

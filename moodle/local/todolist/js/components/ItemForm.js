@@ -3,6 +3,8 @@
 import React from 'react';
 import _ from 'lodash';
 
+import {isValidDate} from '../lib';
+
 /**
  * a form for adding a new item
  * @param {object} form
@@ -18,10 +20,12 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
             <div className="form-group">
                 <label htmlFor="due">Due</label>
                 <input
-                    type="date"
+                    type="text"
                     className="form-control"
                     id="due"
-                    value={form.dueDate.toISOString().substr(0, 10)}
+                    placeholder="YYYY-MM-DD"
+                    value={form.dueDate}
+                    maxLength={'YYYY-MM-DD'.length}
                     onChange={e => setFormDueDate(e.target.value)}
                 />
             </div>
@@ -40,7 +44,7 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
                 type="button"
                 className="btn btn-primary"
                 onClick={() => addItemThunk()}
-                disabled={_.size(form.taskDescription) === 0}
+                disabled={!isValidDate(form.dueDate) || _.size(form.taskDescription) === 0}
             >Save</button>
         </form>
     </div>

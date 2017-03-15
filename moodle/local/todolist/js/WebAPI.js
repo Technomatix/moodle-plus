@@ -2,6 +2,8 @@
 
 import request from 'superagent';
 
+import {dateFromString} from './lib';
+
 /**
  * puts one item
  * @param {object} item
@@ -22,7 +24,7 @@ export const putItem = (item, cb) => {
 
 /**
  * posts one item
- * @param {Date} dueDate
+ * @param {string} dueDate
  * @param {string} taskDescription
  * @param {function} cb
  */
@@ -32,7 +34,7 @@ export const postItem = (dueDate, taskDescription, cb) => {
         .accept('application/json')
         .send({
             task_description: taskDescription,
-            due_timestamp: parseInt(dueDate.getTime() / 1000)
+            due_timestamp: parseInt(dateFromString(dueDate).getTime() / 1000)
         })
         .end(cb);
 };

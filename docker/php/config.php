@@ -24,9 +24,10 @@ $CFG->admin     = 'admin';
 $CFG->phpunit_prefix   = 'phpu_';
 $CFG->phpunit_dataroot = '/var/www/html/moodledata/phpu';
 
-$CFG->behat_prefix   = 'behat_';
-$CFG->behat_dataroot = '/var/www/html/moodledata/behat';
-$CFG->behat_wwwroot  = 'http://0.0.0.0:8000'; # IP address of the Docker container running the 'builtin' service
+$CFG->behat_prefix        = 'behat_';
+$CFG->behat_dataroot      = '/var/www/html/moodledata/behat';
+$CFG->behat_wwwroot       = 'http://0.0.0.0:8000'; # IP address of the Docker container running the 'builtin' service
+$CFG->behat_faildump_path = $CFG->behat_dataroot;
 
 $CFG->directorypermissions = 0777;
 
