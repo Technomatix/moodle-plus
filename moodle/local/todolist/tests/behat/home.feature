@@ -1,6 +1,6 @@
 @local @local_todolist @javascript
 Feature: home
-  In order to see my list of items to do
+  In order to see my list of TODO items
   As a user
   I need to view the TODO list home page
 
