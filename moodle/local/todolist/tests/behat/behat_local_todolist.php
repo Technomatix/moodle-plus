@@ -35,7 +35,7 @@ class behat_local_todolist extends behat_base {
     }
 
     /**
-     * @Given /^I fill out the add item form with due date "(?P<due_string>(?:[^"]|\\")*)" and description "(?P<desc_string>(?:[^"]|\\")*)"$/
+     * @Given /^I add a new item with due date "(?P<due_string>(?:[^"]|\\")*)" and description "(?P<desc_string>(?:[^"]|\\")*)"$/
      */
     public function i_set_the_add_item_form($due, $desc) {
         $page = $this->getSession()->getPage();
