@@ -4,7 +4,7 @@ use Functional as F;
 
 defined('MOODLE_INTERNAL') || die();
 
-require_once __DIR__ . '/../misc.php';
+require_once __DIR__ . '/../routes_lib.php';
 require_once __DIR__ . '/../classes/task/remove_historic_items.php';
 
 class todolist_general_test extends advanced_testcase {
