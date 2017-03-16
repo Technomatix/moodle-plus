@@ -20574,12 +20574,7 @@ var dateFromString = exports.dateFromString = function dateFromString(date) {
     var bits = _lodash2.default.map(date.split('-'), function (i) {
         return parseInt(i);
     });
-    var d = new Date();
-    d.setUTCFullYear(bits[0]);
-    d.setUTCMonth(bits[1] - 1);
-    d.setUTCDate(bits[2]);
-    d.setUTCHours(0, 0, 0, 0);
-    return d;
+    return new Date(Date.UTC(bits[0], bits[1] - 1, bits[2]));
 };
 
 /**
@@ -28084,6 +28079,7 @@ var Item = function Item(_ref) {
             _react2.default.createElement('input', {
                 className: 'form-check-input',
                 type: 'checkbox',
+                name: 'mark',
                 checked: item.isDone,
                 onChange: function onChange() {
                     return toggleDoneThunk(item);
@@ -28097,19 +28093,19 @@ var Item = function Item(_ref) {
                 text,
                 ': ',
                 item.taskDescription
-            ),
-            _react2.default.createElement(
-                'button',
-                {
-                    className: 'btn btn-danger btn-sm',
-                    style: style,
-                    onClick: function onClick() {
-                        return deleteItemThunk(item);
-                    },
-                    disabled: !item.isDone
-                },
-                'Delete'
             )
+        ),
+        _react2.default.createElement(
+            'button',
+            {
+                className: 'btn btn-danger btn-sm',
+                style: style,
+                onClick: function onClick() {
+                    return deleteItemThunk(item);
+                },
+                disabled: !item.isDone
+            },
+            'Delete'
         )
     );
 };

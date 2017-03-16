@@ -34,7 +34,7 @@ function xmldb_local_todolist_install() {
             'past' => false,
         ],
     ];
-    $now = strtotime(date('Y-m-d', time()));
+    $now = strtotime(date('Y-m-d UTC'));
 
     F\each($tasks, function ($task) use ($now) {
         global $DB;

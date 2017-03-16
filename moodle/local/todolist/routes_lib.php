@@ -47,7 +47,7 @@ function get_plugin_renderer() {
  */
 function get_items_for_user(\stdClass $user, $now = null) {
     global $DB;
-    $now = empty($now) ? strtotime(date('Y-m-d', time())) : $now;
+    $now = empty($now) ? strtotime(date('Y-m-d UTC')) : $now;
     $records = $DB->get_recordset_select(
         TABLE,
         'user_id = :user_id AND (is_done = 0 OR due_timestamp >= :now)',
@@ -82,7 +82,7 @@ function get_item($id) {
 function create_item_for_user(array $item, \stdClass $user, $now = null) {
     global $DB;
     $item['user_id'] = $user->id;
-    $item['created_timestamp'] = empty($now) ? strtotime(date('Y-m-d', time())) : $now;
+    $item['created_timestamp'] = empty($now) ? strtotime(date('Y-m-d UTC')) : $now;
     $item['is_done'] = '0';
     $id = $DB->insert_record(TABLE, (object)$item);
     return get_item($id);

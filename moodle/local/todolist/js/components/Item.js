@@ -27,18 +27,19 @@ const Item = ({item, toggleDoneThunk, deleteItemThunk}) => {
                 <input
                     className="form-check-input"
                     type="checkbox"
+                    name="mark"
                     checked={item.isDone}
                     onChange={() => toggleDoneThunk(item)}
                     disabled={item.id < 0}
                 />
                 <span> {text}: {item.taskDescription}</span>
-                <button
-                    className="btn btn-danger btn-sm"
-                    style={style}
-                    onClick={() => deleteItemThunk(item)}
-                    disabled={!item.isDone}
-                >Delete</button>
             </label>
+            <button
+                className="btn btn-danger btn-sm"
+                style={style}
+                onClick={() => deleteItemThunk(item)}
+                disabled={!item.isDone}
+            >Delete</button>
         </li>
     );
 };

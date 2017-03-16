@@ -19,12 +19,7 @@ export const currentDate = () => {
  */
 export const dateFromString = date => {
     const bits = _.map(date.split('-'), i => parseInt(i));
-    const d = new Date();
-    d.setUTCFullYear(bits[0]);
-    d.setUTCMonth(bits[1] - 1);
-    d.setUTCDate(bits[2]);
-    d.setUTCHours(0, 0, 0, 0);
-    return d;
+    return new Date(Date.UTC(bits[0], bits[1] - 1, bits[2]));
 };
 
 /**

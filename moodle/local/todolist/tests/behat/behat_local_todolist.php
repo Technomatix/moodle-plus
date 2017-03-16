@@ -9,25 +9,17 @@ require_once __DIR__ . '/../../../../lib/behat/behat_base.php';
 class behat_local_todolist extends behat_base {
 
     /**
-     * @Given /^I am on the TODO list home page$/
-     */
-    public function i_am_on_todolist_home_page() {
-        $this->getSession()->visit($this->locate_path('/local/todolist/'));
-    }
-
-    /**
      * @Given /^the user "(?P<username_string>(?:[^"]|\\")*)" has the following TODO items:$/
      */
     public function user_has_todolist_items($username, TableNode $node) {
         global $DB;
         $user = $DB->get_record('user', ['username' => $username], 'id', MUST_EXIST);
-        $now = strtotime(date('Y-m-d', time()));
+        $now = strtotime(date('Y-m-d UTC'));
         F\each($node->getHash(), function ($task) use ($DB, $user, $now) {
-            $due_timestamp = $now + 3600 * 24 * 7;
             $DB->insert_record('local_todolist', (object)[
                 'task_description'  => $task['description'],
                 'is_done'           => $task['is done'] === 'yes' ? 1 : 0,
-                'due_timestamp'     => $due_timestamp,
+                'due_timestamp'     => strtotime($task['due'] . ' UTC'),
                 'created_timestamp' => $now,
                 'user_id'           => $user->id,
             ]);
