@@ -30,7 +30,7 @@ A dockerized Moodle 3.2 development environment with containers:
 - [x] Plugin cron task to delete historic items
 - [x] Delete existing item
 - [x] PHPUnits
-- [ ] Behat tests
+- [x] Behat tests
 - [ ] Create a theme based on [Boost](https://docs.moodle.org/dev/Creating_a_theme_based_on_boost)
 - [ ] Try putting Webpack vendor bundle in theme JS
 

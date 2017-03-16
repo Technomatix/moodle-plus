@@ -14,9 +14,9 @@ Feature: home
       | Walk the dog       | no      | 2017-05-01 |
       | Clean the bathroom | no      | 2017-05-02 |
     And I log in as "tyrion.lannister"
+    And I am on homepage
 
   Scenario: Viewing the TODO list home page
-    Given I am on homepage
     When I click on "TODO list" "link"
     Then I should see "Items"
     And I should see "Due Sun, 30 Apr 2017"
