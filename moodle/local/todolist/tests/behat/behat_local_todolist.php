@@ -14,7 +14,7 @@ class behat_local_todolist extends behat_base {
     public function user_has_todolist_items($username, TableNode $node) {
         global $DB;
         $user = $DB->get_record('user', ['username' => $username], 'id', MUST_EXIST);
-        $now = strtotime(date('Y-m-d UTC'));
+        $now = strtotime(date('Y-m-d') . ' UTC');
         F\each($node->getHash(), function ($task) use ($DB, $user, $now) {
             $DB->insert_record('local_todolist', (object)[
                 'task_description'  => $task['description'],
