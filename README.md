@@ -59,12 +59,12 @@ create database moodle;
 Run the bash initialization script:
 
 ```
-. docker/init.sh
+. utils/init.sh
 ```
 
 ### Environments without bash
 
-The above bash initialization script should work on Windows environments that have bash ("Docker Quickstart Terminal" for "Docker Toolbox") however it won't work in PowerShell (obviously) if using (the newer) "Docker for Windows" (instead of the older "Docker Toolbox"). If using "Docker for Windows", the individual commands in `init.sh` should be performed manually.
+The above bash initialization script should work on Windows environments that have bash ("Docker Quickstart Terminal" for "Docker Toolbox") however it won't work in PowerShell (obviously) if using (the newer) "Docker for Windows" (instead of the older "Docker Toolbox"). If using "Docker for Windows", the individual commands in `utils/init.sh` should be performed manually.
 
 ## Commands
 
@@ -106,6 +106,12 @@ docker-compose run --rm -w /var/www/html/moodle php vendor/bin/phpunit --colors=
 
 ```
 docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodledata/behat/behatrun/behat/behat.yml path/to/feature
+```
+
+### Initialize Behat
+
+```
+. utils/behat.sh
 ```
 
 ### Purge Moodle caches
