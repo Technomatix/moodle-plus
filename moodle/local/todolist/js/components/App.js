@@ -2,10 +2,12 @@
 
 import React from 'react';
 import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
 
 import ItemList from './ItemList';
 import ItemForm from './ItemForm';
 import * as actionCreators from '../actionCreators';
+import * as thunks from '../thunks';
 
 /**
  * the application
@@ -44,7 +46,17 @@ App.propTypes = {
     deleteItemThunk: React.PropTypes.func
 };
 
-export const AppContainer = connect(state => ({
-    items: state.items,
-    form: state.form
-}), actionCreators)(App);
+const mapStateToProps = ({items, form}) => ({
+    items,
+    form
+});
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+    toggleDoneThunk: thunks.toggleDoneThunk,
+    setFormDueDate: actionCreators.setFormDueDate,
+    setFormTaskDescription: actionCreators.setFormTaskDescription,
+    addItemThunk: thunks.addItemThunk,
+    deleteItemThunk: thunks.deleteItemThunk
+}, dispatch);
+
+export const AppContainer = connect(mapStateToProps, mapDispatchToProps)(App);

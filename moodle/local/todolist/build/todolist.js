@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 16);
+/******/ 	return __webpack_require__(__webpack_require__.s = 17);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -133,20 +133,6 @@ var isValidDate = exports.isValidDate = function isValidDate(date) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.deleteItemThunk = exports.addItemThunk = exports.toggleDoneThunk = exports.deleteItem = exports.removeOptimisticallyAddedItems = exports.optimisticallyAddItem = exports.setFormTaskDescription = exports.setFormDueDate = exports.toggleDone = exports.receiveItem = exports.setInitialState = undefined;
-
-var _clone = __webpack_require__(5);
-
-var _clone2 = _interopRequireDefault(_clone);
-
-var _WebAPI = __webpack_require__(11);
-
-var WebAPI = _interopRequireWildcard(_WebAPI);
-
-function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 var setInitialState = exports.setInitialState = function setInitialState(items) {
     return {
         type: 'SET_INITIAL_STATE',
@@ -203,38 +189,6 @@ var deleteItem = exports.deleteItem = function deleteItem(item) {
     };
 };
 
-var toggleDoneThunk = exports.toggleDoneThunk = function toggleDoneThunk(item) {
-    return function (dispatch) {
-        dispatch(toggleDone(item));
-        var i = (0, _clone2.default)(item);
-        i.isDone = !i.isDone;
-        WebAPI.putItem(i, function (error, response) {
-            dispatch(error ? toggleDone(item) : receiveItem(response.body));
-        });
-    };
-};
-
-var addItemThunk = exports.addItemThunk = function addItemThunk() {
-    return function (dispatch, getState) {
-        var dueDate = getState().form.dueDate;
-        var taskDescription = getState().form.taskDescription;
-        dispatch(optimisticallyAddItem(dueDate, taskDescription));
-        WebAPI.postItem(dueDate, taskDescription, function (error, response) {
-            if (!error) {
-                dispatch(receiveItem(response.body));
-            }
-            dispatch(removeOptimisticallyAddedItems());
-        });
-    };
-};
-
-var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
-    return function (dispatch) {
-        dispatch(deleteItem(item));
-        WebAPI.deleteItem(item);
-    };
-};
-
 /***/ }),
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -245,10 +199,16 @@ module.exports = (__webpack_require__(0))(191);
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(93);
+module.exports = (__webpack_require__(0))(88);
 
 /***/ }),
 /* 6 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(93);
+
+/***/ }),
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -265,6 +225,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRedux = __webpack_require__(4);
 
+var _redux = __webpack_require__(5);
+
 var _ItemList = __webpack_require__(14);
 
 var _ItemList2 = _interopRequireDefault(_ItemList);
@@ -276,6 +238,10 @@ var _ItemForm2 = _interopRequireDefault(_ItemForm);
 var _actionCreators = __webpack_require__(3);
 
 var actionCreators = _interopRequireWildcard(_actionCreators);
+
+var _thunks = __webpack_require__(15);
+
+var thunks = _interopRequireWildcard(_thunks);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
@@ -327,15 +293,29 @@ App.propTypes = {
     deleteItemThunk: _react2.default.PropTypes.func
 };
 
-var AppContainer = exports.AppContainer = (0, _reactRedux.connect)(function (state) {
+var mapStateToProps = function mapStateToProps(_ref2) {
+    var items = _ref2.items,
+        form = _ref2.form;
     return {
-        items: state.items,
-        form: state.form
+        items: items,
+        form: form
     };
-}, actionCreators)(App);
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+    return (0, _redux.bindActionCreators)({
+        toggleDoneThunk: thunks.toggleDoneThunk,
+        setFormDueDate: actionCreators.setFormDueDate,
+        setFormTaskDescription: actionCreators.setFormTaskDescription,
+        addItemThunk: thunks.addItemThunk,
+        deleteItemThunk: thunks.deleteItemThunk
+    }, dispatch);
+};
+
+var AppContainer = exports.AppContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ }),
-/* 7 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -345,7 +325,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _clone = __webpack_require__(5);
+var _clone = __webpack_require__(6);
 
 var _clone2 = _interopRequireDefault(_clone);
 
@@ -515,22 +495,16 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 8 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(119);
 
 /***/ }),
-/* 9 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(205);
-
-/***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(88);
+module.exports = (__webpack_require__(0))(205);
 
 /***/ }),
 /* 11 */
@@ -544,7 +518,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteItem = exports.postItem = exports.putItem = undefined;
 
-var _superagent = __webpack_require__(15);
+var _superagent = __webpack_require__(16);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -847,10 +821,70 @@ exports.default = ItemList;
 /* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(209);
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.deleteItemThunk = exports.addItemThunk = exports.toggleDoneThunk = undefined;
+
+var _clone = __webpack_require__(6);
+
+var _clone2 = _interopRequireDefault(_clone);
+
+var _WebAPI = __webpack_require__(11);
+
+var WebAPI = _interopRequireWildcard(_WebAPI);
+
+var _actionCreators = __webpack_require__(3);
+
+var actionCreators = _interopRequireWildcard(_actionCreators);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var toggleDoneThunk = exports.toggleDoneThunk = function toggleDoneThunk(item) {
+    return function (dispatch) {
+        dispatch(actionCreators.toggleDone(item));
+        var i = (0, _clone2.default)(item);
+        i.isDone = !i.isDone;
+        WebAPI.putItem(i, function (error, response) {
+            dispatch(error ? actionCreators.toggleDone(item) : actionCreators.receiveItem(response.body));
+        });
+    };
+};
+
+var addItemThunk = exports.addItemThunk = function addItemThunk() {
+    return function (dispatch, getState) {
+        var dueDate = getState().form.dueDate;
+        var taskDescription = getState().form.taskDescription;
+        dispatch(actionCreators.optimisticallyAddItem(dueDate, taskDescription));
+        WebAPI.postItem(dueDate, taskDescription, function (error, response) {
+            if (!error) {
+                dispatch(actionCreators.receiveItem(response.body));
+            }
+            dispatch(actionCreators.removeOptimisticallyAddedItems());
+        });
+    };
+};
+
+var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
+    return function (dispatch) {
+        dispatch(actionCreators.deleteItem(item));
+        WebAPI.deleteItem(item);
+    };
+};
 
 /***/ }),
 /* 16 */
+/***/ (function(module, exports, __webpack_require__) {
+
+module.exports = (__webpack_require__(0))(209);
+
+/***/ }),
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -860,25 +894,25 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(8);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _redux = __webpack_require__(10);
+var _redux = __webpack_require__(5);
 
 var _reactRedux = __webpack_require__(4);
 
-var _reduxThunk = __webpack_require__(9);
+var _reduxThunk = __webpack_require__(10);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reducer = __webpack_require__(7);
+var _reducer = __webpack_require__(8);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
 var _actionCreators = __webpack_require__(3);
 
-var _App = __webpack_require__(6);
+var _App = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 

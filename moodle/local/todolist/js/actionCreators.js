@@ -1,9 +1,5 @@
 'use strict';
 
-import clone from 'clone';
-
-import * as WebAPI from './WebAPI';
-
 export const setInitialState = items => ({
     type: 'SET_INITIAL_STATE',
     items
@@ -43,29 +39,3 @@ export const deleteItem = item => ({
     type: 'DELETE_ITEM',
     item
 });
-
-export const toggleDoneThunk = item => dispatch => {
-    dispatch(toggleDone(item));
-    const i = clone(item);
-    i.isDone = !i.isDone;
-    WebAPI.putItem(i, (error, response) => {
-        dispatch(error ? toggleDone(item) : receiveItem(response.body));
-    });
-};
-
-export const addItemThunk = () => (dispatch, getState) => {
-    const dueDate = getState().form.dueDate;
-    const taskDescription = getState().form.taskDescription;
-    dispatch(optimisticallyAddItem(dueDate, taskDescription));
-    WebAPI.postItem(dueDate, taskDescription, (error, response) => {
-        if (!error) {
-            dispatch(receiveItem(response.body));
-        }
-        dispatch(removeOptimisticallyAddedItems());
-    });
-};
-
-export const deleteItemThunk = item => dispatch => {
-    dispatch(deleteItem(item));
-    WebAPI.deleteItem(item);
-};
