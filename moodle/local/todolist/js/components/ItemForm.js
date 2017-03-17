@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import _ from 'lodash';
 
 import {isValidDate} from '../lib';
 
@@ -44,7 +43,7 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
                 type="button"
                 className="btn btn-primary"
                 onClick={() => addItemThunk()}
-                disabled={!isValidDate(form.dueDate) || _.size(form.taskDescription) === 0}
+                disabled={!isValidDate(form.dueDate) || form.taskDescription.length === 0}
             >Save</button>
         </form>
     </div>

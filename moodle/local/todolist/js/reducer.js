@@ -1,6 +1,6 @@
 'use strict';
 
-import _ from 'lodash';
+import clone from 'clone';
 
 import {dateFromString} from './lib';
 
@@ -11,7 +11,7 @@ import {dateFromString} from './lib';
  */
 const setInitialState = (state, items) => {
     const newState = {};
-    newState.items = _.map(items, item => ({
+    newState.items = items.map(item => ({
         id: parseInt(item.id),
         taskDescription: item.task_description,
         isDone: item.is_done === '1',
@@ -32,10 +32,10 @@ const setInitialState = (state, items) => {
  * @returns {object}
  */
 const receiveItem = (state, item) => {
-    const newState = _.cloneDeep(state);
-    let newItem = _.find(newState.items, i => i.id === parseInt(item.id));
-    if (_.isUndefined(newItem)) {
-        newItem = _.last(newState.items);
+    const newState = clone(state);
+    let newItem = newState.items.find(i => i.id === parseInt(item.id));
+    if (typeof newItem === 'undefined') {
+        newItem = newState.items[newState.items.length - 1];
         newItem.id = parseInt(item.id);
     }
     newItem.taskDescription = item.task_description;
@@ -50,9 +50,9 @@ const receiveItem = (state, item) => {
  * @returns {object}
  */
 const toggleDone = (state, item) => {
-    const newState = _.cloneDeep(state);
-    const newItem = _.find(newState.items, i => i.id === item.id);
-    if (_.isObject(newItem)) {
+    const newState = clone(state);
+    const newItem = newState.items.find(i => i.id === item.id);
+    if (typeof newItem !== 'undefined') {
         newItem.isDone = !newItem.isDone;
     }
     return newState;
@@ -64,7 +64,7 @@ const toggleDone = (state, item) => {
  * @returns {object}
  */
 const setFormDueDate = (state, dueDate) => {
-    const newState = _.cloneDeep(state);
+    const newState = clone(state);
     newState.form.dueDate = dueDate;
     return newState;
 };
@@ -75,7 +75,7 @@ const setFormDueDate = (state, dueDate) => {
  * @returns {object}
  */
 const setFormTaskDescription = (state, taskDescription) => {
-    const newState = _.cloneDeep(state);
+    const newState = clone(state);
     newState.form.taskDescription = taskDescription;
     return newState;
 };
@@ -85,7 +85,7 @@ const setFormTaskDescription = (state, taskDescription) => {
  * @returns {object}
  */
 const optimisticallyAddItem = state => {
-    const newState = _.cloneDeep(state);
+    const newState = clone(state);
     const dueDate = dateFromString(newState.form.dueDate);
     newState.items.push({
         id: newState.form.id,
@@ -107,8 +107,8 @@ const optimisticallyAddItem = state => {
  * @returns {object}
  */
 const removeOptimisticallyAddedItems = state => {
-    const newState = _.cloneDeep(state);
-    newState.items = _.filter(newState.items, i => i.id > 0);
+    const newState = clone(state);
+    newState.items = newState.items.filter(i => i.id > 0);
     return newState;
 };
 
@@ -118,8 +118,8 @@ const removeOptimisticallyAddedItems = state => {
  * @returns {object}
  */
 const deleteItem = (state, item) => {
-    const newState = _.cloneDeep(state);
-    newState.items = _.filter(newState.items, i => i.id !== item.id);
+    const newState = clone(state);
+    newState.items = newState.items.filter(i => i.id !== item.id);
     return newState;
 };
 

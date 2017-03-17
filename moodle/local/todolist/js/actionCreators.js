@@ -1,6 +1,7 @@
 'use strict';
 
-import _ from 'lodash';
+import clone from 'clone';
+
 import * as WebAPI from './WebAPI';
 
 export const setInitialState = items => ({
@@ -45,7 +46,7 @@ export const deleteItem = item => ({
 
 export const toggleDoneThunk = item => dispatch => {
     dispatch(toggleDone(item));
-    const i = _.cloneDeep(item);
+    const i = clone(item);
     i.isDone = !i.isDone;
     WebAPI.putItem(i, (error, response) => {
         dispatch(error ? toggleDone(item) : receiveItem(response.body));

@@ -8,15 +8,6 @@ A dockerized Moodle 3.2 development environment with containers:
 * Selenium (for Behat)
 * Built-in web server (for Behat)
 
-## Including
-
-* [XDebug](https://xdebug.org/)
-* [Composer](https://getcomposer.org/)
-* [PHPUnit](https://docs.moodle.org/dev/PHPUnit)
-* [Behat](https://docs.moodle.org/dev/Acceptance_testing)
-* [PHP Code Sniffer](https://github.com/squizlabs/PHP_CodeSniffer)
-* [Slim 3 micro-framework](https://www.slimframework.com/docs/)
-
 ## Requirements
 
 * Docker 17.03.0 (CE)
