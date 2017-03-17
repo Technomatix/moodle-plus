@@ -13,6 +13,7 @@ Feature: home
       | Feed the fish      | no      | 2017-04-30 |
       | Walk the dog       | no      | 2017-05-01 |
       | Clean the bathroom | no      | 2017-05-02 |
+      | Wash the car       | yes     | 2017-01-01 |
     And I log in as "tyrion.lannister"
     And I am on homepage
 
@@ -25,3 +26,4 @@ Feature: home
     And I should see "Walk the dog"
     And I should see "Due Tue, 02 May 2017"
     And I should see "Clean the bathroom"
+    And I should not see "Wash the car"
