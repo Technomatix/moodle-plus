@@ -8,21 +8,6 @@ const PLUGIN = 'local_todolist';
 const TABLE = 'local_todolist';
 
 /**
- * get JavaScript revision
- * @return integer
- */
-function get_jsrev() {
-    global $CFG;
-    if (empty($CFG->cachejs)) {
-        return -1;
-    } else if (empty($CFG->jsrev)) {
-        return 1;
-    } else {
-        return (integer)$CFG->jsrev;
-    }
-}
-
-/**
  * get plugin renderer
  * @global \moodle_page $PAGE
  * @return \local_todolist\output\renderer
