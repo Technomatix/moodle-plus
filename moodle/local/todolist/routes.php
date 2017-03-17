@@ -28,16 +28,7 @@ $home = function (Request $request, Response $response) {
     $header = $output->header();
     $footer = $output->footer();
 
-    // replace RequireJS (which breaks Webpack bundles) with a no-op
-    $require_min = $CFG->debugdeveloper ? 'js' : 'min.js';
-    $require_js = $CFG->wwwroot . '/lib/javascript.php/' . get_jsrev() . '/lib/requirejs/require.' . $require_min;
-    $footer = str_replace(
-        '<script type="text/javascript" src="' . $require_js . '"></script>',
-        '<script type="text/javascript">var require = function () {};</script>',
-        $footer
-    );
-
-    // ensure this app bundle is loaded after the vendor bundle (from the 'plus' theme)
+    // load Webpack app bundle after Webpack vendor bundle (from the 'plus' theme)
     $bundle_min = debugging() ? 'js' : 'min.js';
     $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . $bundle_min;
     $todolist_items_js = '<script type="application/json" class="todolist-items">' . $todolist_items . '</script>';
