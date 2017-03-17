@@ -24,20 +24,27 @@ $home = function (Request $request, Response $response) {
     /** @var \local_todolist\output\renderer $output */
     $output = get_plugin_renderer();
 
-    // header
+    // get header and footer
     $header = $output->header();
-
-    // footer (remove RequireJS, add Webpack bundle)
     $footer = $output->footer();
+
+    // replace RequireJS with a no-op and insert items
     $require_min = $CFG->debugdeveloper ? 'js' : 'min.js';
     $require_js = $CFG->wwwroot . '/lib/javascript.php/' . get_jsrev() . '/lib/requirejs/require.' . $require_min;
-    $bundle_min = debugging() ? 'js' : 'min.js';
-    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . $bundle_min;
     $footer = str_replace(
         '<script type="text/javascript" src="' . $require_js . '"></script>',
         '<script type="text/javascript">var require = function () {};</script>' .
-        '<script type="application/json" class="todolist-items">' . $todolist_items . '</script>' .
-        '<script type="text/javascript" src="' . $bundle_js . '"></script>',
+        '<script type="application/json" class="todolist-items">' . $todolist_items . '</script>',
+        $footer
+    );
+
+    // ensure this app bundle is loaded after the vendor bundle
+    $bundle_min = debugging() ? 'js' : 'min.js';
+    $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . $bundle_min;
+    $footer_js = '/footer">';
+    $footer = str_replace(
+        $footer_js,
+        $footer_js . '</script><script type="text/javascript" src="' . $bundle_js . '"></script>',
         $footer
     );
 

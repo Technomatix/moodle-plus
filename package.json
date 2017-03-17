@@ -1,6 +1,7 @@
 {
   "scripts": {
     "clean": "rimraf composer.lock && rimraf vendor && rimraf moodle/vendor && rimraf moodle/config.php && rimraf moodledata",
+    "build-dll": "webpack -p --config webpack.dll.js",
     "build-todolist": "(webpack -p --env.app=todolist --env.min && webpack --env.app=todolist) || true",
     "watch-todolist": "webpack --env.app=todolist --watch"
   },

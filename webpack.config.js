@@ -15,6 +15,10 @@ module.exports = function (env) {
             filename: app + ext
         },
         plugins: [
+            new webpack.DllReferencePlugin({
+                context: path.join(__dirname),
+                manifest: require(path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript', 'vendor-manifest.json'))
+            }),
             new webpack.LoaderOptionsPlugin({
                 options: {
                     eslint: {
