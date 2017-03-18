@@ -845,6 +845,11 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * toggles the 'done' status of the given item
+ * @param {object} item
+ * @returns {function}
+ */
 var toggleDoneThunk = exports.toggleDoneThunk = function toggleDoneThunk(item) {
     return function (dispatch) {
         dispatch(actionCreators.toggleDone(item));
@@ -856,6 +861,10 @@ var toggleDoneThunk = exports.toggleDoneThunk = function toggleDoneThunk(item) {
     };
 };
 
+/**
+ * adds the item from the form to the collection
+ * @returns {function}
+ */
 var addItemThunk = exports.addItemThunk = function addItemThunk() {
     return function (dispatch, getState) {
         var dueDate = getState().form.dueDate;
@@ -870,6 +879,11 @@ var addItemThunk = exports.addItemThunk = function addItemThunk() {
     };
 };
 
+/**
+ * deletes the given item
+ * @param {object} item
+ * @returns {function}
+ */
 var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
     return function (dispatch) {
         dispatch(actionCreators.deleteItem(item));

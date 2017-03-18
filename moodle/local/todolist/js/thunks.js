@@ -5,6 +5,11 @@ import clone from 'clone';
 import * as WebAPI from './WebAPI';
 import * as actionCreators from './actionCreators';
 
+/**
+ * toggles the 'done' status of the given item
+ * @param {object} item
+ * @returns {function}
+ */
 export const toggleDoneThunk = item => dispatch => {
     dispatch(actionCreators.toggleDone(item));
     const i = clone(item);
@@ -14,6 +19,10 @@ export const toggleDoneThunk = item => dispatch => {
     });
 };
 
+/**
+ * adds the item from the form to the collection
+ * @returns {function}
+ */
 export const addItemThunk = () => (dispatch, getState) => {
     const dueDate = getState().form.dueDate;
     const taskDescription = getState().form.taskDescription;
@@ -26,6 +35,11 @@ export const addItemThunk = () => (dispatch, getState) => {
     });
 };
 
+/**
+ * deletes the given item
+ * @param {object} item
+ * @returns {function}
+ */
 export const deleteItemThunk = item => dispatch => {
     dispatch(actionCreators.deleteItem(item));
     WebAPI.deleteItem(item);
