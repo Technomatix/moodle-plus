@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # Behat
+printf "Configurating Behat ...\n"
 docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/behat/cli/init.php
 
 # get IP address of built-in web server and Selenium
