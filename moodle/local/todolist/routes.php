@@ -15,7 +15,7 @@ require_once __DIR__ . '/routes_lib.php';
  * @return Response
  */
 $home = function (Request $request, Response $response) {
-    global $CFG, $USER;
+    global $CFG, $USER, $PAGE;
     require_login();
 
     // get items belonging to the logged in user
@@ -23,6 +23,11 @@ $home = function (Request $request, Response $response) {
 
     /** @var \local_todolist\output\renderer $output */
     $output = get_plugin_renderer();
+
+    // check theme
+    if ($PAGE->theme->name !== 'plus') {
+        return $response->withStatus(400)->write("This plugin requires the 'plus' theme to be installed and selected");
+    }
 
     // get header and footer
     $header = $output->header();
