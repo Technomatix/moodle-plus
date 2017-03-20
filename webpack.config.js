@@ -23,7 +23,7 @@ module.exports = function (env) {
                 options: {
                     eslint: {
                         failOnError: true,
-                        configFile: './.eslintrc'
+                        configFile: path.join(__dirname, '.eslintrc')
                     }
                 }
             })

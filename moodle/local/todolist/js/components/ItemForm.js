@@ -2,7 +2,7 @@
 
 import React from 'react';
 
-import {isValidDate} from '../lib';
+import {isValidDate, getLangString} from '../lib';
 
 /**
  * a form for adding a new item
@@ -14,10 +14,10 @@ import {isValidDate} from '../lib';
  */
 const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) => (
     <div className="card card-block">
-        <h4 className="card-title">Add item</h4>
+        <h4 className="card-title">{getLangString('add_item')}</h4>
         <form>
             <div className="form-group">
-                <label htmlFor="due">Due</label>
+                <label htmlFor="due">{getLangString('due')}</label>
                 <input
                     type="text"
                     className="form-control"
@@ -29,12 +29,12 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
                 />
             </div>
             <div className="form-group">
-                <label htmlFor="description">Description</label>
+                <label htmlFor="description">{getLangString('description')}</label>
                 <input
                     type="text"
                     className="form-control"
                     id="description"
-                    placeholder="Type task description here"
+                    placeholder={getLangString('type_task_desc_here')}
                     value={form.taskDescription}
                     onChange={e => setFormTaskDescription(e.target.value)}
                 />
@@ -44,7 +44,7 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
                 className="btn btn-primary"
                 onClick={() => addItemThunk()}
                 disabled={!isValidDate(form.dueDate) || form.taskDescription.length === 0}
-            >Save</button>
+            >{getLangString('save')}</button>
         </form>
     </div>
 );

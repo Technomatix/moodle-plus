@@ -31,3 +31,10 @@ export const isValidDate = date => {
     }
     return dateFromString(date).toISOString().substr(0, 'YYYY-MM-DD'.length) === date;
 };
+
+/**
+ * get a Moodle language string that's been exported for JavaScript
+ * @param {string} id
+ * @returns {string}
+ */
+export const getLangString = id => M.util.get_string(`js:${id}`, 'local_todolist');

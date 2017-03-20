@@ -2,10 +2,22 @@
 
 namespace local_todolist;
 
+use Functional as F;
+
 defined('MOODLE_INTERNAL') || die();
 
 const PLUGIN = 'local_todolist';
 const TABLE = 'local_todolist';
+const LANG = [
+    'due',
+    'done',
+    'items',
+    'add_item',
+    'description',
+    'type_task_desc_here',
+    'save',
+    'delete',
+];
 
 /**
  * get plugin renderer
@@ -20,6 +32,9 @@ function get_plugin_renderer() {
     $PAGE->set_pagelayout('standard');
     $PAGE->set_title($plugin_name);
     $PAGE->set_heading($plugin_name);
+    $PAGE->requires->strings_for_js(F\map(LANG, function ($id) {
+        return 'js:' . $id;
+    }), PLUGIN);
     return $PAGE->get_renderer(PLUGIN);
 }
 

@@ -91,12 +91,12 @@ module.exports = (__webpack_require__(0))(28);
  */
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
 var currentDate = exports.currentDate = function currentDate() {
-    var d = new Date();
-    d.setHours(0, 0, 0, 0);
-    return d;
+  var d = new Date();
+  d.setHours(0, 0, 0, 0);
+  return d;
 };
 
 /**
@@ -105,10 +105,10 @@ var currentDate = exports.currentDate = function currentDate() {
  * @return {Date}
  */
 var dateFromString = exports.dateFromString = function dateFromString(date) {
-    var bits = date.split('-').map(function (i) {
-        return parseInt(i);
-    });
-    return new Date(Date.UTC(bits[0], bits[1] - 1, bits[2]));
+  var bits = date.split('-').map(function (i) {
+    return parseInt(i);
+  });
+  return new Date(Date.UTC(bits[0], bits[1] - 1, bits[2]));
 };
 
 /**
@@ -117,10 +117,19 @@ var dateFromString = exports.dateFromString = function dateFromString(date) {
  * @returns {boolean}
  */
 var isValidDate = exports.isValidDate = function isValidDate(date) {
-    if (date === null || date.length !== 'YYYY-MM-DD'.length) {
-        return false;
-    }
-    return dateFromString(date).toISOString().substr(0, 'YYYY-MM-DD'.length) === date;
+  if (date === null || date.length !== 'YYYY-MM-DD'.length) {
+    return false;
+  }
+  return dateFromString(date).toISOString().substr(0, 'YYYY-MM-DD'.length) === date;
+};
+
+/**
+ * get a Moodle language string that's been exported for JavaScript
+ * @param {string} id
+ * @returns {string}
+ */
+var getLangString = exports.getLangString = function getLangString(id) {
+  return M.util.get_string('js:' + id, 'local_todolist');
 };
 
 /***/ }),
@@ -595,7 +604,7 @@ var Item = function Item(_ref) {
     var listGroupItem = 'list-group-item';
     var overdue = item.dueDate < (0, _lib.currentDate)() ? 'danger' : 'warning';
     var className = listGroupItem + ' ' + listGroupItem + '-' + (item.isDone ? 'success' : overdue);
-    var text = item.isDone ? 'Done' : 'Due ' + item.dueDate.toUTCString().substr(0, 'Sun, 01 Jan 2017'.length);
+    var text = item.isDone ? (0, _lib.getLangString)('done') : (0, _lib.getLangString)('due') + ' ' + item.dueDate.toUTCString().substr(0, 'Sun, 01 Jan 2017'.length);
     var style = {
         position: 'absolute',
         right: '20px'
@@ -635,7 +644,7 @@ var Item = function Item(_ref) {
                 },
                 disabled: !item.isDone
             },
-            'Delete'
+            (0, _lib.getLangString)('delete')
         )
     );
 };
@@ -686,7 +695,7 @@ var ItemForm = function ItemForm(_ref) {
         _react2.default.createElement(
             'h4',
             { className: 'card-title' },
-            'Add item'
+            (0, _lib.getLangString)('add_item')
         ),
         _react2.default.createElement(
             'form',
@@ -697,7 +706,7 @@ var ItemForm = function ItemForm(_ref) {
                 _react2.default.createElement(
                     'label',
                     { htmlFor: 'due' },
-                    'Due'
+                    (0, _lib.getLangString)('due')
                 ),
                 _react2.default.createElement('input', {
                     type: 'text',
@@ -717,13 +726,13 @@ var ItemForm = function ItemForm(_ref) {
                 _react2.default.createElement(
                     'label',
                     { htmlFor: 'description' },
-                    'Description'
+                    (0, _lib.getLangString)('description')
                 ),
                 _react2.default.createElement('input', {
                     type: 'text',
                     className: 'form-control',
                     id: 'description',
-                    placeholder: 'Type task description here',
+                    placeholder: (0, _lib.getLangString)('type_task_desc_here'),
                     value: form.taskDescription,
                     onChange: function onChange(e) {
                         return setFormTaskDescription(e.target.value);
@@ -740,7 +749,7 @@ var ItemForm = function ItemForm(_ref) {
                     },
                     disabled: !(0, _lib.isValidDate)(form.dueDate) || form.taskDescription.length === 0
                 },
-                'Save'
+                (0, _lib.getLangString)('save')
             )
         )
     );
@@ -774,6 +783,8 @@ var _Item = __webpack_require__(12);
 
 var _Item2 = _interopRequireDefault(_Item);
 
+var _lib = __webpack_require__(2);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -796,7 +807,7 @@ var ItemList = function ItemList(_ref) {
             _react2.default.createElement(
                 'h4',
                 { className: 'card-title' },
-                'Items'
+                (0, _lib.getLangString)('items')
             ),
             _react2.default.createElement(
                 'ul',
@@ -833,9 +844,9 @@ var _clone = __webpack_require__(6);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _WebAPI = __webpack_require__(11);
+var _api = __webpack_require__(11);
 
-var WebAPI = _interopRequireWildcard(_WebAPI);
+var api = _interopRequireWildcard(_api);
 
 var _actionCreators = __webpack_require__(3);
 
@@ -855,7 +866,7 @@ var toggleDoneThunk = exports.toggleDoneThunk = function toggleDoneThunk(item) {
         dispatch(actionCreators.toggleDone(item));
         var i = (0, _clone2.default)(item);
         i.isDone = !i.isDone;
-        WebAPI.putItem(i, function (error, response) {
+        api.putItem(i, function (error, response) {
             dispatch(error ? actionCreators.toggleDone(item) : actionCreators.receiveItem(response.body));
         });
     };
@@ -870,7 +881,7 @@ var addItemThunk = exports.addItemThunk = function addItemThunk() {
         var dueDate = getState().form.dueDate;
         var taskDescription = getState().form.taskDescription;
         dispatch(actionCreators.optimisticallyAddItem(dueDate, taskDescription));
-        WebAPI.postItem(dueDate, taskDescription, function (error, response) {
+        api.postItem(dueDate, taskDescription, function (error, response) {
             if (!error) {
                 dispatch(actionCreators.receiveItem(response.body));
             }
@@ -887,7 +898,7 @@ var addItemThunk = exports.addItemThunk = function addItemThunk() {
 var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
     return function (dispatch) {
         dispatch(actionCreators.deleteItem(item));
-        WebAPI.deleteItem(item);
+        api.deleteItem(item);
     };
 };
 
@@ -934,11 +945,23 @@ var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default
 var store = createStoreWithMiddleware(_reducer2.default);
 store.dispatch((0, _actionCreators.setInitialState)(JSON.parse(document.querySelector('.todolist-items').innerHTML)));
 
-_reactDom2.default.render(_react2.default.createElement(
-    _reactRedux.Provider,
-    { store: store },
-    _react2.default.createElement(_App.AppContainer, null)
-), document.querySelector('div[role="main"]'));
+var render = function render() {
+    _reactDom2.default.render(_react2.default.createElement(
+        _reactRedux.Provider,
+        { store: store },
+        _react2.default.createElement(_App.AppContainer, null)
+    ), document.querySelector('div[role="main"]'));
+};
+
+var waitForLangStrings = function waitForLangStrings() {
+    if (typeof M !== 'undefined' && typeof M.util !== 'undefined' && typeof M.util.get_string === 'function') {
+        render();
+    } else {
+        setTimeout(waitForLangStrings, 100);
+    }
+};
+
+setTimeout(waitForLangStrings, 100);
 
 /***/ })
 /******/ ]);
