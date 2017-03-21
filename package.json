@@ -4,7 +4,10 @@
     "build-dll": "webpack -p --config webpack.dll.js",
     "build-todolist": "(webpack -p --env.app=todolist --env.min && webpack --env.app=todolist) || true",
     "watch-todolist": "webpack --env.app=todolist --watch",
-    "build-all": "npm-run-all build-dll build-todolist"
+    "build-theme": "(sass-lint -v -q && node-sass --recursive --output moodle/theme/plus/style moodle/theme/plus/sass) || true",
+    "watch-theme": "watch 'npm run build-theme'",
+    "lint-theme": "sass-lint -v -q || true",
+    "build-all": "npm-run-all build-dll build-todolist build-sass"
   },
   "devDependencies": {
     "babel-core": "6.24.0",
@@ -18,6 +21,7 @@
     "npm-run-all": "4.0.2",
     "rimraf": "2.6.1",
     "sass-lint": "1.10.2",
+    "watch": "1.0.2",
     "webpack": "2.2.1"
   },
   "dependencies": {

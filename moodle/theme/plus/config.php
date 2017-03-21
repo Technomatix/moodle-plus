@@ -3,7 +3,7 @@
 defined('MOODLE_INTERNAL') || die();
 
 $THEME->name = 'plus';
-$THEME->sheets = [];
+$THEME->sheets = ['plus'];
 $THEME->editor_sheets = [];
 $THEME->parents = ['boost'];
 $THEME->enable_dock = false;
