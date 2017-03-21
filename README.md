@@ -178,3 +178,11 @@ The below will not remove the `pgdata` Docker volume (thereby ensuring the Postg
 docker-compose stop
 docker-compose rm -f
 ```
+
+## Uninstall Moodle
+
+The below *will* remove the `pgdata` Docker volume (thereby removing the Moodle database):
+
+```
+. utils/uninit.sh
+```
