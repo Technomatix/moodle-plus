@@ -5,7 +5,7 @@
     "build-todolist": "(webpack -p --env.app=todolist --env.min && webpack --env.app=todolist) || true",
     "watch-todolist": "webpack --env.app=todolist --watch",
     "build-theme": "(sass-lint -v -q && node-sass --recursive --output moodle/theme/plus/style moodle/theme/plus/sass) || true",
-    "watch-theme": "watch 'npm run build-theme'",
+    "watch-theme": "watch 'npm run build-theme' moodle/theme/plus/sass",
     "lint-theme": "sass-lint -v -q || true",
     "build-all": "npm-run-all build-dll build-todolist build-theme"
   },
