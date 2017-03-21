@@ -2,20 +2,18 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-const PLUGIN = 'theme_plus';
-
 if ($ADMIN->fulltree) {
-    $settings = new theme_boost_admin_settingspage_tabs('themesettingplus', get_string('configtitle', PLUGIN));
-    $page = new admin_settingpage('theme_plus_general', get_string('generalsettings', PLUGIN));
+    $settings = new theme_boost_admin_settingspage_tabs('themesettingplus', get_string('configtitle', 'theme_plus'));
+    $page = new admin_settingpage('theme_plus_general', get_string('generalsettings', 'theme_plus'));
 
     $name = 'theme_plus/preset';
-    $title = get_string('preset', PLUGIN);
-    $description = get_string('preset_desc', PLUGIN);
+    $title = get_string('preset', 'theme_plus');
+    $description = get_string('preset_desc', 'theme_plus');
     $default = 'default.scss';
 
     $context = context_system::instance();
     $fs = get_file_storage();
-    $files = $fs->get_area_files($context->id, PLUGIN, 'preset', 0, 'itemid, filepath, filename', false);
+    $files = $fs->get_area_files($context->id, 'theme_plus', 'preset', 0, 'itemid, filepath, filename', false);
 
     $choices = [];
     foreach ($files as $file) {
@@ -29,31 +27,31 @@ if ($ADMIN->fulltree) {
     $page->add($setting);
 
     $name = 'theme_plus/presetfiles';
-    $title = get_string('presetfiles', PLUGIN);
-    $description = get_string('presetfiles_desc', PLUGIN);
+    $title = get_string('presetfiles', 'theme_plus');
+    $description = get_string('presetfiles_desc', 'theme_plus');
 
     $setting = new admin_setting_configstoredfile($name, $title, $description, 'preset', 0,
         array('maxfiles' => 20, 'accepted_types' => array('.scss')));
     $page->add($setting);
 
-    $name = PLUGIN . '/brandcolor';
-    $title = get_string('brandcolor', PLUGIN);
-    $description = get_string('brandcolor_desc', PLUGIN);
+    $name = 'theme_plus/brandcolor';
+    $title = get_string('brandcolor', 'theme_plus');
+    $description = get_string('brandcolor_desc', 'theme_plus');
     $setting = new admin_setting_configcolourpicker($name, $title, $description, '');
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
     $settings->add($page);
 
-    $page = new admin_settingpage('theme_plus_advanced', get_string('advancedsettings', PLUGIN));
+    $page = new admin_settingpage('theme_plus_advanced', get_string('advancedsettings', 'theme_plus'));
 
-    $setting = new admin_setting_scsscode(PLUGIN . '/scsspre',
-        get_string('rawscsspre', PLUGIN), get_string('rawscsspre_desc', PLUGIN), '', PARAM_RAW);
+    $setting = new admin_setting_scsscode('theme_plus/scsspre',
+        get_string('rawscsspre', 'theme_plus'), get_string('rawscsspre_desc', 'theme_plus'), '', PARAM_RAW);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 
-    $setting = new admin_setting_scsscode(PLUGIN . '/scss', get_string('rawscss', PLUGIN),
-        get_string('rawscss_desc', PLUGIN), '', PARAM_RAW);
+    $setting = new admin_setting_scsscode('theme_plus/scss', get_string('rawscss', 'theme_plus'),
+        get_string('rawscss_desc', 'theme_plus'), '', PARAM_RAW);
     $setting->set_updatedcallback('theme_reset_all_caches');
     $page->add($setting);
 

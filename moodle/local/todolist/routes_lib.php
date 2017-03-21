@@ -8,16 +8,18 @@ defined('MOODLE_INTERNAL') || die();
 
 const PLUGIN = 'local_todolist';
 const TABLE = 'local_todolist';
-const LANG = [
-    'due',
-    'done',
-    'items',
-    'add_item',
-    'description',
-    'type_task_desc_here',
-    'save',
-    'delete',
-];
+
+/**
+ * gets language strings in the plugin that are prefixed with 'js:' and therefore intended for JavaScript
+ * @return array
+ */
+function get_javascript_lang_strings() {
+    $string = [];
+    include __DIR__ . '/lang/en/local_todolist.php';
+    return F\filter(array_keys($string), function ($key) {
+        return substr($key, 0, 3) === 'js:';
+    });
+}
 
 /**
  * get plugin renderer
@@ -32,9 +34,7 @@ function get_plugin_renderer() {
     $PAGE->set_pagelayout('standard');
     $PAGE->set_title($plugin_name);
     $PAGE->set_heading($plugin_name);
-    $PAGE->requires->strings_for_js(F\map(LANG, function ($id) {
-        return 'js:' . $id;
-    }), PLUGIN);
+    $PAGE->requires->strings_for_js(get_javascript_lang_strings(), PLUGIN);
     return $PAGE->get_renderer(PLUGIN);
 }
 
