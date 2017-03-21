@@ -37,10 +37,10 @@ $home = function (Request $request, Response $response) {
     $bundle_min = debugging() ? 'js' : 'min.js';
     $bundle_js = $CFG->wwwroot . '/local/todolist/build/todolist.' . $bundle_min;
     $todolist_items_js = '<script type="application/json" class="todolist-items">' . $todolist_items . '</script>';
-    $footer_js = 'footer">';
+    $footer_js = 'footer"></script>';
     $footer = str_replace(
         $footer_js,
-        $footer_js . '</script>' . $todolist_items_js . '<script type="text/javascript" src="' . $bundle_js . '"></script>',
+        $footer_js . $todolist_items_js . '<script type="text/javascript" src="' . $bundle_js . '"></script>',
         $footer
     );
 
