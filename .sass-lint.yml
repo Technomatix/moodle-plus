@@ -13,12 +13,15 @@ rules:
     hex-length: 2
     no-color-keywords: 2
     no-color-literals: 2
+    no-css-comments: 2
     no-empty-rulesets: 2
+    no-ids: 2
     no-mergeable-selectors: 2
     no-qualifying-elements: 2
     no-trailing-whitespace: 2
     one-declaration-per-line: 2
     pseudo-element: 2
+    shorthand-values: 2
     single-line-per-selector: 2
     space-after-colon: 2
     space-after-comma: 2
@@ -48,8 +51,5 @@ rules:
         - style: single
 
     # disable
-    no-css-comments: 0
-    no-ids: 0
     no-vendor-prefixes: 0
     property-sort-order: 0
-    shorthand-values: 0
