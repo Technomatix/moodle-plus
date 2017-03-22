@@ -48,10 +48,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && rm -rf /var/lib/apt/lists/*
 
 # CodeSniffer
-RUN mkdir -p /usr/code/codesniffer \
-    && git clone https://github.com/squizlabs/PHP_CodeSniffer.git /usr/code/codesniffer \
-    && cd /usr/code/codesniffer \
-    && git checkout 2.8.1
+RUN curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +x phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs \
+    && curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod +x phpcbf.phar && mv phpcbf.phar /usr/local/bin/phpcbf
 
 # Codechecker (essentially, Moodle rules for CodeSniffer)
 COPY codechecker.diff /tmp/
@@ -60,4 +58,4 @@ RUN mkdir -p /usr/code/codechecker \
     && cd /usr/code/codechecker \
     && git checkout v2.5.4 \
     && git apply --whitespace=fix /tmp/codechecker.diff \
-    && echo 'alias phpcs="find -type f -name \"*.php\" | xargs /usr/code/codesniffer/scripts/phpcs --colors --standard=/usr/code/codechecker/moodle/ruleset.xml"' >> ~/.bashrc
+    && echo 'alias lmc="find -type f -name \"*.php\" | xargs phpcs --colors --standard=/usr/code/codechecker/moodle/ruleset.xml"' >> ~/.bashrc

@@ -105,12 +105,12 @@ docker-compose run --rm -w /var/www/html/moodle php php admin/cli/purge_caches.p
 docker-compose run --rm php php utils/plugin_types.php
 ```
 
-### Lint PHP code with CodeSniffer
+### Lint Moodle PHP code
 
 ```
 docker-compose exec php bash
 cd /path/to/moodle/plugin
-phpcs
+lmc
 ```
 
 ## Moodle source code
