@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 17);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -236,11 +236,11 @@ var _reactRedux = __webpack_require__(4);
 
 var _redux = __webpack_require__(5);
 
-var _ItemList = __webpack_require__(14);
+var _ItemList = __webpack_require__(15);
 
 var _ItemList2 = _interopRequireDefault(_ItemList);
 
-var _ItemForm = __webpack_require__(13);
+var _ItemForm = __webpack_require__(14);
 
 var _ItemForm2 = _interopRequireDefault(_ItemForm);
 
@@ -248,7 +248,7 @@ var _actionCreators = __webpack_require__(3);
 
 var actionCreators = _interopRequireWildcard(_actionCreators);
 
-var _thunks = __webpack_require__(15);
+var _thunks = __webpack_require__(16);
 
 var thunks = _interopRequireWildcard(_thunks);
 
@@ -527,7 +527,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteItem = exports.postItem = exports.putItem = undefined;
 
-var _superagent = __webpack_require__(16);
+var _superagent = __webpack_require__(17);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -572,6 +572,61 @@ var deleteItem = exports.deleteItem = function deleteItem(item) {
 
 /***/ }),
 /* 12 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactDom = __webpack_require__(9);
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
+var _redux = __webpack_require__(5);
+
+var _reactRedux = __webpack_require__(4);
+
+var _reduxThunk = __webpack_require__(10);
+
+var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
+
+var _reducer = __webpack_require__(8);
+
+var _reducer2 = _interopRequireDefault(_reducer);
+
+var _actionCreators = __webpack_require__(3);
+
+var _App = __webpack_require__(7);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
+var store = createStoreWithMiddleware(_reducer2.default);
+store.dispatch((0, _actionCreators.setInitialState)(JSON.parse(document.querySelector('.todolist-items').innerHTML)));
+
+var render = function render() {
+    _reactDom2.default.render(_react2.default.createElement(
+        _reactRedux.Provider,
+        { store: store },
+        _react2.default.createElement(_App.AppContainer, null)
+    ), document.querySelector('div[role="main"]'));
+};
+
+var waitForLangStrings = function waitForLangStrings() {
+    if (typeof M !== 'undefined' && typeof M.util !== 'undefined' && typeof M.util.get_string === 'function') {
+        render();
+    } else {
+        setTimeout(waitForLangStrings, 100);
+    }
+};
+
+setTimeout(waitForLangStrings, 100);
+
+/***/ }),
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -658,7 +713,7 @@ Item.propTypes = {
 exports.default = Item;
 
 /***/ }),
-/* 13 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -765,7 +820,7 @@ ItemForm.propTypes = {
 exports.default = ItemForm;
 
 /***/ }),
-/* 14 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -779,7 +834,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Item = __webpack_require__(12);
+var _Item = __webpack_require__(13);
 
 var _Item2 = _interopRequireDefault(_Item);
 
@@ -829,7 +884,7 @@ ItemList.propTypes = {
 exports.default = ItemList;
 
 /***/ }),
-/* 15 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -903,65 +958,10 @@ var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
 };
 
 /***/ }),
-/* 16 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(209);
-
-/***/ }),
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-"use strict";
-
-
-var _react = __webpack_require__(1);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactDom = __webpack_require__(9);
-
-var _reactDom2 = _interopRequireDefault(_reactDom);
-
-var _redux = __webpack_require__(5);
-
-var _reactRedux = __webpack_require__(4);
-
-var _reduxThunk = __webpack_require__(10);
-
-var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
-
-var _reducer = __webpack_require__(8);
-
-var _reducer2 = _interopRequireDefault(_reducer);
-
-var _actionCreators = __webpack_require__(3);
-
-var _App = __webpack_require__(7);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var createStoreWithMiddleware = (0, _redux.applyMiddleware)(_reduxThunk2.default)(_redux.createStore);
-var store = createStoreWithMiddleware(_reducer2.default);
-store.dispatch((0, _actionCreators.setInitialState)(JSON.parse(document.querySelector('.todolist-items').innerHTML)));
-
-var render = function render() {
-    _reactDom2.default.render(_react2.default.createElement(
-        _reactRedux.Provider,
-        { store: store },
-        _react2.default.createElement(_App.AppContainer, null)
-    ), document.querySelector('div[role="main"]'));
-};
-
-var waitForLangStrings = function waitForLangStrings() {
-    if (typeof M !== 'undefined' && typeof M.util !== 'undefined' && typeof M.util.get_string === 'function') {
-        render();
-    } else {
-        setTimeout(waitForLangStrings, 100);
-    }
-};
-
-setTimeout(waitForLangStrings, 100);
+module.exports = (__webpack_require__(0))(209);
 
 /***/ })
 /******/ ]);

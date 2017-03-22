@@ -20,7 +20,7 @@
     "npm-run-all": "4.0.2",
     "sass-lint": "1.10.2",
     "watch": "1.0.2",
-    "webpack": "2.2.1"
+    "webpack": "2.3.0"
   },
   "dependencies": {
     "clone": "2.1.1",
