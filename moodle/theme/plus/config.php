@@ -11,7 +11,7 @@ $THEME->yuicssmodules = [];
 $THEME->rendererfactory = 'theme_overridden_renderer_factory';
 $THEME->requiredblocks = '';
 $THEME->addblockposition = BLOCK_ADDBLOCK_POSITION_FLATNAV;
-$THEME->javascripts_footer = ['vendor.min'];
+$THEME->javascripts_footer = [debugging() ? 'vendor' : 'vendor.min'];
 $THEME->scss = function($theme) {
     return theme_plus_get_main_scss_content($theme);
 };

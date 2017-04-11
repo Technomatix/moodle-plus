@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {currentDate, getLangString} from './../lib';
 
@@ -45,9 +46,9 @@ const Item = ({item, toggleDoneThunk, deleteItemThunk}) => {
 };
 
 Item.propTypes = {
-    item: React.PropTypes.object,
-    toggleDoneThunk: React.PropTypes.func,
-    deleteItemThunk: React.PropTypes.func
+    item: PropTypes.object,
+    toggleDoneThunk: PropTypes.func,
+    deleteItemThunk: PropTypes.func
 };
 
 export default Item;

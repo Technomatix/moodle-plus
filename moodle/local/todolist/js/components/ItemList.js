@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import Item from './Item';
 import {getLangString} from './../lib';
@@ -26,9 +27,9 @@ const ItemList = ({items, toggleDoneThunk, deleteItemThunk}) => (
 );
 
 ItemList.propTypes = {
-    items: React.PropTypes.arrayOf(React.PropTypes.object),
-    toggleDoneThunk: React.PropTypes.func,
-    deleteItemThunk: React.PropTypes.func,
+    items: PropTypes.array,
+    toggleDoneThunk: PropTypes.func,
+    deleteItemThunk: PropTypes.func,
 };
 
 export default ItemList;

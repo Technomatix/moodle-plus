@@ -1,6 +1,7 @@
 'use strict';
 
 import React from 'react';
+import PropTypes from 'prop-types';
 
 import {isValidDate, getLangString} from '../lib';
 
@@ -50,10 +51,10 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
 );
 
 ItemForm.propTypes = {
-    form: React.PropTypes.object,
-    setFormDueDate: React.PropTypes.func,
-    setFormTaskDescription: React.PropTypes.func,
-    addItemThunk: React.PropTypes.func
+    form: PropTypes.object,
+    setFormDueDate: PropTypes.func,
+    setFormTaskDescription: PropTypes.func,
+    addItemThunk: PropTypes.func
 };
 
 export default ItemForm;

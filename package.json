@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "build-dll": "webpack -p --config webpack.dll.js",
+    "build-dll": "(webpack -p --config webpack.dll.js --env.min && webpack --config webpack.dll.js) || true",
     "build-todolist": "(webpack -p --env.app=todolist --env.min && webpack --env.app=todolist) || true",
     "watch-todolist": "webpack --env.app=todolist --watch",
     "build-theme": "(sass-lint -v -q && node-sass --recursive --output moodle/theme/plus/style moodle/theme/plus/sass) || true",
@@ -24,8 +24,9 @@
   },
   "dependencies": {
     "clone": "2.1.1",
-    "react": "15.5.3",
-    "react-dom": "15.5.3",
+    "prop-types": "15.5.7",
+    "react": "15.5.4",
+    "react-dom": "15.5.4",
     "react-redux": "5.0.4",
     "redux": "3.6.0",
     "redux-thunk": "2.2.0",
