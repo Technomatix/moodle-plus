@@ -2,19 +2,19 @@ var path = require('path'),
     webpack = require('webpack');
 
 module.exports = function (env) {
-    var ext = typeof env !== 'undefined' && env.min ? '.min.js' : '.js';
+    var prod = typeof env !== 'undefined' && env.min;
     return {
         entry: {
             vendor: [path.join(__dirname, 'vendors.js')]
         },
         output: {
             path: path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript'),
-            filename: 'vendor' + ext,
+            filename: 'vendor' + (prod ? '.min.js' : '.js'),
             library: '[name]'
         },
         plugins: [
             new webpack.DllPlugin({
-                path: path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript', 'vendor-manifest.json'),
+                path: path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript', prod ? 'vendor-manifest-min.json' : 'vendor-manifest.json'),
                 name: '[name]',
                 context: path.resolve(__dirname)
             }),

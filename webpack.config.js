@@ -4,7 +4,7 @@ var path = require('path'),
 module.exports = function (env) {
     var app = env.app,
         dirname = path.join(__dirname, 'moodle', 'local'),
-        ext = env.min ? '.min.js' : '.js';
+        prod = typeof env !== 'undefined' && env.min;
     return {
         cache: true,
         entry: {
@@ -12,12 +12,12 @@ module.exports = function (env) {
         },
         output: {
             path: path.join(dirname, app, 'build'),
-            filename: app + ext
+            filename: app + (prod ? '.min.js' : '.js')
         },
         plugins: [
             new webpack.DllReferencePlugin({
                 context: path.join(__dirname),
-                manifest: require(path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript', 'vendor-manifest.json'))
+                manifest: require(path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript', prod ? 'vendor-manifest-min.json' : 'vendor-manifest.json'))
             }),
             new webpack.LoaderOptionsPlugin({
                 options: {
