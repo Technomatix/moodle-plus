@@ -126,76 +126,72 @@
         "default"
       ]
     },
-    "./node_modules/prop-types/index.js": {
+    "./node_modules/react-dom/lib/DOMChildrenOperations.js": {
       "id": 30,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/DOMChildrenOperations.js": {
+    "./node_modules/react-dom/lib/DOMNamespaces.js": {
       "id": 31,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/DOMNamespaces.js": {
+    "./node_modules/react-dom/lib/EventPluginRegistry.js": {
       "id": 32,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/EventPluginRegistry.js": {
+    "./node_modules/react-dom/lib/EventPluginUtils.js": {
       "id": 33,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/EventPluginUtils.js": {
+    "./node_modules/react-dom/lib/KeyEscapeUtils.js": {
       "id": 34,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/KeyEscapeUtils.js": {
+    "./node_modules/react-dom/lib/LinkedValueUtils.js": {
       "id": 35,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/LinkedValueUtils.js": {
+    "./node_modules/react-dom/lib/ReactComponentEnvironment.js": {
       "id": 36,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/ReactComponentEnvironment.js": {
+    "./node_modules/react-dom/lib/ReactErrorUtils.js": {
       "id": 37,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/ReactErrorUtils.js": {
+    "./node_modules/react-dom/lib/ReactUpdateQueue.js": {
       "id": 38,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/ReactUpdateQueue.js": {
+    "./node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js": {
       "id": 39,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/createMicrosoftUnsafeLocalFunction.js": {
+    "./node_modules/react-dom/lib/getEventCharCode.js": {
       "id": 40,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/getEventCharCode.js": {
+    "./node_modules/react-dom/lib/getEventModifierState.js": {
       "id": 41,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/getEventModifierState.js": {
+    "./node_modules/react-dom/lib/getEventTarget.js": {
       "id": 42,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/getEventTarget.js": {
+    "./node_modules/react-dom/lib/isEventSupported.js": {
       "id": 43,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/isEventSupported.js": {
+    "./node_modules/react-dom/lib/shouldUpdateReactComponent.js": {
       "id": 44,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/shouldUpdateReactComponent.js": {
+    "./node_modules/react-dom/lib/validateDOMNesting.js": {
       "id": 45,
       "meta": {}
     },
-    "./node_modules/react-dom/lib/validateDOMNesting.js": {
-      "id": 46,
-      "meta": {}
-    },
     "./node_modules/react-redux/es/utils/warning.js": {
-      "id": 47,
+      "id": 46,
       "meta": {
         "harmonyModule": true
       },
@@ -204,39 +200,39 @@
       ]
     },
     "./node_modules/react/lib/ReactComponent.js": {
-      "id": 48,
+      "id": 47,
       "meta": {}
     },
     "./node_modules/react/lib/ReactNoopUpdateQueue.js": {
-      "id": 49,
+      "id": 48,
       "meta": {}
     },
     "./node_modules/react/react.js": {
-      "id": 50,
+      "id": 49,
       "meta": {}
     },
     "./node_modules/superagent/lib/is-object.js": {
-      "id": 51,
+      "id": 50,
       "meta": {}
     },
     "./node_modules/webpack/buildin/global.js": {
-      "id": 52,
+      "id": 51,
       "meta": {}
     },
     "./node_modules/fbjs/lib/EventListener.js": {
-      "id": 53,
+      "id": 52,
       "meta": {}
     },
     "./node_modules/fbjs/lib/focusNode.js": {
-      "id": 54,
+      "id": 53,
       "meta": {}
     },
     "./node_modules/fbjs/lib/getActiveElement.js": {
-      "id": 55,
+      "id": 54,
       "meta": {}
     },
     "./node_modules/lodash-es/_Symbol.js": {
-      "id": 56,
+      "id": 55,
       "meta": {
         "harmonyModule": true
       },
@@ -245,10 +241,14 @@
       ]
     },
     "./node_modules/process/browser.js": {
-      "id": 57,
+      "id": 56,
       "meta": {}
     },
     "./node_modules/prop-types/factory.js": {
+      "id": 57,
+      "meta": {}
+    },
+    "./node_modules/prop-types/index.js": {
       "id": 58,
       "meta": {}
     },

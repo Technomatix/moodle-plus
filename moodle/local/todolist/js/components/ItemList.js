@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import Item from './Item';
 import {getLangString} from './../lib';
@@ -13,7 +12,7 @@ import {getLangString} from './../lib';
  * @param {function} deleteItemThunk
  * @returns {XML}
  */
-const ItemList = ({items, toggleDoneThunk, deleteItemThunk}) => (
+export default ({items, toggleDoneThunk, deleteItemThunk}) => (
     <div className="card">
         <div className="card-block">
             <h4 className="card-title">{getLangString('items')}</h4>
@@ -25,11 +24,3 @@ const ItemList = ({items, toggleDoneThunk, deleteItemThunk}) => (
         </div>
     </div>
 );
-
-ItemList.propTypes = {
-    items: PropTypes.array,
-    toggleDoneThunk: PropTypes.func,
-    deleteItemThunk: PropTypes.func,
-};
-
-export default ItemList;

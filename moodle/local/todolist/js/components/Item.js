@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {currentDate, getLangString} from './../lib';
 
@@ -12,7 +11,7 @@ import {currentDate, getLangString} from './../lib';
  * @param {function} deleteItemThunk
  * @returns {XML}
  */
-const Item = ({item, toggleDoneThunk, deleteItemThunk}) => {
+export default ({item, toggleDoneThunk, deleteItemThunk}) => {
     const listGroupItem = 'list-group-item';
     const overdue = item.dueDate < currentDate() ? 'danger' : 'warning';
     const className = `${listGroupItem} ${listGroupItem}-${item.isDone ? 'success' : overdue}`;
@@ -44,11 +43,3 @@ const Item = ({item, toggleDoneThunk, deleteItemThunk}) => {
         </li>
     );
 };
-
-Item.propTypes = {
-    item: PropTypes.object,
-    toggleDoneThunk: PropTypes.func,
-    deleteItemThunk: PropTypes.func
-};
-
-export default Item;

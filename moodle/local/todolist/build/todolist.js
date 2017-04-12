@@ -63,7 +63,7 @@
 /******/ 	__webpack_require__.p = "";
 /******/
 /******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = 13);
+/******/ 	return __webpack_require__(__webpack_require__.s = 12);
 /******/ })
 /************************************************************************/
 /******/ ([
@@ -76,7 +76,7 @@ module.exports = vendor;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(53);
+module.exports = (__webpack_require__(0))(52);
 
 /***/ }),
 /* 2 */
@@ -134,12 +134,6 @@ var getLangString = exports.getLangString = function getLangString(id) {
 
 /***/ }),
 /* 3 */
-/***/ (function(module, exports, __webpack_require__) {
-
-module.exports = (__webpack_require__(0))(34);
-
-/***/ }),
-/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -205,25 +199,25 @@ var deleteItem = exports.deleteItem = function deleteItem(item) {
 };
 
 /***/ }),
-/* 5 */
+/* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(207);
 
 /***/ }),
-/* 6 */
+/* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(94);
 
 /***/ }),
-/* 7 */
+/* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(99);
 
 /***/ }),
-/* 8 */
+/* 7 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -238,27 +232,23 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
+var _reactRedux = __webpack_require__(4);
 
-var _propTypes2 = _interopRequireDefault(_propTypes);
+var _redux = __webpack_require__(5);
 
-var _reactRedux = __webpack_require__(5);
-
-var _redux = __webpack_require__(6);
-
-var _ItemList = __webpack_require__(16);
+var _ItemList = __webpack_require__(15);
 
 var _ItemList2 = _interopRequireDefault(_ItemList);
 
-var _ItemForm = __webpack_require__(15);
+var _ItemForm = __webpack_require__(14);
 
 var _ItemForm2 = _interopRequireDefault(_ItemForm);
 
-var _actionCreators = __webpack_require__(4);
+var _actionCreators = __webpack_require__(3);
 
 var actionCreators = _interopRequireWildcard(_actionCreators);
 
-var _thunks = __webpack_require__(17);
+var _thunks = __webpack_require__(16);
 
 var thunks = _interopRequireWildcard(_thunks);
 
@@ -302,16 +292,6 @@ var App = function App(_ref) {
     );
 };
 
-App.propTypes = {
-    items: _propTypes2.default.arrayOf(_propTypes2.default.object),
-    form: _propTypes2.default.object,
-    toggleDoneThunk: _propTypes2.default.func,
-    setFormDueDate: _propTypes2.default.func,
-    setFormTaskDescription: _propTypes2.default.func,
-    addItemThunk: _propTypes2.default.func,
-    deleteItemThunk: _propTypes2.default.func
-};
-
 var mapStateToProps = function mapStateToProps(_ref2) {
     var items = _ref2.items,
         form = _ref2.form;
@@ -334,7 +314,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
 var AppContainer = exports.AppContainer = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(App);
 
 /***/ }),
-/* 9 */
+/* 8 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -344,7 +324,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _clone = __webpack_require__(7);
+var _clone = __webpack_require__(6);
 
 var _clone2 = _interopRequireDefault(_clone);
 
@@ -514,19 +494,19 @@ exports.default = function () {
 };
 
 /***/ }),
-/* 10 */
+/* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(129);
 
 /***/ }),
-/* 11 */
+/* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(223);
 
 /***/ }),
-/* 12 */
+/* 11 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -537,7 +517,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteItem = exports.postItem = exports.putItem = undefined;
 
-var _superagent = __webpack_require__(18);
+var _superagent = __webpack_require__(17);
 
 var _superagent2 = _interopRequireDefault(_superagent);
 
@@ -581,7 +561,7 @@ var deleteItem = exports.deleteItem = function deleteItem(item) {
 };
 
 /***/ }),
-/* 13 */
+/* 12 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -591,25 +571,25 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(10);
+var _reactDom = __webpack_require__(9);
 
 var _reactDom2 = _interopRequireDefault(_reactDom);
 
-var _redux = __webpack_require__(6);
+var _redux = __webpack_require__(5);
 
-var _reactRedux = __webpack_require__(5);
+var _reactRedux = __webpack_require__(4);
 
-var _reduxThunk = __webpack_require__(11);
+var _reduxThunk = __webpack_require__(10);
 
 var _reduxThunk2 = _interopRequireDefault(_reduxThunk);
 
-var _reducer = __webpack_require__(9);
+var _reducer = __webpack_require__(8);
 
 var _reducer2 = _interopRequireDefault(_reducer);
 
-var _actionCreators = __webpack_require__(4);
+var _actionCreators = __webpack_require__(3);
 
-var _App = __webpack_require__(8);
+var _App = __webpack_require__(7);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -636,7 +616,7 @@ var waitForLangStrings = function waitForLangStrings() {
 setTimeout(waitForLangStrings, 100);
 
 /***/ }),
-/* 14 */
+/* 13 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -650,10 +630,6 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 var _lib = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -665,7 +641,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {function} deleteItemThunk
  * @returns {XML}
  */
-var Item = function Item(_ref) {
+exports.default = function (_ref) {
     var item = _ref.item,
         toggleDoneThunk = _ref.toggleDoneThunk,
         deleteItemThunk = _ref.deleteItemThunk;
@@ -718,16 +694,8 @@ var Item = function Item(_ref) {
     );
 };
 
-Item.propTypes = {
-    item: _propTypes2.default.object,
-    toggleDoneThunk: _propTypes2.default.func,
-    deleteItemThunk: _propTypes2.default.func
-};
-
-exports.default = Item;
-
 /***/ }),
-/* 15 */
+/* 14 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -741,10 +709,6 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
 var _lib = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -757,7 +721,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {function} addItemThunk
  * @returns {XML}
  */
-var ItemForm = function ItemForm(_ref) {
+exports.default = function (_ref) {
     var form = _ref.form,
         setFormDueDate = _ref.setFormDueDate,
         setFormTaskDescription = _ref.setFormTaskDescription,
@@ -828,17 +792,8 @@ var ItemForm = function ItemForm(_ref) {
     );
 };
 
-ItemForm.propTypes = {
-    form: _propTypes2.default.object,
-    setFormDueDate: _propTypes2.default.func,
-    setFormTaskDescription: _propTypes2.default.func,
-    addItemThunk: _propTypes2.default.func
-};
-
-exports.default = ItemForm;
-
 /***/ }),
-/* 16 */
+/* 15 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -852,11 +807,7 @@ var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _propTypes = __webpack_require__(3);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _Item = __webpack_require__(14);
+var _Item = __webpack_require__(13);
 
 var _Item2 = _interopRequireDefault(_Item);
 
@@ -871,7 +822,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @param {function} deleteItemThunk
  * @returns {XML}
  */
-var ItemList = function ItemList(_ref) {
+exports.default = function (_ref) {
     var items = _ref.items,
         toggleDoneThunk = _ref.toggleDoneThunk,
         deleteItemThunk = _ref.deleteItemThunk;
@@ -897,16 +848,8 @@ var ItemList = function ItemList(_ref) {
     );
 };
 
-ItemList.propTypes = {
-    items: _propTypes2.default.array,
-    toggleDoneThunk: _propTypes2.default.func,
-    deleteItemThunk: _propTypes2.default.func
-};
-
-exports.default = ItemList;
-
 /***/ }),
-/* 17 */
+/* 16 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -917,15 +860,15 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.deleteItemThunk = exports.addItemThunk = exports.toggleDoneThunk = undefined;
 
-var _clone = __webpack_require__(7);
+var _clone = __webpack_require__(6);
 
 var _clone2 = _interopRequireDefault(_clone);
 
-var _api = __webpack_require__(12);
+var _api = __webpack_require__(11);
 
 var api = _interopRequireWildcard(_api);
 
-var _actionCreators = __webpack_require__(4);
+var _actionCreators = __webpack_require__(3);
 
 var actionCreators = _interopRequireWildcard(_actionCreators);
 
@@ -980,7 +923,7 @@ var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
 };
 
 /***/ }),
-/* 18 */
+/* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
 module.exports = (__webpack_require__(0))(227);

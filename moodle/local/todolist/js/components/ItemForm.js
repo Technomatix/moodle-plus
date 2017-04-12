@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 
 import {isValidDate, getLangString} from '../lib';
 
@@ -13,7 +12,7 @@ import {isValidDate, getLangString} from '../lib';
  * @param {function} addItemThunk
  * @returns {XML}
  */
-const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) => (
+export default ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) => (
     <div className="card card-block">
         <h4 className="card-title">{getLangString('add_item')}</h4>
         <form>
@@ -49,12 +48,3 @@ const ItemForm = ({form, setFormDueDate, setFormTaskDescription, addItemThunk}) 
         </form>
     </div>
 );
-
-ItemForm.propTypes = {
-    form: PropTypes.object,
-    setFormDueDate: PropTypes.func,
-    setFormTaskDescription: PropTypes.func,
-    addItemThunk: PropTypes.func
-};
-
-export default ItemForm;

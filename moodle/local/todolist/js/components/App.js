@@ -1,7 +1,6 @@
 'use strict';
 
 import React from 'react';
-import PropTypes from 'prop-types';
 import {connect} from 'react-redux';
 import {bindActionCreators} from 'redux';
 
@@ -36,16 +35,6 @@ const App = ({items, form, toggleDoneThunk, setFormDueDate, setFormTaskDescripti
         />
     </div>
 );
-
-App.propTypes = {
-    items: PropTypes.arrayOf(PropTypes.object),
-    form: PropTypes.object,
-    toggleDoneThunk: PropTypes.func,
-    setFormDueDate: PropTypes.func,
-    setFormTaskDescription: PropTypes.func,
-    addItemThunk: PropTypes.func,
-    deleteItemThunk: PropTypes.func
-};
 
 const mapStateToProps = ({items, form}) => ({
     items,
