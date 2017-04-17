@@ -28,15 +28,20 @@ docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/cli/insta
 docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/cli/upgrade.php --non-interactive
 
 # settings
-printf "\nConfiguring developer settings in the database ...\n"
+printf "\nConfiguring settings in the database ...\n"
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '30719' where name = 'debug'"
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '0' where name in ('debugdisplay', 'cachejs')"
 docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = '14400' where name = 'sessiontimeout'"
+docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set value = 'plus' where name = 'theme'"
 
 # PHPUnit
-printf "\nConfiguring PHPUnit ...\n\n"
+printf "\nConfiguring PHPUnit ...\n"
 docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
 docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/phpunit/cli/init.php
 
 # Behat
 . "${BASH_SOURCE%/*}/behat.sh"
+
+# purge caches
+printf "\nPurging caches ...\n"
+docker-compose run --rm -w /var/www/html/moodle php php admin/cli/purge_caches.php
