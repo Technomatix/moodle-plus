@@ -6,9 +6,9 @@
 /******/ 	function __webpack_require__(moduleId) {
 /******/
 /******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId])
+/******/ 		if(installedModules[moduleId]) {
 /******/ 			return installedModules[moduleId].exports;
-/******/
+/******/ 		}
 /******/ 		// Create a new module (and put it into the cache)
 /******/ 		var module = installedModules[moduleId] = {
 /******/ 			i: moduleId,
@@ -76,7 +76,7 @@ module.exports = vendor;
 /* 1 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(52);
+module.exports = (__webpack_require__(0))(52)
 
 /***/ }),
 /* 2 */
@@ -202,19 +202,19 @@ var deleteItem = exports.deleteItem = function deleteItem(item) {
 /* 4 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(207);
+module.exports = (__webpack_require__(0))(207)
 
 /***/ }),
 /* 5 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(94);
+module.exports = (__webpack_require__(0))(94)
 
 /***/ }),
 /* 6 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(99);
+module.exports = (__webpack_require__(0))(99)
 
 /***/ }),
 /* 7 */
@@ -497,13 +497,13 @@ exports.default = function () {
 /* 9 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(129);
+module.exports = (__webpack_require__(0))(129)
 
 /***/ }),
 /* 10 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(223);
+module.exports = (__webpack_require__(0))(223)
 
 /***/ }),
 /* 11 */
@@ -926,7 +926,7 @@ var deleteItemThunk = exports.deleteItemThunk = function deleteItemThunk(item) {
 /* 17 */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = (__webpack_require__(0))(227);
+module.exports = (__webpack_require__(0))(227)
 
 /***/ })
 /******/ ]);
