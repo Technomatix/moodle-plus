@@ -33,6 +33,9 @@ COPY opcache.ini /usr/local/etc/php/conf.d/
 RUN pecl install xdebug
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 
+# Limits
+COPY limits.ini /usr/local/etc/php/conf.d/
+
 # Composer (set Composer home to /opt/.composer as the 1000 user has no home directory of its own)
 ENV COMPOSER_HOME /opt/.composer
 RUN mkdir -p /opt/.composer \
