@@ -2,8 +2,8 @@
 
 # Composer packages
 printf "Installing Composer packages ...\n"
-docker-compose run --rm -u 1000 php composer install
-docker-compose run --rm -u 1000 -w //var/www/html/moodle php composer install
+docker-compose run --rm -u $(id -u) php composer install
+docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php composer install
 
 # moodledata directories
 printf "\nCreating moodledata directories ...\n"
@@ -24,8 +24,8 @@ fi;
 
 # database
 printf "\nInstalling and upgrading Moodle database ...\n"
-docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
-docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/cli/upgrade.php --non-interactive
+docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
+docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/cli/upgrade.php --non-interactive
 
 # settings
 printf "\nConfiguring settings in the database ...\n"
@@ -36,8 +36,8 @@ docker-compose exec pgsql psql -Upostgres -dmoodle -c "update mdl_config set val
 
 # PHPUnit
 printf "\nConfiguring PHPUnit ...\n"
-docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
-docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/phpunit/cli/init.php
+docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/tool/phpunit/cli/util.php --buildcomponentconfigs
+docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/tool/phpunit/cli/init.php
 
 # Behat
 . "${BASH_SOURCE%/*}/behat.sh"

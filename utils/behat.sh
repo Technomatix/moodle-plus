@@ -2,7 +2,7 @@
 
 # Behat
 printf "Configurating Behat ...\n"
-docker-compose run --rm -u 1000 -w //var/www/html/moodle php php admin/tool/behat/cli/init.php
+docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/tool/behat/cli/init.php
 
 # get IP address of built-in web server and Selenium
 builtin=`docker inspect --format "{{ .NetworkSettings.Networks.moodleplus_default.IPAddress }}" $(docker ps -a | grep builtin | grep -Po "^[a-z0-9]+")`
