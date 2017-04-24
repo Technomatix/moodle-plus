@@ -36,10 +36,10 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/
 # Limits
 COPY limits.ini /usr/local/etc/php/conf.d/
 
-# Composer (set Composer home to /opt/.composer as the 1000 user has no home directory of its own)
+# Composer
 ENV COMPOSER_HOME /opt/.composer
 RUN mkdir -p /opt/.composer \
-    && chown 1000 /opt/.composer \
+    && chmod 777 /opt/.composer \
     && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
 
 # AU locale for PHPUnit
