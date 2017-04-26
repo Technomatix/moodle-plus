@@ -22,7 +22,14 @@ if [ ! -f moodle/config.php ]; then
     chmod a+r moodle/config.php
 fi;
 
-# database
+# database creation
+printf "\nCreating database ...\n"
+moodle_db_exists=`docker-compose exec pgsql psql -Upostgres -l | grep -o moodle`
+if [ "$moodle_db_exists" != "moodle" ]; then
+    docker-compose exec pgsql createdb -Upostgres moodle
+fi;
+
+# database installation
 printf "\nInstalling and upgrading Moodle database ...\n"
 docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/cli/install_database.php --non-interactive --adminpass=Wibble123! --agree-license --fullname=Moodle --shortname=Moodle
 docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/cli/upgrade.php --non-interactive

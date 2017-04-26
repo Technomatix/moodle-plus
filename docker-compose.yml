@@ -21,6 +21,8 @@ services:
             - 5432
         volumes:
             - pgdata:/var/lib/postgresql/data/
+        environment:
+            - POSTGRES_PASSWORD:'Wibble123!'
 
     selenium:
         image: selenium/standalone-firefox:2.53.1-beryllium

@@ -22,17 +22,6 @@ docker-compose up -d
 
 ## Install Moodle
 
-Set the password for the `postgres` user and create an empty database for Moodle:
-
-```
-docker-compose exec pgsql bash
-psql -Upostgres
-\password postgres
-create database moodle;
-```
-
-(Either set the `postgres` password to `Wibble123!` or change Moodle's `config.php` by hand once Moodle is installed.)
-
 ### Environments with bash
 
 Run the bash initialization script:
