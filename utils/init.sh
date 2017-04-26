@@ -18,7 +18,7 @@ fi;
 # config.php
 printf "\nProvisioning config.php ...\n"
 if [ ! -f moodle/config.php ]; then
-    cp docker/php/config.php moodle/
+    cp utils/config.php moodle/
     chmod a+r moodle/config.php
 fi;
 
