@@ -61,4 +61,6 @@ RUN mkdir -p /usr/code/codechecker \
     && cd /usr/code/codechecker \
     && git checkout v2.5.4 \
     && git apply --whitespace=fix /tmp/codechecker.diff \
-    && echo 'alias lmc="find -type f -name \"*.php\" | xargs phpcs --colors --standard=/usr/code/codechecker/moodle/ruleset.xml"' >> ~/.bashrc
+    && phpcs --config-set colors 1 \
+    && phpcs --config-set report_width 120 \
+    && phpcs --config-set default_standard "/usr/code/codechecker/moodle/ruleset.xml"

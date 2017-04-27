@@ -100,7 +100,7 @@ docker-compose run --rm php php utils/plugin_types.php
 ```
 docker-compose exec php bash
 cd /path/to/moodle/plugin
-lmc
+phpcs version.php
 ```
 
 ## Moodle source code
