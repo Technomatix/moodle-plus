@@ -69,10 +69,24 @@ index 9ea1870..b6dfe77 100644
      }
  }
 diff --git a/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php b/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php
-index 9e2b444..e11a173 100644
+index 9e2b444..79c093e 100644
 --- a/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php
 +++ b/moodle/Sniffs/NamingConventions/ValidVariableNameSniff.php
-@@ -121,9 +121,11 @@ class moodle_Sniffs_NamingConventions_ValidVariableNameSniff
+@@ -56,11 +56,13 @@ class moodle_Sniffs_NamingConventions_ValidVariableNameSniff
+         }
+ 
+         // Find underscores in variable names (accepting $_foo for private vars).
++        /*
+         $pos = strpos($membername, '_');
+         if ($pos > 1) {
+             $error = "Member variable \"$membername\" must not contain underscores.";
+             $phpcsfile->addError($error, $stackptr);
+         }
++        */
+ 
+         // Must not be preceded by 'var' keyword.
+         $keyword = $phpcsfile->findPrevious(T_VAR, $stackptr);
+@@ -121,9 +123,11 @@ class moodle_Sniffs_NamingConventions_ValidVariableNameSniff
              $phpcsfile->addError($error, $stackptr);
          }
  
