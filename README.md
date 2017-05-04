@@ -86,7 +86,6 @@ docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodl
 
 ```
 docker-compose run --rm -w /var/www/html/moodle php php admin/cli/purge_caches.php
-docker-compose run --rm php php utils/rebuild_theme.php
 ```
 
 ### See available Moodle plugin types

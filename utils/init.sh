@@ -52,4 +52,3 @@ docker-compose run --rm -u $(id -u) -w //var/www/html/moodle php php admin/tool/
 # purge caches
 printf "\nPurging caches ...\n"
 docker-compose run --rm -w /var/www/html/moodle php php admin/cli/purge_caches.php
-docker-compose run --rm php php utils/rebuild_theme.php
