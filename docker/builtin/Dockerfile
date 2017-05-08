@@ -19,7 +19,7 @@ RUN echo "deb http://apt.postgresql.org/pub/repos/apt/ jessie-pgdg main" > /etc/
 
 # other PHP extensions required by Moodle
 RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libpng12-dev libpng12-dev libicu-dev libxml2 libxml2-dev libcurl4-nss-dev zlib1g-dev \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends libpng12-dev libicu-dev libxml2 libxml2-dev libcurl4-nss-dev zlib1g-dev \
     && docker-php-ext-install curl gd intl mbstring soap xml xmlrpc zip \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
