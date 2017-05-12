@@ -2,7 +2,17 @@ FROM php:5.6-fpm
 LABEL name="php"
 LABEL version="0.0.1"
 
-# APT packages and PHP extensions
+# PHP extension requires APT package
+# curl          -------> libcurl4-nss-dev
+# gd            -------> libpng12-dev
+# intl          -------> libicu-dev
+# mbstring      -------> none
+# soap          -------> libxml2-dev
+# xml           -------> libxml2-dev
+# xmlrpc        -------> libxml2-dev
+# zip           -------> zlib1g-dev
+# pdo_pgsql     -------> libpq-dev
+# pgsql         -------> libpq-dev
 RUN aptPackages=" \
         wget \
         git \
