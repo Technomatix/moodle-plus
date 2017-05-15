@@ -2,6 +2,13 @@ FROM php:5.6-fpm
 LABEL name="php"
 LABEL version="0.0.1"
 
+COPY codechecker.diff /tmp/
+COPY limits.ini /usr/local/etc/php/conf.d/
+COPY opcache.ini /usr/local/etc/php/conf.d/
+COPY xdebug.ini /usr/local/etc/php/conf.d/
+
+ENV COMPOSER_HOME /opt/.composer
+
 # PHP extension requires APT package
 # curl          -------> libcurl4-nss-dev
 # gd            -------> libpng12-dev
@@ -36,40 +43,17 @@ RUN aptPackages=" \
         opcache \
     " \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales git \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install $phpExtensions \
-    && DEBIAN_FRONTEND=noninteractive apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# opcache
-COPY opcache.ini /usr/local/etc/php/conf.d/
-
-# limits
-COPY limits.ini /usr/local/etc/php/conf.d/
-
-# Composer
-ENV COMPOSER_HOME /opt/.composer
-RUN mkdir -p /opt/.composer \
+    && mkdir -p /opt/.composer \
     && chmod 777 /opt/.composer \
-    && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer
-
-# AU locale for PHPUnit
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends locales \
+    && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer \
+    && pecl install xdebug \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen \
-    && DEBIAN_FRONTEND=noninteractive apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
-
-# CodeSniffer
-RUN curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +x phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs \
-    && curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod +x phpcbf.phar && mv phpcbf.phar /usr/local/bin/phpcbf
-
-# Codechecker (essentially, Moodle rules for CodeSniffer)
-COPY codechecker.diff /tmp/
-RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git \
+    && curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +x phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs \
+    && curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod +x phpcbf.phar && mv phpcbf.phar /usr/local/bin/phpcbf \
     && mkdir -p /usr/code/codechecker \
     && git clone https://github.com/moodlehq/moodle-local_codechecker /usr/code/codechecker \
     && cd /usr/code/codechecker \
@@ -79,8 +63,5 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && phpcs --config-set report_width 120 \
     && phpcs --config-set default_standard "/usr/code/codechecker/moodle/ruleset.xml" \
     && DEBIAN_FRONTEND=noninteractive apt-get purge -y git \
+    && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-
-# Xdebug
-RUN pecl install xdebug
-COPY xdebug.ini /usr/local/etc/php/conf.d/
