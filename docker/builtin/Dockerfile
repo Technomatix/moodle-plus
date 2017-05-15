@@ -14,9 +14,6 @@ LABEL version="0.0.1"
 # pdo_pgsql     -------> libpq-dev
 # pgsql         -------> libpq-dev
 RUN aptPackages=" \
-        wget \
-        git \
-        vim \
         libpng12-dev \
         libicu-dev \
         libxml2-dev \

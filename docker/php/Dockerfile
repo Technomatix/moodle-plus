@@ -13,10 +13,8 @@ LABEL version="0.0.1"
 # zip           -------> zlib1g-dev
 # pdo_pgsql     -------> libpq-dev
 # pgsql         -------> libpq-dev
+# opcache       -------> none
 RUN aptPackages=" \
-        wget \
-        git \
-        vim \
         libpng12-dev \
         libicu-dev \
         libxml2-dev \
@@ -35,23 +33,19 @@ RUN aptPackages=" \
         zip \
         pdo_pgsql \
         pgsql \
+        opcache \
     " \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages \
+    && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install $phpExtensions \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
 # opcache
-RUN docker-php-ext-configure opcache --enable-opcache \
-    && docker-php-ext-install opcache
 COPY opcache.ini /usr/local/etc/php/conf.d/
 
-# Xdebug
-RUN pecl install xdebug
-COPY xdebug.ini /usr/local/etc/php/conf.d/
-
-# Limits
+# limits
 COPY limits.ini /usr/local/etc/php/conf.d/
 
 # Composer
@@ -74,11 +68,19 @@ RUN curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +
 
 # Codechecker (essentially, Moodle rules for CodeSniffer)
 COPY codechecker.diff /tmp/
-RUN mkdir -p /usr/code/codechecker \
+RUN DEBIAN_FRONTEND=noninteractive apt-get update -q \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends git \
+    && mkdir -p /usr/code/codechecker \
     && git clone https://github.com/moodlehq/moodle-local_codechecker /usr/code/codechecker \
     && cd /usr/code/codechecker \
     && git checkout v2.5.4 \
     && git apply --whitespace=fix /tmp/codechecker.diff \
     && phpcs --config-set colors 1 \
     && phpcs --config-set report_width 120 \
-    && phpcs --config-set default_standard "/usr/code/codechecker/moodle/ruleset.xml"
+    && phpcs --config-set default_standard "/usr/code/codechecker/moodle/ruleset.xml" \
+    && DEBIAN_FRONTEND=noninteractive apt-get purge -y git \
+    && rm -rf /var/lib/apt/lists/*
+
+# Xdebug
+RUN pecl install xdebug
+COPY xdebug.ini /usr/local/etc/php/conf.d/
