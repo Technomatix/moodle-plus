@@ -5,6 +5,8 @@ LABEL version="0.0.1"
 COPY codechecker.diff /tmp/
 COPY limits.ini /usr/local/etc/php/conf.d/
 COPY opcache.ini /usr/local/etc/php/conf.d/
+COPY phpcbf.phar /usr/local/bin/phpcbf
+COPY phpcs.phar /usr/local/bin/phpcs
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 
 ENV COMPOSER_HOME /opt/.composer
@@ -52,8 +54,8 @@ RUN aptPackages=" \
     && pecl install xdebug \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen \
-    && curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcs.phar && chmod +x phpcs.phar && mv phpcs.phar /usr/local/bin/phpcs \
-    && curl -L -O https://squizlabs.github.io/PHP_CodeSniffer/phpcbf.phar && chmod +x phpcbf.phar && mv phpcbf.phar /usr/local/bin/phpcbf \
+    && chmod +x /usr/local/bin/phpcbf \
+    && chmod +x /usr/local/bin/phpcs \
     && mkdir -p /usr/code/codechecker \
     && git clone https://github.com/moodlehq/moodle-local_codechecker /usr/code/codechecker \
     && cd /usr/code/codechecker \
@@ -63,5 +65,6 @@ RUN aptPackages=" \
     && phpcs --config-set report_width 120 \
     && phpcs --config-set default_standard "/usr/code/codechecker/moodle/ruleset.xml" \
     && DEBIAN_FRONTEND=noninteractive apt-get purge -y git \
+    && DEBIAN_FRONTEND=noninteractive apt-get autoremove --purge -y \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
