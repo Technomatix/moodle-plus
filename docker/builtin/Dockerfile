@@ -40,4 +40,4 @@ RUN aptPackages=" \
     && rm -rf /var/lib/apt/lists/*
 
 # run built-in web server
-CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/moodle"]
+CMD ["php", "-S", "0.0.0.0:8000", "-t", "/var/www/html/vendor/moodle/moodle"]

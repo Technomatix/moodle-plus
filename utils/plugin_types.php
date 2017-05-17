@@ -3,7 +3,7 @@
 /** @see https://docs.moodle.org/dev/Plugin_types */
 
 define('CLI_SCRIPT', true);
-require __DIR__ . '/../moodle/config.php';
+require __DIR__ . '/../plugins/config.php';
 
 $pluginman = core_plugin_manager::instance();
 

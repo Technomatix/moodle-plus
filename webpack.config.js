@@ -3,7 +3,7 @@ var path = require('path'),
 
 module.exports = function (env) {
     var app = env.app,
-        dirname = path.join(__dirname, 'moodle', 'local'),
+        dirname = path.join(__dirname, 'plugins', 'local'),
         prod = typeof env !== 'undefined' && env.min;
     return {
         cache: true,
@@ -17,7 +17,7 @@ module.exports = function (env) {
         plugins: [
             new webpack.DllReferencePlugin({
                 context: path.join(__dirname),
-                manifest: require(path.join(__dirname, 'moodle', 'theme', 'plus', 'javascript', prod ? 'vendor-manifest-min.json' : 'vendor-manifest.json'))
+                manifest: require(path.join(__dirname, 'plugins', 'theme', 'plus', 'javascript', prod ? 'vendor-manifest-min.json' : 'vendor-manifest.json'))
             }),
             new webpack.LoaderOptionsPlugin({
                 options: {

@@ -1,0 +1,14 @@
+diff --git a/lib/classes/minify.php b/lib/classes/minify.php
+index 6a570e4..3efd6be 100644
+--- a/lib/classes/minify.php
++++ b/lib/classes/minify.php
+@@ -75,6 +75,10 @@ EOD;
+                 $compressed[] = "\n\n// Cannot read JS file ".basename(dirname(dirname($file))).'/'.basename(dirname($file)).'/'.basename($file)."\n\n";
+                 continue;
+             }
++            if (strpos($file, 'vendor') !== false) {
++                $compressed[] = $content;
++                continue;
++            }
+             $compressed[] = self::js($content);
+         }

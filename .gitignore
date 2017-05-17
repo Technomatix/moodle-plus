@@ -1,6 +1,8 @@
 *.log
 *.js.map
 composer.lock
+phpunit.xml
+plugins/config.php
 node_modules/
 vendor/
 moodledata/

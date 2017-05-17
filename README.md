@@ -61,19 +61,21 @@ docker-compose logs -f
 ### Run Moodle cron
 
 ```
-docker-compose run --rm -w /var/www/html/moodle php php admin/cli/cron.php
+docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php php admin/cli/cron.php
 ```
 
 ### Run PHPUnits for a particular plugin
 
+It may be necessary to hand-edit the paths in the `phpunit.xml` file first.
+
 ```
-docker-compose run --rm -w /var/www/html/moodle php vendor/bin/phpunit --colors=always -c path/to/plugin
+docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php vendor/bin/phpunit --colors=always -c path/to/plugin
 ```
 
 ### Run Behat tests for a particular feature
 
 ```
-docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodledata/behat/behatrun/behat/behat.yml path/to/feature
+docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php vendor/bin/behat -c ../../../moodledata/behat/behatrun/behat/behat.yml path/to/feature
 ```
 
 ### Initialize Behat
@@ -85,7 +87,7 @@ docker-compose run --rm -w /var/www/html/moodle php vendor/bin/behat -c ../moodl
 ### Purge Moodle caches
 
 ```
-docker-compose run --rm -w /var/www/html/moodle php php admin/cli/purge_caches.php
+docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php php admin/cli/purge_caches.php
 ```
 
 ### See available Moodle plugin types
@@ -102,27 +104,6 @@ cd /path/to/moodle/plugin
 phpcs version.php
 ```
 
-## Moodle source code
-
-### git subtree
-
-The Moodle source code is managed as a [git subtree](https://blogs.atlassian.com/2013/05/alternatives-to-git-submodule-git-subtree/) under `moodle/`.
-
-```
-git remote add moodle https://github.com/moodle/moodle
-git subtree add  --squash --prefix=moodle/ moodle v3.2.0
-git subtree pull --squash --prefix=moodle/ moodle v3.2.1
-git subtree pull --squash --prefix=moodle/ moodle v3.2.2
-```
-
-### Diff
-
-Moodle source code files (i.e. those under `moodle/`) that've been added, modified or deleted can be determined as below (replacing `v3.2.2` with a Moodle tag as appropriate).
-
-```
-git diff --name-status v3.2.2 HEAD:moodle/
-```
-
 ## XDebug
 
 Remote debugging with [XDebug](https://xdebug.org/) is possible in [PHPStorm](https://www.jetbrains.com/phpstorm/) and [Visual Studio Code](https://code.visualstudio.com/Docs/languages/php).
@@ -133,8 +114,8 @@ To set up source code mapping, add the lines below to the "Listen for XDebug" co
 
 ```
 "port": 10000,
-"localSourceRoot": "${workspaceRoot}/moodle",
-"serverSourceRoot": "/var/www/html/moodle"
+"localSourceRoot": "${workspaceRoot}/vendor/moodle/moodle",
+"serverSourceRoot": "/var/www/html/vendor/moodle/moodle"
 ```
 
 ## PostgreSQL query logging
