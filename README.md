@@ -5,6 +5,7 @@ A dockerized Moodle 3.2 development environment with containers:
 * nginx
 * PostgreSQL
 * PHP-FPM 5.6
+* Mailcatcher
 * Selenium (for Behat)
 * Built-in web server (for Behat)
 

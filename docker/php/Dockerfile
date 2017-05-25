@@ -7,6 +7,7 @@ COPY limits.ini /usr/local/etc/php/conf.d/
 COPY opcache.ini /usr/local/etc/php/conf.d/
 COPY phpcbf.phar /usr/local/bin/phpcbf
 COPY phpcs.phar /usr/local/bin/phpcs
+COPY sendmail.ini /usr/local/etc/php/conf.d/
 COPY xdebug.ini /usr/local/etc/php/conf.d/
 
 ENV COMPOSER_HOME /opt/.composer
@@ -45,13 +46,14 @@ RUN aptPackages=" \
         opcache \
     " \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales git \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales git ssmtp \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install $phpExtensions \
     && mkdir -p /opt/.composer \
     && chmod 777 /opt/.composer \
     && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer \
     && pecl install xdebug \
+    && echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen \
     && chmod +x /usr/local/bin/phpcbf \
@@ -68,3 +70,9 @@ RUN aptPackages=" \
     && DEBIAN_FRONTEND=noninteractive apt-get autoremove --purge -y \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+ADD umask.sh /usr/local/bin/umask.sh
+RUN chmod +x /usr/local/bin/umask.sh
+
+ENTRYPOINT ["/usr/local/bin/umask.sh"]
+CMD ["php-fpm"]

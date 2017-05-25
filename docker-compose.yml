@@ -46,3 +46,11 @@ services:
             - .:/var/www/html
         depends_on:
             - pgsql
+            - mailcatcher
+
+    mailcatcher:
+        image: rylwin/mailcatcher
+        ports:
+            - 1080:1080
+        expose:
+            - 1025
