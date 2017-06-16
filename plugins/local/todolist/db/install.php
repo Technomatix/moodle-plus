@@ -4,7 +4,8 @@ defined('MOODLE_INTERNAL') || die();
 
 function xmldb_local_todolist_install() {
     chdir(__DIR__ . '/..');
-    system('composer install 2>&1');
+    system('php composer.phar self-update 2>&1');
+    system('php composer.phar install 2>&1');
     xmldb_local_todolist_example_items();
 }
 
