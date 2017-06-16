@@ -51,18 +51,18 @@ RUN aptPackages=" \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN mkdir -p /opt/.composer \
+RUN mkdir -p /opt/composer \
     && curl -L -O https://getcomposer.org/composer.phar \
     && chmod +x composer.phar \
     && mv composer.phar /usr/local/bin/composer
-COPY composer.json /opt/.composer/
-ENV COMPOSER_HOME /opt/.composer
+COPY composer.json /opt/composer/
+ENV COMPOSER_HOME /opt/composer
 RUN composer global update
-ENV PATH /opt/.composer/vendor/bin:$PATH
+ENV PATH /opt/composer/vendor/bin:$PATH
 RUN phpcs --config-set colors 1 \
     && phpcs --config-set report_width 120 \
-    && phpcs --config-set default_standard "/opt/.composer/vendor/moodlerooms/moodle-coding-standard/moodle" \
-    && chmod -R 775 /opt/.composer
+    && phpcs --config-set default_standard "/opt/composer/vendor/moodlerooms/moodle-coding-standard/moodle" \
+    && chmod -R 777 /opt/composer
 
 ADD umask.sh /usr/local/bin/umask.sh
 RUN chmod +x /usr/local/bin/umask.sh
