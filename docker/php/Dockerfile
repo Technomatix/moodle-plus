@@ -2,15 +2,10 @@ FROM php:5.6-fpm
 LABEL name="php"
 LABEL version="0.0.1"
 
-COPY codechecker.diff /tmp/
 COPY limits.ini /usr/local/etc/php/conf.d/
 COPY opcache.ini /usr/local/etc/php/conf.d/
-COPY phpcbf.phar /usr/local/bin/phpcbf
-COPY phpcs.phar /usr/local/bin/phpcs
 COPY sendmail.ini /usr/local/etc/php/conf.d/
 COPY xdebug.ini /usr/local/etc/php/conf.d/
-
-ENV COMPOSER_HOME /opt/.composer
 
 # PHP extension requires APT package
 # curl          -------> libcurl4-nss-dev
@@ -46,30 +41,28 @@ RUN aptPackages=" \
         opcache \
     " \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales git ssmtp \
+    && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales ssmtp \
     && docker-php-ext-configure opcache --enable-opcache \
     && docker-php-ext-install $phpExtensions \
-    && mkdir -p /opt/.composer \
-    && chmod 777 /opt/.composer \
-    && curl -L -O https://getcomposer.org/composer.phar && chmod +x composer.phar && mv composer.phar /usr/local/bin/composer \
     && pecl install xdebug \
     && echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen \
-    && chmod +x /usr/local/bin/phpcbf \
-    && chmod +x /usr/local/bin/phpcs \
-    && mkdir -p /usr/code/codechecker \
-    && git clone https://github.com/moodlehq/moodle-local_codechecker /usr/code/codechecker \
-    && cd /usr/code/codechecker \
-    && git checkout v2.5.4 \
-    && git apply --whitespace=fix /tmp/codechecker.diff \
-    && phpcs --config-set colors 1 \
-    && phpcs --config-set report_width 120 \
-    && phpcs --config-set default_standard "/usr/code/codechecker/moodle/ruleset.xml" \
-    && DEBIAN_FRONTEND=noninteractive apt-get purge -y git \
-    && DEBIAN_FRONTEND=noninteractive apt-get autoremove --purge -y \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
+
+RUN mkdir -p /opt/.composer \
+    && curl -L -O https://getcomposer.org/composer.phar \
+    && chmod +x composer.phar \
+    && mv composer.phar /usr/local/bin/composer
+COPY composer.json /opt/.composer/
+ENV COMPOSER_HOME /opt/.composer
+RUN composer global update
+ENV PATH /opt/.composer/vendor/bin:$PATH
+RUN phpcs --config-set colors 1 \
+    && phpcs --config-set report_width 120 \
+    && phpcs --config-set default_standard "/opt/.composer/vendor/moodlerooms/moodle-coding-standard/moodle" \
+    && chmod -R 775 /opt/.composer
 
 ADD umask.sh /usr/local/bin/umask.sh
 RUN chmod +x /usr/local/bin/umask.sh

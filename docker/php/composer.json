@@ -1,0 +1,11 @@
+{
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/leo-learning/moodle-coding-standard"
+        }
+    ],
+    "require": {
+        "moodlerooms/moodle-coding-standard": "dev-leo"
+    }
+}
