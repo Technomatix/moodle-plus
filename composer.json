@@ -1,7 +1,5 @@
 {
     "require": {
-        "moodle/moodle": "3.2.3",
-        "slim/slim": "3.7.0",
-        "lstrojny/functional-php": "1.4.0"
+        "moodle/moodle": "3.2.3"
     }
 }

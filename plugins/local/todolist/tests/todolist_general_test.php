@@ -4,6 +4,7 @@ use Functional as F;
 
 defined('MOODLE_INTERNAL') || die();
 
+require_once __DIR__ . '/../vendor/autoload.php';
 require_once __DIR__ . '/../routes_lib.php';
 require_once __DIR__ . '/../classes/task/remove_historic_items.php';
 

@@ -3,7 +3,7 @@
 use Behat\Gherkin\Node\TableNode as TableNode;
 use Functional as F;
 
-require_once __DIR__ . '/../../../../../vendor/autoload.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 require_once __DIR__ . '/../../../../../vendor/moodle/moodle/lib/behat/behat_base.php';
 
 class behat_local_todolist extends behat_base {

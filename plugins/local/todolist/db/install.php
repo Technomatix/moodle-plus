@@ -1,12 +1,14 @@
 <?php
 
-use Functional as F;
-
 defined('MOODLE_INTERNAL') || die();
 
-require_once __DIR__ . '/../../../../vendor/autoload.php';
-
 function xmldb_local_todolist_install() {
+    chdir(__DIR__ . '/..');
+    system('composer install 2>&1');
+    xmldb_local_todolist_example_items();
+}
+
+function xmldb_local_todolist_example_items() {
     $tasks = [
         (object)[
             'desc' => 'Start using React',
@@ -36,16 +38,16 @@ function xmldb_local_todolist_install() {
     ];
     $now = strtotime(date('Y-m-d') . ' UTC');
 
-    F\each($tasks, function ($task) use ($now) {
+    array_map(function ($task) use ($now) {
         global $DB;
         $admin = get_admin();
         $due_timestamp = $task->past ? $now - 3600 * 24 * 7 : $now + 3600 * 24 * 7;
-        $DB->insert_record('local_todolist', (object)[
+        return $DB->insert_record('local_todolist', (object)[
             'task_description'  => $task->desc,
             'is_done'           => $task->done ? 1 : 0,
             'due_timestamp'     => $due_timestamp,
             'created_timestamp' => $now,
             'user_id'           => $admin->id,
         ]);
-    });
+    }, $tasks);
 }

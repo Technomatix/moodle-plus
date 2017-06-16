@@ -67,10 +67,8 @@ docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php php admin/cli/
 
 ### Run PHPUnits for a particular plugin
 
-It may be necessary to hand-edit the paths in the `phpunit.xml` file first.
-
 ```
-docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php vendor/bin/phpunit --colors=always -c path/to/plugin
+docker-compose run --rm -w /var/www/html/vendor/moodle/moodle php vendor/bin/phpunit --colors=always --testsuite local_todolist_testsuite
 ```
 
 ### Run Behat tests for a particular feature
