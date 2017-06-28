@@ -8,6 +8,8 @@ require_once __DIR__ . '/../../../../../vendor/moodle/moodle/lib/behat/behat_bas
 
 class behat_local_todolist extends behat_base {
 
+    // @codingStandardsIgnoreStart
+
     /**
      * @Given /^the user "(?P<username_string>(?:[^"]|\\")*)" has the following TODO items:$/
      */
@@ -34,5 +36,7 @@ class behat_local_todolist extends behat_base {
         $page->fillField('Due', $due);
         $page->fillField('Description', $desc);
     }
+
+    // @codingStandardsIgnoreEnd
 
 }

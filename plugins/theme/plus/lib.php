@@ -2,6 +2,10 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * @param object $theme the theme
+ * @return string
+ */
 function theme_plus_get_main_scss_content($theme) {
     global $CFG;
 

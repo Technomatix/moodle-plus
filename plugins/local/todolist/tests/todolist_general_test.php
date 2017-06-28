@@ -22,6 +22,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * setUp
+     * @return void
      */
     protected function setUp() {
         $this->_user = $user = $this->getDataGenerator()->create_user();
@@ -51,6 +52,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * tests get_items_for_user sorts items by due date
+     * @return void
      */
     public function test_get_items_for_user_sorts_items_by_due_date() {
         $expected = [
@@ -69,6 +71,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * tests get_items_for_user excludes historic items
+     * @return void
      */
     public function test_get_items_for_user_excludes_historic_items() {
         $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
@@ -81,6 +84,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * tests get_items_for_user excludes other user's items
+     * @return void
      */
     public function test_get_items_for_user_excludes_other_users() {
         $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
@@ -92,6 +96,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * tests getting an item
+     * @return void
      */
     public function test_get_item() {
         $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
@@ -109,6 +114,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * tests creating an item
+     * @return void
      */
     public function test_create_item_for_user() {
         $one_day = $this->_now - 3600 * 24 * 1;
@@ -130,6 +136,7 @@ class todolist_general_test extends advanced_testcase {
 
     /**
      * tests updating an item
+     * @return void
      */
     public function test_update_item() {
         $todolist_items = \local_todolist\get_items_for_user($this->_user, $this->_now);
@@ -150,6 +157,7 @@ class todolist_general_test extends advanced_testcase {
     /**
      * tests updating an item
      * @global moodle_database $DB
+     * @return void
      */
     public function test_delete_item() {
         global $DB;
@@ -163,6 +171,7 @@ class todolist_general_test extends advanced_testcase {
     /**
      * tests removing historic items
      * @global moodle_database $DB
+     * @return void
      */
     public function test_remove_historic_items() {
         global $DB;

@@ -2,6 +2,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+/**
+ * @return void
+ */
 function xmldb_local_todolist_install() {
     chdir(__DIR__ . '/..');
     system('php composer.phar self-update 2>&1');
@@ -9,6 +12,9 @@ function xmldb_local_todolist_install() {
     xmldb_local_todolist_example_items();
 }
 
+/**
+ * @return void
+ */
 function xmldb_local_todolist_example_items() {
     $tasks = [
         (object)[

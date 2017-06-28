@@ -8,6 +8,7 @@ class db_install_test extends advanced_testcase {
 
     /**
      * setUp
+     * @return void
      */
     protected function setUp() {
         $this->resetAfterTest();
@@ -15,6 +16,7 @@ class db_install_test extends advanced_testcase {
 
     /**
      * tests xmldb_local_todolist_example_items
+     * @return void
      */
     public function test_xmldb_local_todolist_example_items() {
         global $DB;

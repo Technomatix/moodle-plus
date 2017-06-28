@@ -41,8 +41,8 @@ function get_plugin_renderer() {
 /**
  * get items for the given user
  * @global \moodle_database $DB
- * @param \stdClass $user
- * @param integer $now
+ * @param  \stdClass $user a user
+ * @param  integer   $now  the current time
  * @return array
  */
 function get_items_for_user(\stdClass $user, $now = null) {
@@ -63,7 +63,7 @@ function get_items_for_user(\stdClass $user, $now = null) {
 /**
  * gets the item with the given id from the database
  * @global \moodle_database $DB
- * @param integer $id
+ * @param integer $id primary key
  * @return array
  */
 function get_item($id) {
@@ -74,9 +74,9 @@ function get_item($id) {
 /**
  * create an item in the database
  * @global \moodle_database $DB
- * @param array $item
- * @param \stdClass $user
- * @param integer $now
+ * @param array     $item the item to create
+ * @param \stdClass $user a user
+ * @param integer   $now  the current time
  * @return array
  */
 function create_item_for_user(array $item, \stdClass $user, $now = null) {
@@ -91,7 +91,7 @@ function create_item_for_user(array $item, \stdClass $user, $now = null) {
 /**
  * updates the database with the given item
  * @global \moodle_database $DB
- * @param array $item
+ * @param array $item the item to update
  * @return array
  */
 function update_item(array $item) {
@@ -103,7 +103,7 @@ function update_item(array $item) {
 /**
  * deletes the given item from the database
  * @global \moodle_database $DB
- * @param array $item
+ * @param array $item the item to delete
  * @return array
  */
 function delete_item(array $item) {
