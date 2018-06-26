@@ -9,7 +9,7 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/
 
 # PHP extension requires APT package
 # curl          -------> libcurl4-nss-dev
-# gd            -------> libpng12-dev
+# gd            -------> libpng-dev
 # intl          -------> libicu-dev
 # mbstring      -------> none
 # soap          -------> libxml2-dev
@@ -20,7 +20,7 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/
 # pgsql         -------> libpq-dev
 # opcache       -------> none
 RUN aptPackages=" \
-        libpng12-dev \
+        libpng-dev \
         libicu-dev \
         libxml2-dev \
         libcurl4-nss-dev \
