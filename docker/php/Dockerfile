@@ -43,7 +43,7 @@ RUN aptPackages=" \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales ssmtp \
     && docker-php-ext-configure opcache --enable-opcache \
-    && docker-php-ext-install $phpExtensions \
+    && docker-php-ext-install -j$(nproc) $phpExtensions \
     && pecl install xdebug-2.5.5 \
     && echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \

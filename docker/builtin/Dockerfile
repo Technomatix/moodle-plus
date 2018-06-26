@@ -35,7 +35,7 @@ RUN aptPackages=" \
     " \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages \
-    && docker-php-ext-install $phpExtensions \
+    && docker-php-ext-install -j$(nproc) $phpExtensions \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
