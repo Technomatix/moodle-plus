@@ -4,7 +4,7 @@ LABEL version="0.0.1"
 
 # PHP extension requires APT package
 # curl          -------> libcurl4-nss-dev
-# gd            -------> libpng12-dev
+# gd            -------> libpng-dev
 # intl          -------> libicu-dev
 # mbstring      -------> none
 # soap          -------> libxml2-dev
@@ -14,7 +14,7 @@ LABEL version="0.0.1"
 # pdo_pgsql     -------> libpq-dev
 # pgsql         -------> libpq-dev
 RUN aptPackages=" \
-        libpng12-dev \
+        libpng-dev \
         libicu-dev \
         libxml2-dev \
         libcurl4-nss-dev \
@@ -35,7 +35,7 @@ RUN aptPackages=" \
     " \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages \
-    && docker-php-ext-install $phpExtensions \
+    && docker-php-ext-install -j$(nproc) $phpExtensions \
     && DEBIAN_FRONTEND=noninteractive apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 

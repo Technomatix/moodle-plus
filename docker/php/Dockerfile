@@ -9,7 +9,7 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/
 
 # PHP extension requires APT package
 # curl          -------> libcurl4-nss-dev
-# gd            -------> libpng12-dev
+# gd            -------> libpng-dev
 # intl          -------> libicu-dev
 # mbstring      -------> none
 # soap          -------> libxml2-dev
@@ -20,7 +20,7 @@ COPY xdebug.ini /usr/local/etc/php/conf.d/
 # pgsql         -------> libpq-dev
 # opcache       -------> none
 RUN aptPackages=" \
-        libpng12-dev \
+        libpng-dev \
         libicu-dev \
         libxml2-dev \
         libcurl4-nss-dev \
@@ -43,8 +43,8 @@ RUN aptPackages=" \
     && DEBIAN_FRONTEND=noninteractive apt-get update -q \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends $aptPackages locales ssmtp \
     && docker-php-ext-configure opcache --enable-opcache \
-    && docker-php-ext-install $phpExtensions \
-    && pecl install xdebug \
+    && docker-php-ext-install -j$(nproc) $phpExtensions \
+    && pecl install xdebug-2.5.5 \
     && echo "mailhub=mailcatcher:1025\nUseTLS=NO\nFromLineOverride=YES" > /etc/ssmtp/ssmtp.conf \
     && sed -i 's/# en_AU.UTF-8 UTF-8/en_AU.UTF-8 UTF-8/' /etc/locale.gen \
     && locale-gen \
